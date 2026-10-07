@@ -18,14 +18,14 @@ export default function About() {
 
         {/* Story */}
         <Reveal delay={0.1}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
-            <p className="text-xl text-ink-2 leading-relaxed">{site.about.story}</p>
-            <p className="text-xl text-ink-2 leading-relaxed">{site.about.beliefs}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 mb-12 md:mb-14">
+            <p className="text-lg md:text-xl text-ink-2 leading-relaxed">{site.about.story}</p>
+            <p className="text-lg md:text-xl text-ink-2 leading-relaxed">{site.about.beliefs}</p>
           </div>
         </Reveal>
 
         {/* Principles */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 md:mb-14">
           {site.about.principles.map((p, i) => (
             <Reveal key={i} delay={i * 0.08}>
               <div className="flex items-start gap-5">

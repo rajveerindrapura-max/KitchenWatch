@@ -237,11 +237,12 @@ function Scene({ isMobile }: { isMobile: boolean }) {
 
       {!isMobile && (
         <ContactShadows
-          position={[0, -1.2, 0]}
-          opacity={0.25}
-          scale={8}
-          blur={2.5}
-          far={3}
+          position={[0, -1.0, 0]}
+          opacity={0.16}
+          scale={5.2}
+          blur={2.0}
+          far={2.2}
+          color="#64748b"
         />
       )}
     </>

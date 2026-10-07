@@ -1,0 +1,231 @@
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { AlertCircle, Clock, TrendingDown, Layers, Sparkles } from 'lucide-react';
+import { site } from '../../content/site';
+
+interface DashboardScreenProps {
+  selectedOutlet?: string;
+  onSelectOutlet?: (outlet: string) => void;
+  interactive?: boolean;
+}
+
+function formatINR(val: number): string {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(val);
+}
+
+export default function DashboardScreen({
+  selectedOutlet: controlledOutlet,
+  onSelectOutlet,
+  interactive = true,
+}: DashboardScreenProps) {
+  const scenarioData = site.productDemo.scenarios[0];
+  const [internalOutlet, setInternalOutlet] = useState<string>('All outlets');
+
+  const currentOutlet = controlledOutlet ?? internalOutlet;
+
+  const handleSelect = (outlet: string) => {
+    if (!interactive) return;
+    setInternalOutlet(outlet);
+    onSelectOutlet?.(outlet);
+  };
+
+  const stats =
+    scenarioData.stats[currentOutlet as keyof typeof scenarioData.stats] ??
+    scenarioData.stats['All outlets'];
+
+  const items =
+    scenarioData.attentionItems[currentOutlet as keyof typeof scenarioData.attentionItems] ??
+    scenarioData.attentionItems['All outlets'];
+
+  return (
+    <div className="h-full flex flex-col p-3 sm:p-4 bg-slate-50/40 text-xs overflow-hidden select-none">
+      {/* Top Bar: Title & Outlets */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-border/80">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-blue" />
+          <h4 className="font-jakarta font-bold text-ink text-sm sm:text-base">
+            Inventory Overview
+          </h4>
+          <span className="text-[10px] text-muted font-medium hidden sm:inline">
+            Live metrics
+          </span>
+        </div>
+
+        {/* Outlet Switcher */}
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <div className="inline-flex p-0.5 bg-slate-200/70 rounded-lg">
+            {scenarioData.outlets.map((outlet) => {
+              const active = currentOutlet === outlet;
+              return (
+                <button
+                  key={outlet}
+                  type="button"
+                  onClick={() => handleSelect(outlet)}
+                  className={`px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[10px] font-semibold transition-all ${
+                    active
+                      ? 'bg-surface text-ink shadow-sm'
+                      : 'text-muted hover:text-ink'
+                  }`}
+                >
+                  {outlet}
+                </button>
+              );
+            })}
+          </div>
+
+          {interactive && (
+            <span className="hidden lg:inline-flex items-center gap-1 text-[9px] font-medium text-blue bg-blue/10 px-2 py-0.5 rounded-full animate-pulse">
+              <Sparkles size={10} />
+              {scenarioData.hint}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* 4 Stat Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 my-2.5">
+        {/* Stock Value */}
+        <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border/80 shadow-xs">
+          <div className="flex items-center justify-between text-muted text-[10px] mb-1">
+            <span>Stock value</span>
+            <Layers size={11} className="text-blue" />
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={stats.stockValue}
+              initial={{ opacity: 0, y: 3 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -3 }}
+              className="text-xs sm:text-sm font-jakarta font-extrabold text-ink tabular-nums"
+            >
+              {formatINR(stats.stockValue)}
+            </motion.p>
+          </AnimatePresence>
+          <span className="text-[9px] text-green-700 font-medium">Recorded live</span>
+        </div>
+
+        {/* Low Stock */}
+        <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border/80 shadow-xs">
+          <div className="flex items-center justify-between text-muted text-[10px] mb-1">
+            <span>Low stock</span>
+            <AlertCircle size={11} className="text-amber-500" />
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={stats.lowStock}
+              initial={{ opacity: 0, y: 3 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -3 }}
+              className="text-xs sm:text-sm font-jakarta font-extrabold text-amber-700 tabular-nums"
+            >
+              {stats.lowStock} {stats.lowStock === 1 ? 'item' : 'items'}
+            </motion.p>
+          </AnimatePresence>
+          <span className="text-[9px] text-amber-600 font-medium">Below minimum</span>
+        </div>
+
+        {/* Expiring Soon */}
+        <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border/80 shadow-xs">
+          <div className="flex items-center justify-between text-muted text-[10px] mb-1">
+            <span>Expiring soon</span>
+            <Clock size={11} className="text-red-500" />
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={stats.expiring}
+              initial={{ opacity: 0, y: 3 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -3 }}
+              className="text-xs sm:text-sm font-jakarta font-extrabold text-red-700 tabular-nums"
+            >
+              {stats.expiring} items
+            </motion.p>
+          </AnimatePresence>
+          <span className="text-[9px] text-red-600 font-medium">Next 48 hours</span>
+        </div>
+
+        {/* Wastage */}
+        <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border/80 shadow-xs">
+          <div className="flex items-center justify-between text-muted text-[10px] mb-1">
+            <span>Wastage cost</span>
+            <TrendingDown size={11} className="text-slate-500" />
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={stats.wastage}
+              initial={{ opacity: 0, y: 3 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -3 }}
+              className="text-xs sm:text-sm font-jakarta font-extrabold text-ink tabular-nums"
+            >
+              {formatINR(stats.wastage)}
+            </motion.p>
+          </AnimatePresence>
+          <span className="text-[9px] text-muted font-medium">Logged losses</span>
+        </div>
+      </div>
+
+      {/* Needs Attention List */}
+      <div className="flex-1 rounded-xl bg-surface border border-border/80 p-2 sm:p-2.5 overflow-hidden flex flex-col">
+        <div className="flex items-center justify-between mb-1.5 pb-1 border-b border-border/60">
+          <span className="text-[10px] font-jakarta font-bold uppercase tracking-wider text-muted">
+            Needs Attention ({items.length})
+          </span>
+          <span className="text-[9px] text-muted">Auto-refreshed</span>
+        </div>
+
+        <div className="space-y-1.5 overflow-y-auto pr-0.5">
+          <AnimatePresence initial={false}>
+            {items.map((it, idx) => (
+              <motion.div
+                key={`${it.item}-${it.outlet}-${idx}`}
+                initial={{ opacity: 0, x: -6 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 6 }}
+                transition={{ duration: 0.2, delay: idx * 0.05 }}
+                className="flex items-center justify-between p-1.5 rounded-lg bg-slate-50/70 border border-slate-100 hover:border-border transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      it.tone === 'red'
+                        ? 'bg-red-500'
+                        : it.tone === 'amber'
+                        ? 'bg-amber-500'
+                        : 'bg-green-600'
+                    }`}
+                  />
+                  <div>
+                    <p className="font-semibold text-[11px] text-ink">{it.item}</p>
+                    <p className="text-[9px] text-muted">{it.level}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[9px] text-muted px-1.5 py-0.5 rounded bg-white border border-border font-medium">
+                    {it.outlet}
+                  </span>
+                  <span
+                    className={`text-[9px] px-1.5 py-0.5 rounded-full font-semibold ${
+                      it.tone === 'red'
+                        ? 'bg-red-50 text-red-700'
+                        : it.tone === 'amber'
+                        ? 'bg-amber-50 text-amber-700'
+                        : 'bg-green-50 text-green-700'
+                    }`}
+                  >
+                    {it.status}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}

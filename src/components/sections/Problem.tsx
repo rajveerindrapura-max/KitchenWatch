@@ -13,18 +13,18 @@ export default function Problem() {
   });
 
   return (
-    <section id="product" className="px-6 py-[80px] md:py-[140px]">
+    <section id="problem" className="px-6 pt-6 pb-16 md:pt-8 md:pb-24">
       <div className="max-w-5xl mx-auto" ref={containerRef}>
         {/* Section label */}
         <Reveal>
-          <p className="text-sm font-jakarta font-semibold text-blue uppercase tracking-widest mb-6">
+          <p className="text-xs md:text-sm font-jakarta font-semibold text-blue uppercase tracking-widest mb-4 md:mb-5">
             {site.problem.sectionLabel}
           </p>
         </Reveal>
 
         {/* Scroll-linked word highlight paragraph */}
         <div
-          className="font-jakarta font-bold text-ink leading-snug mb-16"
+          className="font-jakarta font-bold text-ink leading-snug mb-12 md:mb-14"
           style={{ fontSize: 'clamp(26px, 3.5vw, 48px)' }}
           aria-label={site.problem.highlightWords.join(' ')}
         >
@@ -45,7 +45,7 @@ export default function Problem() {
           {site.problem.painPoints.map((point, i) => (
             <Reveal key={i} delay={i * 0.1}>
               <div
-                className={`p-7 md:p-8 ${
+                className={`p-6 md:p-8 ${
                   i < site.problem.painPoints.length - 1
                     ? 'border-b sm:border-b-0 sm:border-r border-border'
                     : ''

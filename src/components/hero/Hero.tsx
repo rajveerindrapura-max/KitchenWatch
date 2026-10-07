@@ -1,6 +1,4 @@
 import React, { Suspense, lazy } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
 import HeroText from './HeroText';
 
 const HeroScene = lazy(() => import('../../three/HeroScene'));
@@ -46,10 +44,10 @@ class HeroErrorBoundary extends React.Component<
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-bg">
+    <section className="relative overflow-hidden bg-bg pt-24 md:pt-28 lg:pt-32 pb-10 md:pb-12">
       {/* Radial glow behind scene */}
       <div
-        className="absolute right-0 top-0 w-[55%] h-full pointer-events-none"
+        className="absolute right-0 top-0 w-[55%] h-full pointer-events-none overflow-hidden"
         aria-hidden="true"
       >
         <div
@@ -61,15 +59,15 @@ export default function Hero() {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 min-h-screen grid grid-cols-1 md:grid-cols-2 gap-0">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
         {/* Text */}
         <div className="flex items-center">
           <HeroText />
         </div>
 
-        {/* 3D scene */}
-        <div className="flex items-center justify-center h-[55vw] md:h-auto min-h-[320px]">
-          <div className="w-full h-full max-h-[600px] flex items-center justify-center">
+        {/* 3D scene clipped cleanly to prevent canvas bleed */}
+        <div className="flex items-center justify-center h-[52vw] md:h-[460px] lg:h-[520px] max-h-[540px] overflow-hidden rounded-3xl">
+          <div className="w-full h-full flex items-center justify-center overflow-hidden">
             <HeroErrorBoundary fallback={<SceneSkeleton />}>
               <Suspense fallback={<SceneSkeleton />}>
                 <HeroScene />
@@ -78,16 +76,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      {/* Scroll cue */}
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted"
-        aria-hidden="true"
-      >
-        <ChevronDown size={22} strokeWidth={1.5} />
-      </motion.div>
     </section>
   );
 }

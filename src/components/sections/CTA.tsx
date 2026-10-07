@@ -27,7 +27,7 @@ function InputField({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-jakarta font-semibold text-white/80 mb-1.5">
+      <label htmlFor={id} className="block text-sm font-jakarta font-semibold text-white/90 mb-1.5">
         {label} {required && <span className="text-red-400">*</span>}
       </label>
       <input
@@ -37,8 +37,8 @@ function InputField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         required={required}
-        className={`w-full bg-white/8 border rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-blue transition-colors ${
-          error ? 'border-red-400/60 focus:ring-red-400' : 'border-white/15 focus:ring-blue'
+        className={`w-full bg-[#0E172A] border rounded-xl px-4 py-3 text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all shadow-inner ${
+          error ? 'border-red-400 focus:ring-red-400' : 'border-white/15 hover:border-white/25'
         }`}
       />
       {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
@@ -97,8 +97,22 @@ export default function CTA() {
   }
 
   return (
-    <section id="cta" className="bg-dark px-6 py-[80px] md:py-[140px]">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+    <section id="cta" className="relative overflow-hidden bg-gradient-to-b from-[#070B14] via-[#091122] to-[#0A1124] px-6 py-16 md:py-24">
+      {/* Background ambient glows */}
+      <div
+        className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-blue/25 blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute -bottom-32 -right-32 w-[30rem] h-[30rem] rounded-full bg-sky/20 blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-7xl bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue/10 via-transparent to-transparent pointer-events-none"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-start">
         {/* Left */}
         <div>
           <h2
@@ -128,8 +142,8 @@ export default function CTA() {
           )}
         </div>
 
-        {/* Right: Form */}
-        <div className="bg-white/5 border border-white/10 rounded-card p-7 md:p-8">
+        {/* Right: Form Card */}
+        <div className="bg-white/[0.08] backdrop-blur-md border border-white/20 rounded-card p-7 md:p-8 shadow-2xl">
           <AnimatePresence mode="wait">
             {state === 'success' ? (
               <motion.div
@@ -180,7 +194,7 @@ export default function CTA() {
                 </div>
 
                 <div>
-                  <label htmlFor="outlets" className="block text-sm font-jakarta font-semibold text-white/80 mb-1.5">
+                  <label htmlFor="outlets" className="block text-sm font-jakarta font-semibold text-white/90 mb-1.5">
                     Number of outlets <span className="text-red-400">*</span>
                   </label>
                   <select
@@ -188,14 +202,13 @@ export default function CTA() {
                     value={fields.outlets}
                     onChange={(e) => set('outlets', e.target.value)}
                     required
-                    className={`w-full bg-white/8 border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue transition-colors ${
-                      fields.outlets ? 'text-white' : 'text-white/30'
-                    } ${errors.outlets ? 'border-red-400/60' : 'border-white/15'}`}
-                    style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
+                    className={`w-full bg-[#0E172A] border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all shadow-inner ${
+                      fields.outlets ? 'text-white' : 'text-slate-400'
+                    } ${errors.outlets ? 'border-red-400 focus:ring-red-400' : 'border-white/15 hover:border-white/25'}`}
                   >
-                    <option value="" disabled style={{ color: '#64748b' }}>Select number of outlets</option>
+                    <option value="" disabled className="text-slate-400 bg-[#0E172A]">Select number of outlets</option>
                     {form.outletOptions.map((o) => (
-                      <option key={o} value={o} style={{ color: '#0B1220', background: '#fff' }}>
+                      <option key={o} value={o} className="text-white bg-[#0E172A]">
                         {o}
                       </option>
                     ))}
@@ -225,7 +238,7 @@ export default function CTA() {
                 />
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-jakarta font-semibold text-white/80 mb-1.5">
+                  <label htmlFor="message" className="block text-sm font-jakarta font-semibold text-white/90 mb-1.5">
                     Anything else (optional)
                   </label>
                   <textarea
@@ -234,7 +247,7 @@ export default function CTA() {
                     value={fields.message}
                     onChange={(e) => set('message', e.target.value)}
                     rows={3}
-                    className="w-full bg-white/8 border border-white/15 rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-blue transition-colors resize-none"
+                    className="w-full bg-[#0E172A] border border-white/15 hover:border-white/25 rounded-xl px-4 py-3 text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all resize-none shadow-inner"
                   />
                 </div>
 

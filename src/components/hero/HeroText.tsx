@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 import MagneticButton from '../ui/MagneticButton';
 import { site } from '../../content/site';
 
@@ -26,8 +27,8 @@ export default function HeroText() {
 
   if (shouldReduce) {
     return (
-      <div className="flex flex-col items-start justify-center h-full pt-28 pb-16 md:pt-0 md:pb-0 relative z-10">
-        <div className="mb-7">
+      <div className="flex flex-col items-start justify-center h-full relative z-10">
+        <div className="mb-6">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill border border-blue/20 bg-blue/5 text-blue text-sm font-jakarta font-semibold">
             {site.hero.pill}
           </span>
@@ -50,10 +51,10 @@ export default function HeroText() {
           <br />
           {site.hero.headlinePost}
         </h1>
-        <p className="text-lg md:text-xl text-ink-2 max-w-lg mb-10 leading-relaxed">
+        <p className="text-lg md:text-xl text-ink-2 max-w-lg mb-8 leading-relaxed">
           {site.hero.subheadline}
         </p>
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-7 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6 w-full sm:w-auto">
           <MagneticButton>
             <a
               href="#cta"
@@ -71,19 +72,22 @@ export default function HeroText() {
             </a>
           </MagneticButton>
         </div>
-        <p className="text-sm text-muted leading-relaxed">{site.hero.trustLine}</p>
+        <p className="text-sm text-muted leading-relaxed max-w-md">{site.hero.trustLine}</p>
+        <div className="mt-6 text-muted hidden md:inline-flex items-center" aria-hidden="true">
+          <ChevronDown size={20} strokeWidth={1.5} />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-start justify-center h-full pt-28 pb-16 md:pt-0 md:pb-0 relative z-10">
+    <div className="flex flex-col items-start justify-center h-full relative z-10">
       {/* Pill */}
       <motion.div
         initial="hidden"
         animate="visible"
         variants={fadeUp}
-        className="mb-7"
+        className="mb-6"
       >
         <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill border border-blue/20 bg-blue/5 text-blue text-sm font-jakarta font-semibold">
           {site.hero.pill}
@@ -133,7 +137,7 @@ export default function HeroText() {
         animate="visible"
         variants={fadeUp}
         transition={{ delay: 0.25 }}
-        className="text-lg md:text-xl text-ink-2 max-w-lg mb-10 leading-relaxed"
+        className="text-lg md:text-xl text-ink-2 max-w-lg mb-8 leading-relaxed"
       >
         {site.hero.subheadline}
       </motion.p>
@@ -144,7 +148,7 @@ export default function HeroText() {
         animate="visible"
         variants={fadeUp}
         transition={{ delay: 0.35 }}
-        className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-7 w-full sm:w-auto"
+        className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6 w-full sm:w-auto"
       >
         <MagneticButton>
           <a
@@ -170,10 +174,20 @@ export default function HeroText() {
         animate="visible"
         variants={fadeUp}
         transition={{ delay: 0.45 }}
-        className="text-sm text-muted leading-relaxed"
+        className="text-sm text-muted leading-relaxed max-w-md"
       >
         {site.hero.trustLine}
       </motion.p>
+
+      {/* Scroll cue inline beneath trust line with 24px gap, hidden on mobile */}
+      <motion.div
+        animate={{ y: [0, 6, 0] }}
+        transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+        className="mt-6 text-muted hidden md:inline-flex items-center"
+        aria-hidden="true"
+      >
+        <ChevronDown size={20} strokeWidth={1.5} />
+      </motion.div>
     </div>
   );
 }

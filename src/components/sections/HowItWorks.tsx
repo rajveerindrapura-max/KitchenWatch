@@ -19,8 +19,8 @@ function PhoneMockup({ step }: { step: number }) {
         <span className="text-[11px] text-white font-semibold">Save item</span>
       </div>
     </div>,
-    // Step 2: worker update
-    <div key="worker" className="p-4 space-y-3">
+    // Step 2: employee update
+    <div key="employee" className="p-4 space-y-3">
       <p className="text-xs font-jakarta font-semibold text-ink">Quick update</p>
       {['Tomatoes', 'Oil', 'Bread'].map((item, i) => (
         <div key={item} className="flex items-center justify-between bg-slate-50 rounded-xl px-3 py-2.5 border border-border">
@@ -36,7 +36,7 @@ function PhoneMockup({ step }: { step: number }) {
     // Step 3: owner dashboard
     <div key="owner" className="p-4 space-y-3">
       <p className="text-xs font-jakarta font-semibold text-ink">All outlets</p>
-      {['Andheri', 'Bandra', 'Juhu'].map((outlet, i) => (
+      {['Outlet 1', 'Outlet 2', 'Outlet 3'].map((outlet, i) => (
         <div key={outlet} className="flex items-center gap-2">
           <div className={`w-2 h-2 rounded-full ${i === 1 ? 'bg-amber-500' : 'bg-green-600'}`} />
           <span className="text-xs text-ink flex-1">{outlet}</span>
@@ -101,7 +101,7 @@ export default function HowItWorks() {
   return (
     <section id="how-it-works" className="bg-dark text-white">
       {/* Mobile: stacked */}
-      <div className="md:hidden px-6 py-[80px]">
+      <div className="md:hidden px-6 py-16">
         <div className="max-w-2xl mx-auto">
           <h2
             className="font-jakarta font-bold text-white tracking-tight mb-12"

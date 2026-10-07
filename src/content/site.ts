@@ -3,9 +3,9 @@
 
 export const site = {
   meta: {
-    title: 'KitchenWatch - Inventory Control for Restaurant Groups',
+    title: 'KitchenWatch - Inventory Control for Restaurant Groups and Single Outlets',
     description:
-      'KitchenWatch gives restaurant owners one dashboard to control inventory, wastage and transfers across every outlet. Built for 2 to 10 outlets.',
+      'KitchenWatch gives restaurant owners one dashboard to control inventory, wastage and transfers. Run one outlet or many. Works alongside your existing POS.',
     og: {
       image: '/og-image.png', // TODO: Create OG image
       url: 'https://kitchenwatch.in', // TODO: Confirm domain
@@ -36,7 +36,7 @@ export const site = {
     ctaPrimary: 'Start free trial',
     ctaSecondary: 'Book a demo',
     trustLine:
-      'Built for restaurant owners with 2 to 10 outlets. Works alongside your existing POS.',
+      'For restaurants, cafes and cloud kitchens. From one outlet to many. Works alongside your existing POS.',
   },
 
   problem: {
@@ -50,7 +50,7 @@ export const site = {
     ],
     painPoints: [
       {
-        title: 'No live visibility across outlets',
+        title: 'No live visibility',
         desc: 'You have no single view of what is available where, in real time.',
       },
       {
@@ -59,72 +59,111 @@ export const site = {
       },
       {
         title: 'Stock moves with no record',
-        desc: 'Transfers between outlets happen on WhatsApp with nothing to audit later.',
+        desc: 'Transfers between locations happen on WhatsApp with nothing to audit later.',
       },
     ],
   },
 
-  carousel: {
-    heading: 'See everything at a glance',
-    subheading:
-      'Every screen designed to save you time and give you control.',
-    slides: [
+  productDemo: {
+    heading: 'See how it works in 30 seconds',
+    subheading: 'Click through a real KitchenWatch workflow. Sample data shown.',
+    sampleDataBadge: 'Sample data',
+    scenarios: [
       {
-        id: 'dashboard',
-        title: 'Owner dashboard',
-        caption: 'One view of all your outlets, stock value and alerts.',
-        type: 'desktop' as const,
-        file: 'dashboard.png',
-      },
-      {
-        id: 'inventory',
-        title: 'Inventory',
-        caption: 'Every item, every outlet, current quantity and minimum level.',
-        type: 'desktop' as const,
-        file: 'inventory.png',
-      },
-      {
-        id: 'item-details',
-        title: 'Item details',
-        caption: 'Full history of every change made to a single item.',
-        type: 'desktop' as const,
-        file: 'item-details.png',
+        id: 'outlets',
+        number: '01',
+        title: 'See every outlet at once',
+        desc: 'Check stock value, alerts and wastage across one outlet or all of them.',
+        caption: 'One clean view for all your outlets, with instant live totals.',
+        hint: 'Try switching outlets',
+        outlets: ['All outlets', 'Outlet 1', 'Outlet 2', 'Outlet 3'] as const,
+        stats: {
+          'All outlets': {
+            stockValue: 348500,
+            lowStock: 3,
+            expiring: 5,
+            wastage: 4200,
+          },
+          'Outlet 1': {
+            stockValue: 142000,
+            lowStock: 1,
+            expiring: 2,
+            wastage: 1800,
+          },
+          'Outlet 2': {
+            stockValue: 118000,
+            lowStock: 2,
+            expiring: 1,
+            wastage: 1200,
+          },
+          'Outlet 3': {
+            stockValue: 88500,
+            lowStock: 0,
+            expiring: 2,
+            wastage: 1200,
+          },
+        },
+        attentionItems: {
+          'All outlets': [
+            { item: 'Cooking oil', outlet: 'Outlet 2', status: 'Low stock', level: '4 L left (min 15 L)', tone: 'amber' as const },
+            { item: 'Milk', outlet: 'Outlet 1', status: 'Expiring in 2 days', level: '12 L remaining', tone: 'red' as const },
+            { item: 'Tomatoes', outlet: 'Outlet 3', status: 'Reorder point', level: '6 kg left (min 10 kg)', tone: 'amber' as const },
+          ],
+          'Outlet 1': [
+            { item: 'Milk', outlet: 'Outlet 1', status: 'Expiring in 2 days', level: '12 L remaining', tone: 'red' as const },
+            { item: 'Chicken', outlet: 'Outlet 1', status: 'Healthy level', level: '28 kg in chiller', tone: 'green' as const },
+          ],
+          'Outlet 2': [
+            { item: 'Cooking oil', outlet: 'Outlet 2', status: 'Low stock', level: '4 L left (min 15 L)', tone: 'amber' as const },
+            { item: 'Flour', outlet: 'Outlet 2', status: 'Low stock', level: '8 kg left (min 20 kg)', tone: 'amber' as const },
+          ],
+          'Outlet 3': [
+            { item: 'Tomatoes', outlet: 'Outlet 3', status: 'Reorder point', level: '6 kg left (min 10 kg)', tone: 'amber' as const },
+            { item: 'Rice', outlet: 'Outlet 3', status: 'Healthy level', level: '50 kg bag in store', tone: 'green' as const },
+          ],
+        },
       },
       {
         id: 'transfers',
-        title: 'Stock transfer',
-        caption: 'Move stock between outlets with a full record of who moved what.',
-        type: 'desktop' as const,
-        file: 'transfers.png',
+        number: '02',
+        title: 'Move stock where it\'s needed',
+        desc: 'Shift excess items between outlets with instant stock level updates.',
+        caption: 'Both outlets update at once, with a full record.',
+        fromOutlet: 'Outlet 1',
+        toOutlet: 'Outlet 2',
+        item: 'Cooking oil',
+        unit: 'L',
+        initialFrom: 45,
+        initialTo: 4,
+        transferAmount: 10,
+        finalFrom: 35,
+        finalTo: 14,
+        ledgerRecord: {
+          ref: 'TR-804',
+          role: 'Manager',
+          desc: '10 L Cooking oil from Outlet 1 to Outlet 2',
+          time: 'Just now',
+        },
       },
       {
-        id: 'wastage',
-        title: 'Wastage log',
-        caption: 'Record every loss with a reason and see the rupee cost.',
-        type: 'desktop' as const,
-        file: 'wastage.png',
-      },
-      {
-        id: 'activity',
-        title: 'Activity history',
-        caption: 'A complete audit trail of every action across all outlets.',
-        type: 'desktop' as const,
-        file: 'activity.png',
-      },
-      {
-        id: 'worker-mobile',
-        title: 'Worker mobile update',
-        caption: 'Workers log stock changes from their phone in seconds.',
-        type: 'mobile' as const,
-        file: 'worker-mobile.png',
-      },
-      {
-        id: 'qr-menu',
-        title: 'QR menu',
-        caption: 'Let customers order directly by scanning a QR code at the table.',
-        type: 'mobile' as const,
-        file: 'qr-menu.png',
-        comingSoon: true,
+        id: 'mobile-worker',
+        number: '03',
+        title: 'Update stock from a phone',
+        desc: 'Employees log usage and wastage on their phone in seconds.',
+        caption: 'Your team updates in seconds. You see it immediately.',
+        workerItem: 'Tomatoes',
+        initialStock: 18,
+        usedAmount: 3,
+        unit: 'kg',
+        toast: '3 kg Tomatoes logged as used',
+        activityFeedRow: {
+          type: 'Usage update',
+          qty: '-3 kg',
+          item: 'Tomatoes',
+          outlet: 'Outlet 1',
+          role: 'Employee',
+          time: 'Just now',
+        },
       },
     ],
   },
@@ -132,7 +171,8 @@ export const site = {
   features: {
     heading: 'Everything you need to control inventory. Nothing you don\'t.',
     subheading:
-      'KitchenWatch does one thing well: keeps you in control of your stock across every outlet.',
+      'Run one outlet or many. Transfers and the all-outlets view appear when you add more outlets.',
+    sampleDataBadge: 'Sample data',
     tiles: [
       {
         id: 'dashboard',
@@ -143,7 +183,7 @@ export const site = {
       {
         id: 'ledger',
         title: 'Stock movement ledger',
-        desc: 'Every change is recorded: who changed it, when, how much and why. Nothing is anonymous.',
+        desc: 'Every change is recorded: role, timestamp, quantity and reason. Nothing is anonymous.',
         size: 'medium' as const,
       },
       {
@@ -173,7 +213,7 @@ export const site = {
       {
         id: 'roles',
         title: 'Roles and permissions',
-        desc: 'Owners and managers add items and set levels. Workers only update existing stock. Clean separation.',
+        desc: 'Owners and managers add items and set levels. Employees only update existing stock. Clean separation.',
         size: 'small' as const,
       },
       {
@@ -197,7 +237,7 @@ export const site = {
       {
         number: '02',
         title: 'Your team updates in seconds',
-        desc: 'Workers record usage and wastage from their phone. No training needed. The interface is built to be fast for people who are not sitting at a desk.',
+        desc: 'Employees record usage and wastage from their phone. No training needed. The interface is built to be fast for people who are not sitting at a desk.',
       },
       {
         number: '03',
@@ -205,23 +245,31 @@ export const site = {
         desc: 'Alerts, stock value and every movement, across all outlets, in one place. Know what is happening without calling anyone.',
       },
     ],
-    note: 'Owners and managers add items and set minimum levels. Workers only update existing stock.',
+    note: 'Owners and managers add items and set minimum levels. Employees only update existing stock.',
   },
 
   whoFor: {
     heading: 'Built for operators, not accountants.',
     audiences: [
       {
-        title: 'Independent restaurant groups',
-        desc: '2 to 8 outlets. No enterprise contract required. Start with one outlet and add more as you grow.',
+        title: 'Single-outlet restaurants and cafes',
+        desc: 'Keep tight control on ingredients and stop throwing money away on wastage. No enterprise setup needed.',
+      },
+      {
+        title: 'Multi-outlet groups and chains',
+        desc: 'Consistent stock levels across every location. Manage transfers centrally without spreadsheets or WhatsApp.',
       },
       {
         title: 'Cloud kitchens',
-        desc: 'Multiple brands, shared kitchen, separate inventory. KitchenWatch keeps it clean.',
+        desc: 'Multiple brands and delivery menus sharing one prep floor. Clear separation of ingredients and stock counts.',
       },
       {
-        title: 'QSR and cafe chains',
-        desc: 'Consistent stock levels across locations. Transfers managed centrally. No spreadsheets.',
+        title: 'Bakeries and sweet shops',
+        desc: 'High-turnover fresh items with daily expiry. Spot ingredient shortages before morning prep begins.',
+      },
+      {
+        title: 'Hotel and banquet kitchens',
+        desc: 'Large-scale batch cooking and event inventory. Track bulk issues and store movements easily.',
       },
     ],
     roles: [
@@ -229,9 +277,9 @@ export const site = {
         id: 'owner',
         label: 'Owner',
         title: 'For Owners',
-        desc: 'See the complete picture across every outlet. Know your stock value, wastage cost, and which location needs attention, without calling anyone.',
+        desc: 'See the complete picture across your business. Know your stock value, wastage cost, and which location needs attention, without calling anyone.',
         capabilities: [
-          'Full dashboard across all outlets',
+          'Full dashboard for single or all outlets',
           'Stock value and wastage reports',
           'Low-stock alerts for every location',
           'Complete activity history and audit log',
@@ -253,9 +301,9 @@ export const site = {
         ],
       },
       {
-        id: 'worker',
-        label: 'Worker',
-        title: 'For Workers',
+        id: 'employee',
+        label: 'Employee',
+        title: 'For Employees',
         desc: 'Update stock from your phone in seconds. No complicated forms, no guessing what to fill in.',
         capabilities: [
           'Update stock quantities on your phone',
@@ -280,8 +328,8 @@ export const site = {
           'Transfers between outlets',
           'Wastage tracking with reasons',
           'Low-stock alerts',
-          'Multi-outlet dashboard',
-          'Roles: Owner, Manager, Worker',
+          'Single & multi-outlet dashboards',
+          'Roles: Owner, Manager, Employee',
           'Activity history and audit trail',
         ],
       },
@@ -307,7 +355,7 @@ export const site = {
     ],
     earlyAccess: {
       heading: 'Join our pilot program',
-      desc: 'We are onboarding a small group of restaurant owners to use KitchenWatch and help shape the product. Free setup help for early partners.',
+      desc: 'We are onboarding food businesses to use KitchenWatch and help shape the product. Free setup help for early partners.',
       cta: 'Apply for early access',
     },
   },
@@ -319,14 +367,14 @@ export const site = {
       {
         id: 'starter',
         name: 'Starter',
-        outlets: 'Up to 2 outlets',
+        outlets: '1 to 2 outlets',
         price: {
           // TODO: Confirm prices before launch
           monthly: 2499,
           yearly: 1999,
         },
         features: [
-          'Up to 2 outlets',
+          '1 to 2 outlets',
           'Unlimited items',
           'Stock movements and ledger',
           'Low-stock alerts',
@@ -394,7 +442,7 @@ export const site = {
       {
         number: '01',
         title: 'Simple',
-        desc: 'If a worker needs training to use it, we have failed. The interface should be obvious.',
+        desc: 'If an employee needs training to use it, we have failed. The interface should be obvious.',
       },
       {
         number: '02',
@@ -404,7 +452,7 @@ export const site = {
       {
         number: '03',
         title: 'Traceable',
-        desc: 'Every change has a name, a time and a reason. No anonymous updates.',
+        desc: 'Every change has a role, a timestamp and a reason. No anonymous updates.',
       },
       {
         number: '04',
@@ -424,6 +472,10 @@ export const site = {
   faq: {
     items: [
       {
+        q: 'Do I need more than one outlet?',
+        a: 'No. KitchenWatch is built for single-outlet restaurants as well as multi-outlet groups. Single-outlet operators use it to eliminate food waste, track daily usage, and catch low stock. When you open a second outlet, multi-outlet dashboards and stock transfers are ready immediately.',
+      },
+      {
         q: 'Do I need to replace my POS system?',
         a: 'No. KitchenWatch works alongside your existing POS. It is focused on inventory tracking and does not replace your billing or ordering system.',
       },
@@ -433,19 +485,19 @@ export const site = {
       },
       {
         q: 'Who can add items and set minimum levels?',
-        a: 'Only Owners and Managers can add items and set minimum levels. Workers can update existing stock quantities and log wastage, but they cannot add new items or change limits.',
+        a: 'Only Owners and Managers can add items and set minimum levels. Employees can update existing stock quantities and log wastage, but they cannot add new items or change limits.',
       },
       {
-        q: 'Can workers use it on a phone?',
-        a: 'Yes. The worker interface is built for mobile. No app download is needed. It runs in any mobile browser and is designed to be fast on a small screen.',
+        q: 'Can employees use it on a phone?',
+        a: 'Yes. The employee interface is built for mobile. No app download is needed. It runs in any mobile browser and is designed to be fast on a small screen.',
       },
       {
         q: 'Does it work across multiple outlets?',
-        a: 'Yes. That is the core use case. You can see all outlets in one dashboard, transfer stock between them, and get alerts for any outlet that goes below its minimum.',
+        a: 'Yes. You can see all outlets in one dashboard, transfer stock between them, and get alerts for any outlet that goes below its minimum. If you run a single outlet, multi-outlet options stay quietly out of the way.',
       },
       {
         q: 'How are stock changes tracked?',
-        a: 'Every change - whether a usage update, a transfer, or a wastage entry - is recorded with the name of the person who made it, the time, and a reason. You can see the full history for any item.',
+        a: 'Every change - whether a usage update, a transfer, or a wastage entry - is recorded with the role of the person who made it, the timestamp, and a reason. You can see the full history for any item.',
       },
       {
         q: 'Is QR ordering available now?',
@@ -453,7 +505,7 @@ export const site = {
       },
       {
         q: 'How much does it cost?',
-        a: 'Pricing starts at around \u20b92,499 per month for up to 2 outlets. All plans include a free 14-day trial. See the pricing section for full details. GST is extra.',
+        a: 'Pricing starts at around \u20b92,499 per month for 1 to 2 outlets. All plans include a free 14-day trial. See the pricing section for full details. GST is extra.',
       },
       {
         q: 'What happens to my data?',
@@ -486,10 +538,11 @@ export const site = {
   },
 
   footer: {
-    description: 'Inventory control for restaurant groups with 2 to 10 outlets.',
+    description: 'Inventory control for restaurants, cafes and cloud kitchens. Run one outlet or many.',
     tagline: 'Know your stock. Move it where it\'s needed.',
     links: {
       product: [
+        { label: 'Product', href: '#product' },
         { label: 'Features', href: '#features' },
         { label: 'How it works', href: '#how-it-works' },
         { label: 'Pricing', href: '#pricing' },
