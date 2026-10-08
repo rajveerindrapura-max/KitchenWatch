@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { site } from '../../content/site';
 
@@ -136,127 +136,107 @@ function PhoneMockup({ step }: { step: number }) {
 
 export default function HowItWorks() {
   const [activeStep, setActiveStep] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
   const shouldReduce = useReducedMotion();
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Auto-cycle steps smoothly unless user paused/hovered or prefers-reduced-motion
   useEffect(() => {
-    if (shouldReduce) return;
+    if (shouldReduce || isPaused) return;
 
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const sectionH = sectionRef.current.offsetHeight;
-      const viewportH = window.innerHeight;
+    timerRef.current = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % site.howItWorks.steps.length);
+    }, 5000);
 
-      // How far we've scrolled through the section
-      const progress = Math.max(0, Math.min(1, -rect.top / (sectionH - viewportH)));
-      const step = Math.min(2, Math.floor(progress * 3));
-      setActiveStep(step);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [shouldReduce]);
+  }, [isPaused, shouldReduce]);
 
   return (
     <section
       id="how-it-works"
-      className="bg-[#101218] text-[#F5F5F7] border-b border-white/10 overflow-hidden"
+      className="bg-[#101218] text-[#F5F5F7] border-b border-white/10 px-4 sm:px-6 py-20 md:py-24"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Mobile: stacked */}
-      <div className="md:hidden px-4 sm:px-6 py-16">
-        <div className="max-w-2xl mx-auto">
-          <span className="text-xs font-semibold tracking-wider text-blue uppercase mb-3 block">
+      <div className="max-w-6xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-14 md:mb-16">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-blue font-sans font-medium text-xs tracking-wide uppercase mb-3">
             HOW IT WORKS
           </span>
           <h2
-            className="font-sans font-semibold text-white tracking-[-0.035em] mb-10"
-            style={{ fontSize: 'clamp(30px, 7vw, 42px)' }}
+            className="font-sans font-semibold text-white tracking-[-0.035em] mb-3"
+            style={{ fontSize: 'clamp(32px, 4.2vw, 48px)' }}
           >
             {site.howItWorks.heading}
           </h2>
-          <div className="space-y-10">
-            {site.howItWorks.steps.map((step, i) => (
-              <div key={i} className="bg-white/5 rounded-2xl border border-white/10 p-5">
-                <div className="flex items-start gap-3.5 mb-5">
-                  <span className="font-mono text-sm font-semibold px-2.5 py-1 rounded-lg bg-blue text-white shrink-0">
-                    {step.number}
-                  </span>
-                  <div>
-                    <h3 className="font-sans font-semibold text-lg text-white mb-1">
-                      {step.title}
-                    </h3>
-                    <p className="text-[#A7AEBB] text-sm leading-relaxed">{step.desc}</p>
-                  </div>
-                </div>
-                <div className="flex justify-center pt-2">
-                  <PhoneMockup step={i} />
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="mt-8 text-[#A7AEBB]/70 text-xs italic">{site.howItWorks.ruleNote}</p>
+          <p className="text-sm sm:text-base text-[#A7AEBB]">
+            Three straightforward steps to complete control of your kitchen stock.
+          </p>
         </div>
-      </div>
 
-      {/* Desktop: Apple-style pinned scroll */}
-      <div
-        ref={sectionRef}
-        className="hidden md:block relative"
-        style={{ height: '300vh' }}
-      >
-        <div className="sticky top-0 h-screen flex items-center">
-          <div className="max-w-6xl mx-auto px-6 w-full grid grid-cols-2 gap-16 items-center">
-            {/* Steps Left */}
-            <div>
-              <span className="text-xs font-semibold tracking-wider text-blue uppercase mb-3 block">
-                HOW IT WORKS
-              </span>
-              <h2
-                className="font-sans font-semibold text-white tracking-[-0.035em] mb-12"
-                style={{ fontSize: 'clamp(36px, 4vw, 52px)' }}
-              >
-                {site.howItWorks.heading}
-              </h2>
-              <div className="space-y-4">
-                {site.howItWorks.steps.map((step, i) => {
-                  const isActive = activeStep === i;
-                  return (
-                    <button
-                      key={i}
-                      onClick={() => setActiveStep(i)}
-                      className={`block w-full text-left p-5 rounded-2xl border transition-all duration-300 cursor-pointer ${
-                        isActive
-                          ? 'bg-white/10 border-blue/60 shadow-subtle ring-1 ring-blue/30'
-                          : 'bg-white/[0.02] border-white/5 opacity-70 hover:opacity-100 hover:border-white/15'
+        {/* 2-Column Content: Steps on Left, Phone on Right (No extra vertical empty space) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Steps Left */}
+          <div className="lg:col-span-7 space-y-4">
+            {site.howItWorks.steps.map((step, i) => {
+              const isActive = activeStep === i;
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => {
+                    setActiveStep(i);
+                    setIsPaused(true);
+                  }}
+                  className={`block w-full text-left p-5 rounded-2xl border transition-all duration-300 cursor-pointer relative overflow-hidden ${
+                    isActive
+                      ? 'bg-white/10 border-blue shadow-subtle ring-1 ring-blue/30'
+                      : 'bg-white/[0.03] border-white/10 opacity-75 hover:opacity-100 hover:border-white/20'
+                  }`}
+                >
+                  <div className="flex items-start gap-4">
+                    <span
+                      className={`font-mono text-sm font-semibold px-3 py-1 rounded-lg shrink-0 transition-colors ${
+                        isActive ? 'bg-blue text-white' : 'bg-white/10 text-[#A7AEBB]'
                       }`}
                     >
-                      <div className="flex items-start gap-4">
-                        <span
-                          className={`font-mono text-sm font-semibold px-3 py-1 rounded-lg shrink-0 transition-colors ${
-                            isActive ? 'bg-blue text-white' : 'bg-white/10 text-[#A7AEBB]'
-                          }`}
-                        >
-                          {step.number}
-                        </span>
-                        <div>
-                          <h3 className="font-sans font-semibold text-xl text-white mb-1">
-                            {step.title}
-                          </h3>
-                          <p className="text-[#A7AEBB] text-sm leading-relaxed">{step.desc}</p>
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-              <p className="mt-8 text-[#A7AEBB]/60 text-xs italic">{site.howItWorks.ruleNote}</p>
-            </div>
+                      {step.number}
+                    </span>
+                    <div className="flex-1">
+                      <h3 className="font-sans font-semibold text-lg sm:text-xl text-white mb-1">
+                        {step.title}
+                      </h3>
+                      <p className="text-[#A7AEBB] text-xs sm:text-sm leading-relaxed">
+                        {step.desc}
+                      </p>
+                    </div>
+                  </div>
 
-            {/* Pinned Phone mockup Right */}
-            <div className="flex justify-center">
-              <PhoneMockup step={activeStep} />
-            </div>
+                  {/* Active Step Progress Indicator */}
+                  {isActive && !shouldReduce && (
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 5, ease: 'linear' }}
+                      style={{ originX: 0 }}
+                    />
+                  )}
+                </button>
+              );
+            })}
+
+            <p className="pt-2 text-[#A7AEBB]/70 text-xs italic">
+              {site.howItWorks.ruleNote}
+            </p>
+          </div>
+
+          {/* Phone Mockup Right */}
+          <div className="lg:col-span-5 flex justify-center py-4">
+            <PhoneMockup step={activeStep} />
           </div>
         </div>
       </div>
