@@ -9,11 +9,12 @@ interface TransferScreenProps {
 
 export default function TransferScreen({ phase, onManualTransfer }: TransferScreenProps) {
   const data = site.productDemo.scenarios[1];
+  const unit = 'L';
   const isTransferred = phase === 'confirmed' || phase === 'recorded';
   const isStepped = phase === 'stepped' || isTransferred;
 
-  const fromQty = isTransferred ? data.finalFrom : data.initialFrom;
-  const toQty = isTransferred ? data.finalTo : data.initialTo;
+  const fromQty = isTransferred ? data.finalFrom : data.fromStock;
+  const toQty = isTransferred ? data.finalTo : data.toStock;
   const transferQty = isStepped ? data.transferAmount : 0;
 
   return (
@@ -60,7 +61,7 @@ export default function TransferScreen({ phase, onManualTransfer }: TransferScre
                   animate={{ scale: 1, color: '#0B1220' }}
                   className="font-jakarta font-extrabold text-sm sm:text-base tabular-nums"
                 >
-                  {fromQty} {data.unit}
+                  {fromQty} {unit}
                 </motion.span>
               </AnimatePresence>
             </div>
@@ -70,10 +71,10 @@ export default function TransferScreen({ phase, onManualTransfer }: TransferScre
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="mt-1.5 pt-1.5 border-t border-dashed border-border/80 text-[10px] text-blue font-medium flex items-center justify-between"
+              className="mt-1.5 pt-1.5 border-t border-dashed border-border/80 text-[10px] text-blue-700 font-medium flex items-center justify-between"
             >
-              <span>Deducted</span>
-              <span className="font-bold">-{data.transferAmount} {data.unit}</span>
+              <span>Dispatched</span>
+              <span className="font-bold">-{data.transferAmount} {unit}</span>
             </motion.div>
           )}
         </div>
@@ -84,7 +85,7 @@ export default function TransferScreen({ phase, onManualTransfer }: TransferScre
             <span className="font-semibold uppercase tracking-wider text-slate-500">
               Destination (TO)
             </span>
-            <span className="px-1.5 py-0.5 rounded bg-blue/10 text-blue font-semibold">
+            <span className="px-1.5 py-0.5 rounded bg-blue-50 text-blue font-semibold">
               {data.toOutlet}
             </span>
           </div>
@@ -92,10 +93,10 @@ export default function TransferScreen({ phase, onManualTransfer }: TransferScre
           <div className="flex items-center justify-between">
             <div>
               <p className="font-bold text-ink text-sm">{data.item}</p>
-              <p className="text-[10px] text-amber-700 font-medium">Was low stock</p>
+              <p className="text-[10px] text-amber-600 font-medium">Low stock item</p>
             </div>
             <div className="text-right">
-              <span className="text-[10px] text-muted block">Available:</span>
+              <span className="text-[10px] text-muted block">Stock level:</span>
               <AnimatePresence mode="wait">
                 <motion.span
                   key={toQty}
@@ -103,7 +104,7 @@ export default function TransferScreen({ phase, onManualTransfer }: TransferScre
                   animate={{ scale: 1, color: isTransferred ? '#15803D' : '#B45309' }}
                   className="font-jakarta font-extrabold text-sm sm:text-base tabular-nums"
                 >
-                  {toQty} {data.unit}
+                  {toQty} {unit}
                 </motion.span>
               </AnimatePresence>
             </div>
@@ -116,7 +117,7 @@ export default function TransferScreen({ phase, onManualTransfer }: TransferScre
               className="mt-1.5 pt-1.5 border-t border-dashed border-border/80 text-[10px] text-green-700 font-medium flex items-center justify-between"
             >
               <span>Received</span>
-              <span className="font-bold">+{data.transferAmount} {data.unit}</span>
+              <span className="font-bold">+{data.transferAmount} {unit}</span>
             </motion.div>
           )}
         </div>
@@ -128,7 +129,7 @@ export default function TransferScreen({ phase, onManualTransfer }: TransferScre
           <span className="text-[10px] text-muted font-medium">Transfer quantity:</span>
           <div className="inline-flex items-center gap-1.5 bg-slate-100 px-2 py-1 rounded-lg border border-border">
             <span className="font-jakarta font-bold text-ink text-xs tabular-nums">
-              {transferQty} {data.unit}
+              {transferQty} {unit}
             </span>
           </div>
         </div>
@@ -180,28 +181,21 @@ export default function TransferScreen({ phase, onManualTransfer }: TransferScre
                     {data.ledgerRecord.ref}
                   </span>
                   <div>
-                    <p className="font-semibold text-ink">{data.ledgerRecord.desc}</p>
-                    <p className="text-[9px] text-muted">Role: {data.ledgerRecord.role}</p>
+                    <span className="font-semibold text-ink">{data.ledgerRecord.desc}</span>
+                    <span className="text-[9px] text-muted ml-2">by {data.ledgerRecord.role}</span>
                   </div>
                 </div>
-                <div className="text-right">
-                  <span className="text-[9px] text-green-700 font-semibold bg-green-50 px-1.5 py-0.5 rounded">
-                    Verified
-                  </span>
-                  <p className="text-[9px] text-muted mt-0.5">{data.ledgerRecord.time}</p>
-                </div>
+                <span className="text-[10px] text-muted font-medium">
+                  {data.ledgerRecord.time}
+                </span>
               </motion.div>
             ) : (
-              <div className="py-4 text-center text-muted text-[10px]">
-                Pending transfer submission...
+              <div className="text-[11px] text-muted italic text-center py-2">
+                Click Confirm Transfer or wait for auto-pilot to record entry...
               </div>
             )}
           </AnimatePresence>
         </div>
-
-        <p className="text-[9px] text-muted text-center pt-1 border-t border-slate-100">
-          Both outlets update at once, with a full record.
-        </p>
       </div>
     </div>
   );

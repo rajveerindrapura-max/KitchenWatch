@@ -37,9 +37,11 @@ export default function DashboardScreen({
     scenarioData.stats[currentOutlet as keyof typeof scenarioData.stats] ??
     scenarioData.stats['All outlets'];
 
+  const allAttention = scenarioData.attentionItems;
   const items =
-    scenarioData.attentionItems[currentOutlet as keyof typeof scenarioData.attentionItems] ??
-    scenarioData.attentionItems['All outlets'];
+    currentOutlet === 'All outlets'
+      ? allAttention
+      : allAttention.filter((item) => item.outlet === currentOutlet);
 
   return (
     <div className="h-full flex flex-col p-3 sm:p-4 bg-slate-50/40 text-xs overflow-hidden select-none">
@@ -58,37 +60,31 @@ export default function DashboardScreen({
         {/* Outlet Switcher */}
         <div className="flex items-center gap-1.5 flex-wrap">
           <div className="inline-flex p-0.5 bg-slate-200/70 rounded-lg">
-            {scenarioData.outlets.map((outlet) => {
-              const active = currentOutlet === outlet;
+            {scenarioData.outlets.map((outletName) => {
+              const active = currentOutlet === outletName;
               return (
                 <button
-                  key={outlet}
+                  key={outletName}
                   type="button"
-                  onClick={() => handleSelect(outlet)}
-                  className={`px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[10px] font-semibold transition-all ${
+                  onClick={() => handleSelect(outletName)}
+                  disabled={!interactive}
+                  className={`px-2 sm:px-2.5 py-1 rounded-md text-[11px] font-jakarta transition-all ${
                     active
-                      ? 'bg-surface text-ink shadow-sm'
-                      : 'text-muted hover:text-ink'
+                      ? 'bg-surface text-ink font-bold shadow-xs'
+                      : 'text-muted hover:text-ink font-medium'
                   }`}
                 >
-                  {outlet}
+                  {outletName}
                 </button>
               );
             })}
           </div>
-
-          {interactive && (
-            <span className="hidden lg:inline-flex items-center gap-1 text-[9px] font-medium text-blue bg-blue/10 px-2 py-0.5 rounded-full animate-pulse">
-              <Sparkles size={10} />
-              {scenarioData.hint}
-            </span>
-          )}
         </div>
       </div>
 
-      {/* 4 Stat Cards */}
+      {/* KPI Cards (Rupee Stock Value, Low Stock, Expiring, Wastage) */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 my-2.5">
-        {/* Stock Value */}
+        {/* Total Value in Rupees */}
         <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border/80 shadow-xs">
           <div className="flex items-center justify-between text-muted text-[10px] mb-1">
             <span>Stock value</span>
@@ -105,10 +101,12 @@ export default function DashboardScreen({
               {formatINR(stats.stockValue)}
             </motion.p>
           </AnimatePresence>
-          <span className="text-[9px] text-green-700 font-medium">Recorded live</span>
+          <span className="text-[9px] text-emerald font-medium flex items-center gap-0.5">
+            <Sparkles size={9} /> Total tracked
+          </span>
         </div>
 
-        {/* Low Stock */}
+        {/* Low Stock Items */}
         <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border/80 shadow-xs">
           <div className="flex items-center justify-between text-muted text-[10px] mb-1">
             <span>Low stock</span>
@@ -182,7 +180,7 @@ export default function DashboardScreen({
           <AnimatePresence initial={false}>
             {items.map((it, idx) => (
               <motion.div
-                key={`${it.item}-${it.outlet}-${idx}`}
+                key={`${it.name}-${it.outlet}-${idx}`}
                 initial={{ opacity: 0, x: -6 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 6 }}
@@ -192,16 +190,12 @@ export default function DashboardScreen({
                 <div className="flex items-center gap-2">
                   <span
                     className={`w-1.5 h-1.5 rounded-full ${
-                      it.tone === 'red'
-                        ? 'bg-red-500'
-                        : it.tone === 'amber'
-                        ? 'bg-amber-500'
-                        : 'bg-green-600'
+                      it.status === 'expiring' ? 'bg-red-500' : 'bg-amber-500'
                     }`}
                   />
                   <div>
-                    <p className="font-semibold text-[11px] text-ink">{it.item}</p>
-                    <p className="text-[9px] text-muted">{it.level}</p>
+                    <p className="font-semibold text-[11px] text-ink">{it.name}</p>
+                    <p className="text-[9px] text-muted">{it.qty}</p>
                   </div>
                 </div>
 
@@ -211,11 +205,9 @@ export default function DashboardScreen({
                   </span>
                   <span
                     className={`text-[9px] px-1.5 py-0.5 rounded-full font-semibold ${
-                      it.tone === 'red'
+                      it.status === 'expiring'
                         ? 'bg-red-50 text-red-700'
-                        : it.tone === 'amber'
-                        ? 'bg-amber-50 text-amber-700'
-                        : 'bg-green-50 text-green-700'
+                        : 'bg-amber-50 text-amber-700'
                     }`}
                   >
                     {it.status}

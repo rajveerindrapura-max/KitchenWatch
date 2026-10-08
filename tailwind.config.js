@@ -6,22 +6,42 @@ export default {
       colors: {
         bg: 'var(--bg)',
         surface: 'var(--surface)',
+        border: 'var(--border)',
         ink: {
           DEFAULT: 'var(--ink)',
           2: 'var(--ink-2)',
         },
         muted: 'var(--muted)',
-        border: 'var(--border)',
+        cream: 'var(--cream)',
+        dark: 'var(--dark)',
         blue: {
           DEFAULT: 'var(--blue)',
           hover: 'var(--blue-hover)',
+          tint: 'var(--blue-tint)',
         },
-        sky: 'var(--sky)',
-        dark: 'var(--dark)',
-        status: {
-          green: 'var(--green)',
-          amber: 'var(--amber)',
-          red: 'var(--red)',
+        sky: {
+          DEFAULT: 'var(--sky)',
+          tint: 'var(--sky-tint)',
+        },
+        teal: {
+          DEFAULT: 'var(--teal)',
+          tint: 'var(--teal-tint)',
+        },
+        emerald: {
+          DEFAULT: 'var(--emerald)',
+          tint: 'var(--emerald-tint)',
+        },
+        amber: {
+          DEFAULT: 'var(--amber)',
+          tint: 'var(--amber-tint)',
+        },
+        coral: {
+          DEFAULT: 'var(--coral)',
+          tint: 'var(--coral-tint)',
+        },
+        violet: {
+          DEFAULT: 'var(--violet)',
+          tint: 'var(--violet-tint)',
         },
       },
       fontFamily: {

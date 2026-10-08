@@ -129,7 +129,7 @@ export default function HowItWorks() {
               </div>
             ))}
           </div>
-          <p className="mt-12 text-white/40 text-sm italic">{site.howItWorks.note}</p>
+          <p className="mt-12 text-white/40 text-sm italic">{site.howItWorks.ruleNote}</p>
         </div>
       </div>
 
@@ -179,7 +179,7 @@ export default function HowItWorks() {
                   );
                 })}
               </div>
-              <p className="mt-10 text-white/30 text-sm italic">{site.howItWorks.note}</p>
+              <p className="mt-10 text-white/30 text-sm italic">{site.howItWorks.ruleNote}</p>
             </div>
 
             {/* Phone mockup */}

@@ -1,69 +1,161 @@
-// All site copy lives here. Edit freely without touching any component.
-// Fields marked with TODO need to be confirmed before launch.
+// KitchenWatch marketing site copy and configuration.
+// Single source of truth. All copy, flags, prices, and links live here.
+// Fields with confirm: true require founder confirmation and are tracked in CONTENT_TODO.md.
+
+export interface PlanPricing {
+  monthly: number;
+  yearly: number;
+  confirm: boolean;
+}
+
+export interface PricingPlan {
+  id: 'starter' | 'growth' | 'business';
+  name: string;
+  outlets: string;
+  price: PlanPricing;
+  features: string[];
+  recommended?: boolean;
+}
 
 export const site = {
-  meta: {
-    title: 'KitchenWatch - Inventory Control for Restaurant Groups and Single Outlets',
-    description:
-      'KitchenWatch gives restaurant owners one dashboard to control inventory, wastage and transfers. Run one outlet or many. Works alongside your existing POS.',
-    og: {
-      image: '/og-image.png', // TODO: Create OG image
-      url: 'https://kitchenwatch.in', // TODO: Confirm domain
+  // Environment & External URLs
+  config: {
+    appUrl: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_APP_URL) || 'https://app.kitchenwatch.in',
+    whatsappNumber: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_WHATSAPP_NUMBER) || '919876543210',
+    whatsappPrefill: 'Hi, I would like to know more about KitchenWatch',
+    bookingUrl: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_BOOKING_URL) || 'https://cal.com/kitchenwatch/demo',
+    leadEndpoint: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_LEAD_ENDPOINT) || '/api/lead',
+    analyticsId: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_ANALYTICS_ID) || '',
+    confirm: {
+      whatsappNumber: true,
+      bookingUrl: true,
+      appUrl: true,
+      leadEndpoint: true,
     },
   },
 
+  // Feature Flags (Auto-hide missing real content per core rules)
+  flags: {
+    showFounder: false, // Set true once real founder name, bio, and photo are supplied
+    showFounderVideo: false, // Set true when 30-60s founder video is provided
+    showTestimonials: false, // No fake reviews allowed; kept false
+    showCustomerLogos: false, // No fake logos allowed; kept false
+    showStats: false, // No fake metrics; kept false
+  },
+
+  meta: {
+    title: 'KitchenWatch — Restaurant Inventory Control Software India',
+    description:
+      'Simple multi-outlet inventory control for restaurants, cafes and cloud kitchens. Know stock, stop wastage, track transfers.',
+    keywords:
+      'restaurant inventory management software India, stock control for restaurants, multi-outlet restaurant inventory, restaurant wastage tracking',
+    canonical: 'https://kitchenwatch.in',
+    ogImage: '/og-image.png',
+  },
+
+  // Global Navigation (Max 5 links per core principle)
   nav: {
     links: [
       { label: 'Product', href: '#product' },
       { label: 'Features', href: '#features' },
-      { label: 'How it works', href: '#how-it-works' },
-      { label: 'Who it\'s for', href: '#who-its-for' },
       { label: 'Pricing', href: '#pricing' },
       { label: 'About', href: '#about' },
       { label: 'FAQ', href: '#faq' },
     ],
-    ctaPrimary: 'Start free trial',
-    ctaSecondary: 'Book a demo',
+    loginText: 'Log in',
+    ctaPrimary: 'Book a free demo',
+    ctaSecondary: 'Start free trial',
   },
 
+  // Section 1: Hero (Approved copy preserved; trust line updated)
   hero: {
     pill: 'Now onboarding early partners',
     headlinePre: 'Know your',
     headlineSerif: 'stock.',
     headlinePost: 'Move it where it\'s needed.',
     subheadline:
-      'KitchenWatch gives restaurant owners one simple dashboard to control inventory, wastage and transfers across every outlet, and lets customers order by scanning a QR code.',
-    ctaPrimary: 'Start free trial',
-    ctaSecondary: 'Book a demo',
+      'KitchenWatch gives restaurant owners one simple dashboard to control inventory, wastage and transfers across every outlet.',
+    ctaPrimary: 'Book a free demo',
+    ctaSecondary: 'Start free trial',
     trustLine:
       'For restaurants, cafes and cloud kitchens. From one outlet to many. Works alongside your existing POS.',
   },
 
-  problem: {
+  // Common marquee items (Neutral, real kitchen goods)
+  commonItems: [
+    'Chicken',
+    'Cooking oil',
+    'Rice',
+    'Tomatoes',
+    'Milk',
+    'Flour',
+    'Bread',
+    'Butter',
+    'Paneer',
+    'Onions',
+  ],
+
+  // Section 2: Problem & Benefits (Single animated story)
+  problemBenefits: {
     sectionLabel: 'The problem',
-    heading: 'The notebook and WhatsApp problem',
-    highlightWords: [
-      'Stock', 'lives', 'in', 'notebooks,', 'spreadsheets', 'and', 'WhatsApp',
-      'messages.', 'One', 'outlet', 'runs', 'out', 'while', 'another', 'is',
-      'overstocked.', 'Wastage', 'is', 'found', 'at', 'month', 'end.', 'You',
-      'find', 'out', 'too', 'late.',
+    problemStatement:
+      'Stock lives in notebooks, spreadsheets and WhatsApp. One outlet runs out while another is overstocked. You find out too late.',
+    problemWords: [
+      'Stock',
+      'lives',
+      'in',
+      'notebooks,',
+      'spreadsheets',
+      'and',
+      'WhatsApp.',
+      'One',
+      'outlet',
+      'runs',
+      'out',
+      'while',
+      'another',
+      'is',
+      'overstocked.',
+      'You',
+      'find',
+      'out',
+      'too',
+      'late.',
     ],
-    painPoints: [
+    benefitsHeading: 'Four ways KitchenWatch fixes it',
+    benefits: [
       {
-        title: 'No live visibility',
-        desc: 'You have no single view of what is available where, in real time.',
+        id: 'live-stock',
+        heading: 'Always know what is in stock',
+        supporting: 'Live count on every phone. No manual counting at midnight.',
+        targetId: 'features',
+        visualType: 'bar-fill' as const,
       },
       {
-        title: 'Wastage and expiry found too late',
-        desc: 'By the time you see it on paper, the margin is already gone.',
+        id: 'rupee-wastage',
+        heading: 'See wastage in rupees before month end',
+        supporting: 'Every damaged or expired item logged with cost immediately.',
+        targetId: 'features',
+        visualType: 'rupee-counter' as const,
       },
       {
-        title: 'Stock moves with no record',
-        desc: 'Transfers between locations happen on WhatsApp with nothing to audit later.',
+        id: 'transfers',
+        heading: 'Move stock to where it is needed',
+        supporting: 'Transfer between outlets with digital confirmation from both sides.',
+        targetId: 'features',
+        visualType: 'transfer-packet' as const,
+      },
+      {
+        id: 'phone-check',
+        heading: 'Check every outlet from your phone',
+        supporting: 'Owners switch between outlets in one second without calling managers.',
+        targetId: 'features',
+        visualType: 'outlet-toggle' as const,
       },
     ],
   },
 
+  // Section 3: Interactive Product Demo (Sample data only)
   productDemo: {
     heading: 'See how it works in 30 seconds',
     subheading: 'Click through a real KitchenWatch workflow. Sample data shown.',
@@ -103,40 +195,25 @@ export const site = {
             wastage: 1200,
           },
         },
-        attentionItems: {
-          'All outlets': [
-            { item: 'Cooking oil', outlet: 'Outlet 2', status: 'Low stock', level: '4 L left (min 15 L)', tone: 'amber' as const },
-            { item: 'Milk', outlet: 'Outlet 1', status: 'Expiring in 2 days', level: '12 L remaining', tone: 'red' as const },
-            { item: 'Tomatoes', outlet: 'Outlet 3', status: 'Reorder point', level: '6 kg left (min 10 kg)', tone: 'amber' as const },
-          ],
-          'Outlet 1': [
-            { item: 'Milk', outlet: 'Outlet 1', status: 'Expiring in 2 days', level: '12 L remaining', tone: 'red' as const },
-            { item: 'Chicken', outlet: 'Outlet 1', status: 'Healthy level', level: '28 kg in chiller', tone: 'green' as const },
-          ],
-          'Outlet 2': [
-            { item: 'Cooking oil', outlet: 'Outlet 2', status: 'Low stock', level: '4 L left (min 15 L)', tone: 'amber' as const },
-            { item: 'Flour', outlet: 'Outlet 2', status: 'Low stock', level: '8 kg left (min 20 kg)', tone: 'amber' as const },
-          ],
-          'Outlet 3': [
-            { item: 'Tomatoes', outlet: 'Outlet 3', status: 'Reorder point', level: '6 kg left (min 10 kg)', tone: 'amber' as const },
-            { item: 'Rice', outlet: 'Outlet 3', status: 'Healthy level', level: '50 kg bag in store', tone: 'green' as const },
-          ],
-        },
+        attentionItems: [
+          { name: 'Cooking oil', outlet: 'Outlet 2', qty: '4 L left', status: 'low' as const },
+          { name: 'Milk', outlet: 'Outlet 1', qty: 'Expires today', status: 'expiring' as const },
+          { name: 'Tomatoes', outlet: 'Outlet 3', qty: '3 kg left', status: 'low' as const },
+        ],
       },
       {
         id: 'transfers',
         number: '02',
-        title: 'Move stock where it\'s needed',
-        desc: 'Shift excess items between outlets with instant stock level updates.',
-        caption: 'Both outlets update at once, with a full record.',
+        title: 'Move stock where needed',
+        desc: 'Select an item, choose destination, and stock updates in both outlets.',
+        caption: 'Both outlets see the updated stock in seconds. Full audit trail.',
+        item: 'Cooking oil',
         fromOutlet: 'Outlet 1',
         toOutlet: 'Outlet 2',
-        item: 'Cooking oil',
-        unit: 'L',
-        initialFrom: 45,
-        initialTo: 4,
+        fromStock: 24,
+        toStock: 4,
         transferAmount: 10,
-        finalFrom: 35,
+        finalFrom: 14,
         finalTo: 14,
         ledgerRecord: {
           ref: 'TR-804',
@@ -146,10 +223,10 @@ export const site = {
         },
       },
       {
-        id: 'mobile-worker',
+        id: 'mobile-update',
         number: '03',
         title: 'Update stock from a phone',
-        desc: 'Employees log usage and wastage on their phone in seconds.',
+        desc: 'Workers log usage and wastage on their phone in seconds with undo.',
         caption: 'Your team updates in seconds. You see it immediately.',
         workerItem: 'Tomatoes',
         initialStock: 18,
@@ -161,226 +238,347 @@ export const site = {
           qty: '-3 kg',
           item: 'Tomatoes',
           outlet: 'Outlet 1',
-          role: 'Employee',
+          role: 'Worker',
           time: 'Just now',
         },
       },
     ],
   },
 
+  // Section 4: Features Bento Grid (Semantic color mapped)
   features: {
-    heading: 'Everything you need to control inventory. Nothing you don\'t.',
-    subheading:
-      'Run one outlet or many. Transfers and the all-outlets view appear when you add more outlets.',
-    sampleDataBadge: 'Sample data',
+    heading: 'Everything you need. Nothing you do not.',
+    subheading: 'Run one outlet or many. Built specifically for kitchen operations.',
     tiles: [
       {
         id: 'dashboard',
         title: 'Multi-outlet dashboard',
-        desc: 'One screen shows every outlet\'s stock level, alerts and recent movements. Switch between outlets instantly.',
+        desc: 'Switch between outlets instantly with live stock totals.',
+        colorToken: 'blue',
         size: 'large' as const,
       },
       {
         id: 'ledger',
         title: 'Stock movement ledger',
-        desc: 'Every change is recorded: role, timestamp, quantity and reason. Nothing is anonymous.',
+        desc: 'Received, used, wasted or adjusted. Every move logged.',
+        colorToken: 'ink',
         size: 'medium' as const,
       },
       {
         id: 'alerts',
         title: 'Low-stock alerts',
-        desc: 'Set minimum levels per item per outlet. Get alerted before you run out.',
+        desc: 'Set minimum limits per item. Know before running out.',
+        colorToken: 'amber',
         size: 'small' as const,
       },
       {
         id: 'expiry',
         title: 'Expiry tracking',
-        desc: 'Tag items with expiry dates. Get a heads-up before stock expires.',
+        desc: 'Optional batch expiry alerts before fresh stock spoils.',
+        colorToken: 'amber',
         size: 'small' as const,
       },
       {
         id: 'transfers',
         title: 'Transfers between outlets',
-        desc: 'Create a stock transfer in seconds. Both outlets see it immediately, with a full record.',
+        desc: 'Clear From and To records for 2 or more outlets.',
+        colorToken: 'teal',
         size: 'medium' as const,
       },
       {
         id: 'wastage',
-        title: 'Wastage tracking',
-        desc: 'Log every loss with a reason. See total wastage cost in rupees, by outlet or across all.',
+        title: 'Wastage with rupee cost',
+        desc: 'Log reasons and see total rupees wasted before month end.',
+        colorToken: 'coral',
         size: 'small' as const,
       },
       {
         id: 'roles',
         title: 'Roles and permissions',
-        desc: 'Owners and managers add items and set levels. Employees only update existing stock. Clean separation.',
+        desc: 'Owners configure items. Workers log usage on mobile.',
+        colorToken: 'violet',
         size: 'small' as const,
       },
       {
         id: 'qr',
         title: 'QR ordering',
-        desc: 'Customers scan a QR code and order directly. No app required, no third-party commissions.',
+        desc: 'Customers scan table QR to order directly.',
+        colorToken: 'sky',
         size: 'small' as const,
         badge: 'Coming soon',
       },
     ],
   },
 
+  // Section 5: How It Works (Dark #0B1220 section)
   howItWorks: {
     heading: 'Simple by design.',
+    subheading: 'No week-long setup. Up and running in 30 minutes.',
     steps: [
       {
         number: '01',
         title: 'Set up in minutes',
-        desc: 'Create your outlets and add only the items you want to track. No complicated onboarding. You can be up and running in under 30 minutes.',
+        desc: 'Add only the items you want to track and set minimum levels.',
+        accent: 'sky',
       },
       {
         number: '02',
-        title: 'Your team updates in seconds',
-        desc: 'Employees record usage and wastage from their phone. No training needed. The interface is built to be fast for people who are not sitting at a desk.',
+        title: 'Team updates in seconds',
+        desc: 'Workers record usage and wastage from their phone browser.',
+        accent: 'teal',
       },
       {
         number: '03',
         title: 'You see everything',
-        desc: 'Alerts, stock value and every movement, across all outlets, in one place. Know what is happening without calling anyone.',
+        desc: 'Alerts, stock value and movements across all outlets live.',
+        accent: 'emerald',
       },
     ],
-    note: 'Owners and managers add items and set minimum levels. Employees only update existing stock.',
+    ruleNote: 'Owners and managers add items. Workers only update stock.',
   },
 
-  whoFor: {
+  // Section 6: Savings Estimator (id="calculator")
+  calculator: {
+    heading: 'Estimate your avoidable food wastage',
+    subheading: 'Enter your monthly numbers to estimate potential savings.',
+    disclaimer:
+      'This is an estimate based only on the numbers you enter. Actual results vary.',
+    cta: 'Book a free demo to check your numbers',
+    defaults: {
+      outlets: 2,
+      monthlyPurchasesPerOutlet: 150000, // ₹1,50,000
+      wastagePercent: 8, // 8%
+      targetReductionPercent: 30, // 30% reduction in waste
+    },
+    ranges: {
+      outlets: { min: 1, max: 10, step: 1 },
+      purchases: { min: 25000, max: 1000000, step: 25000 },
+      wastage: { min: 2, max: 20, step: 1 },
+      reduction: { min: 10, max: 60, step: 5 },
+    },
+  },
+
+  // Section 7: Who It Is For
+  whoItsFor: {
     heading: 'Built for operators, not accountants.',
+    subheading: 'Works for single outlets as smoothly as multi-outlet chains.',
     audiences: [
       {
-        title: 'Single-outlet restaurants and cafes',
-        desc: 'Keep tight control on ingredients and stop throwing money away on wastage. No enterprise setup needed.',
+        title: 'Single-outlet cafes & restaurants',
+        desc: 'Eliminate ingredient stock-outs and control fresh food wastage.',
       },
       {
-        title: 'Multi-outlet groups and chains',
-        desc: 'Consistent stock levels across every location. Manage transfers centrally without spreadsheets or WhatsApp.',
+        title: 'Multi-outlet groups & chains',
+        desc: 'Central visibility, inter-branch transfers and consistent stock.',
       },
       {
         title: 'Cloud kitchens',
-        desc: 'Multiple brands and delivery menus sharing one prep floor. Clear separation of ingredients and stock counts.',
+        desc: 'Multiple brands sharing one prep kitchen with clear usage tracking.',
       },
       {
-        title: 'Bakeries and sweet shops',
-        desc: 'High-turnover fresh items with daily expiry. Spot ingredient shortages before morning prep begins.',
+        title: 'Bakeries & sweet shops',
+        desc: 'Fast-moving raw goods with tight expiry dates and morning prep.',
       },
       {
-        title: 'Hotel and banquet kitchens',
-        desc: 'Large-scale batch cooking and event inventory. Track bulk issues and store movements easily.',
+        title: 'Hotel & banquet kitchens',
+        desc: 'Bulk event prep and store-room transfers without paperwork.',
       },
     ],
     roles: [
       {
         id: 'owner',
         label: 'Owner',
-        title: 'For Owners',
-        desc: 'See the complete picture across your business. Know your stock value, wastage cost, and which location needs attention, without calling anyone.',
+        title: 'For Restaurant Owners',
+        desc: 'Know your stock value and wastage across every outlet at once.',
         capabilities: [
-          'Full dashboard for single or all outlets',
-          'Stock value and wastage reports',
-          'Low-stock alerts for every location',
-          'Complete activity history and audit log',
-          'Add and manage items and minimum levels',
-          'Manage team members and their roles',
+          'Full cross-outlet stock dashboard',
+          'Live wastage cost in rupees',
+          'Set role permissions & limits',
+          'Export audit trail anytime',
         ],
       },
       {
         id: 'manager',
         label: 'Manager',
-        title: 'For Managers',
-        desc: 'Run your outlet without paperwork. Create stock transfers, log wastage, and keep your team accountable.',
+        title: 'For Branch Managers',
+        desc: 'Manage store-room inventory, approve transfers, and control shift waste.',
         capabilities: [
-          'Dashboard for your assigned outlet',
-          'Create and approve stock transfers',
-          'Log wastage with reasons',
-          'Review team activity for your outlet',
-          'Set and update minimum stock levels',
+          'Assigned outlet stock control',
+          'Create & confirm stock transfers',
+          'Log wastage with specific reasons',
+          'Shift-wise usage oversight',
         ],
       },
       {
-        id: 'employee',
-        label: 'Employee',
-        title: 'For Employees',
-        desc: 'Update stock from your phone in seconds. No complicated forms, no guessing what to fill in.',
+        id: 'worker',
+        label: 'Worker',
+        title: 'For Kitchen Staff',
+        desc: 'Tap-to-update on any phone. Fast, large buttons, no training needed.',
         capabilities: [
-          'Update stock quantities on your phone',
-          'Log wastage with a simple reason',
-          'Confirm stock received from a transfer',
-          'View current stock levels for your outlet',
+          'Quick usage deduction in 3 taps',
+          'Log spoiled items with simple reason',
+          'Confirm received transfers',
+          'Undo mistakes instantly',
         ],
       },
     ],
+    comparison: {
+      heading: 'How KitchenWatch compares',
+      rows: [
+        {
+          feature: 'Live stock across outlets',
+          manual: 'Calls & WhatsApp groups',
+          spreadsheet: 'End-of-day delay',
+          kitchenwatch: 'Live on every phone',
+        },
+        {
+          feature: 'Audit record (who changed what)',
+          manual: 'None',
+          spreadsheet: 'Easily overwritten',
+          kitchenwatch: 'Permanent role & time log',
+        },
+        {
+          feature: 'Low-stock & expiry alerts',
+          manual: 'Found after running out',
+          spreadsheet: 'Manual formula checking',
+          kitchenwatch: 'Automatic warning badges',
+        },
+        {
+          feature: 'Kitchen staff update speed',
+          manual: 'Pen and paper notebook',
+          spreadsheet: 'Unusable during rush hour',
+          kitchenwatch: 'Under 5 seconds on mobile',
+        },
+        {
+          feature: 'Wastage tracking with rupees',
+          manual: 'Estimated at month end',
+          spreadsheet: 'Complex calculations',
+          kitchenwatch: 'Instant rupee cost per item',
+        },
+      ],
+    },
   },
 
-  roadmap: {
-    heading: 'Where we are and where we are going.',
-    desc: 'This is our current plan. We share it openly so you can plan alongside us. It is not a formal commitment.',
-    items: [
+  // Section 8: Pilot Program & Roadmap (id="pilot")
+  pilot: {
+    heading: 'Join our pilot program',
+    subheading: 'We are onboarding early restaurant partners to shape KitchenWatch.',
+    benefits: [
+      { title: 'Free dedicated 1-on-1 setup help', confirm: true },
+      { title: 'Direct WhatsApp line to the founder', confirm: true },
+      { title: 'Feature requests prioritized on the roadmap', confirm: true },
+      { title: 'Founding-partner locked lifetime pricing', confirm: true },
+    ],
+    cta: 'Apply for pilot access',
+    timelineHeading: 'Our plan, not a promise',
+    timeline: [
       {
         phase: 'Now',
         label: 'Available today',
-        features: [
-          'Inventory management',
-          'Stock movements and ledger',
-          'Transfers between outlets',
-          'Wastage tracking with reasons',
-          'Low-stock alerts',
-          'Single & multi-outlet dashboards',
-          'Roles: Owner, Manager, Employee',
-          'Activity history and audit trail',
+        accent: 'emerald',
+        items: [
+          'Inventory control & alerts',
+          'Stock movements ledger',
+          'Inter-outlet transfers',
+          'Wastage tracking with rupees',
+          'Owner, Manager & Worker roles',
+          'Full activity audit trail',
         ],
       },
       {
         phase: 'Next',
         label: 'In development',
-        features: [
+        accent: 'blue',
+        items: [
           'QR ordering for customers',
-          'Customer-facing digital menu',
-          'Order management for staff',
+          'Customer digital table menu',
+          'Kitchen order display',
         ],
       },
       {
         phase: 'Later',
         label: 'Planned',
-        features: [
+        accent: 'muted',
+        items: [
           'WhatsApp stock alerts',
-          'Supplier messaging',
-          'Hindi language support',
-          'Advanced analytics and reports',
+          'Supplier purchase messaging',
+          'Hindi language interface',
+          'Advanced multi-brand analytics',
         ],
       },
     ],
-    earlyAccess: {
-      heading: 'Join our pilot program',
-      desc: 'We are onboarding food businesses to use KitchenWatch and help shape the product. Free setup help for early partners.',
-      cta: 'Apply for early access',
+    founder: {
+      name: 'TODO: Founder Name',
+      role: 'Founder & Builder',
+      note: 'Built to fix the chaos of managing restaurant stock on WhatsApp.',
+      photo: '/founder-placeholder.jpg',
+      videoUrl: '', // TODO: Founder video
+      confirm: true,
     },
   },
 
+  // Section: About
+  about: {
+    heading: 'Built to make inventory simple.',
+    subheading: 'Designed for the speed of real kitchen operations.',
+    story:
+      'KitchenWatch was built to end the nightly chaos of paper stock counting, lost WhatsApp messages, and unexpected stock-outs across outlets.',
+    beliefs:
+      'We believe inventory software should take seconds on a phone, require zero employee training, and work alongside your existing billing system without interruption.',
+    principles: [
+      {
+        number: '01',
+        title: 'Floor speed first',
+        desc: 'Any stock deduction or wastage entry takes under 5 seconds on any mobile browser.',
+      },
+      {
+        number: '02',
+        title: 'Live visibility',
+        desc: 'Know exactly what raw materials you have in every branch without calling managers.',
+      },
+      {
+        number: '03',
+        title: 'Works with your POS',
+        desc: 'No replacing your cash counter. KitchenWatch runs alongside your existing POS.',
+      },
+      {
+        number: '04',
+        title: 'Rupees, not percentages',
+        desc: 'Track wasted items with exact rupee costs so kitchen teams see the direct financial impact.',
+      },
+    ],
+    founder: {
+      name: 'TODO: Founder Name',
+      role: 'Founder & Builder',
+      bio: 'Building software specifically for Indian restaurants, cafes, bakeries, and cloud kitchens.',
+      confirm: true,
+    },
+  },
+
+  // Section 9: Pricing
   pricing: {
     heading: 'Simple, honest pricing.',
-    subheading: 'No hidden fees. No per-user charges. Cancel any time.',
+    subheading: 'No hidden fees. No user limits. 14-day free trial.',
+    yearlyDiscountText: '2 months free on yearly billing',
     plans: [
       {
         id: 'starter',
         name: 'Starter',
         outlets: '1 to 2 outlets',
         price: {
-          // TODO: Confirm prices before launch
           monthly: 2499,
           yearly: 1999,
+          confirm: true,
         },
         features: [
-          '1 to 2 outlets',
-          'Unlimited items',
-          'Stock movements and ledger',
+          '1 to 2 outlets included',
+          'Unlimited items to track',
+          'Stock movements & ledger',
           'Low-stock alerts',
-          'Wastage tracking',
-          'Up to 5 team members',
-          'Email support',
+          'Wastage tracking with cost',
+          'Owner, Manager & Worker roles',
+          'Mobile browser access for staff',
+          'Email & WhatsApp support',
         ],
         recommended: false,
       },
@@ -389,182 +587,153 @@ export const site = {
         name: 'Growth',
         outlets: 'Up to 6 outlets',
         price: {
-          // TODO: Confirm prices before launch
           monthly: 4999,
           yearly: 3999,
+          confirm: true,
         },
         features: [
-          'Up to 6 outlets',
-          'Unlimited items',
-          'Stock movements and ledger',
+          'Up to 6 outlets included',
+          'All Starter features',
           'Transfers between outlets',
-          'Low-stock alerts and expiry tracking',
-          'Wastage tracking with cost',
-          'Unlimited team members',
-          'Activity history',
-          'Priority support',
+          'Expiry date tracking',
+          'Detailed rupee wastage analytics',
+          'Central multi-outlet dashboard',
+          'Full activity audit log',
+          'Priority phone & WhatsApp help',
         ],
         recommended: true,
       },
       {
         id: 'business',
         name: 'Business',
-        outlets: '7+ outlets',
+        outlets: '7 or more outlets',
         price: {
-          // TODO: Confirm prices before launch
           monthly: 8999,
           yearly: 7499,
+          confirm: true,
         },
         features: [
-          '7 or more outlets',
-          'Unlimited items',
+          '7+ outlets (custom scale)',
           'All Growth features',
-          'Dedicated onboarding',
-          'Custom roles and permissions',
-          'Phone support',
-          'Data export',
+          'Dedicated onboarding specialist',
+          'Custom branch hierarchy',
+          'Historical data exports',
+          'Direct founder support line',
+          'Custom staff training sessions',
         ],
         recommended: false,
       },
+    ] as PricingPlan[],
+    notes: [
+      'Free 14-day trial, no card required',
+      'GST extra as applicable',
+      'Cancel anytime with one click',
+      'Need a custom plan? Talk to us.',
     ],
-    note: 'All prices in Indian rupees. GST extra. Free 14-day trial on all plans.',
-    customLine: 'Need a custom plan for a larger group? Talk to us.',
-    yearlyLabel: 'Save 2 months',
   },
 
-  about: {
-    heading: 'Built to make inventory simple.',
-    story:
-      'Restaurant owners spend too much time managing stock on WhatsApp groups and notebooks. We built KitchenWatch to fix that - a focused tool that does inventory and transfers well, without trying to be a complete restaurant operating system.',
-    beliefs:
-      'We believe restaurant software should be useful on day one, without a week of setup or a trainer walking you through it.',
-    principles: [
-      {
-        number: '01',
-        title: 'Simple',
-        desc: 'If an employee needs training to use it, we have failed. The interface should be obvious.',
-      },
-      {
-        number: '02',
-        title: 'Fast',
-        desc: 'Stock updates happen on the floor, in a busy kitchen. Every screen must be fast.',
-      },
-      {
-        number: '03',
-        title: 'Traceable',
-        desc: 'Every change has a role, a timestamp and a reason. No anonymous updates.',
-      },
-      {
-        number: '04',
-        title: 'Useful',
-        desc: 'KitchenWatch is not trying to be everything. It does inventory and QR ordering well.',
-      },
-    ],
-    founder: {
-      // TODO: Add real founder details before launch
-      name: 'TODO: Founder name',
-      role: 'TODO: Role / title',
-      bio: 'TODO: 2-3 sentence founder bio explaining motivation and background.',
-      TODO: true as const,
-    },
-  },
-
+  // Section 10: FAQ (Strictly max 30 words per answer)
   faq: {
+    heading: 'Frequently answered questions.',
+    subheading: 'Clear facts. No sales fluff.',
     items: [
       {
-        q: 'Do I need more than one outlet?',
-        a: 'No. KitchenWatch is built for single-outlet restaurants as well as multi-outlet groups. Single-outlet operators use it to eliminate food waste, track daily usage, and catch low stock. When you open a second outlet, multi-outlet dashboards and stock transfers are ready immediately.',
+        q: 'Do I need to replace my POS?',
+        a: 'No. KitchenWatch works alongside your existing POS system. It focuses purely on inventory, transfers, and wastage without touching billing.',
       },
       {
-        q: 'Do I need to replace my POS system?',
-        a: 'No. KitchenWatch works alongside your existing POS. It is focused on inventory tracking and does not replace your billing or ordering system.',
+        q: 'Do I need more than one outlet?',
+        a: 'No. Single outlets use it daily to prevent stock-outs and track waste. Multi-outlet features activate when you expand.',
       },
       {
         q: 'Do I have to enter every ingredient?',
-        a: 'No. You only add the items you want to track. Start with the items where wastage or stock-outs are costing you money. You can add more over time.',
+        a: 'No. You choose what to track. Start with high-cost or high-wastage items, then expand as your team gets comfortable.',
       },
       {
-        q: 'Who can add items and set minimum levels?',
-        a: 'Only Owners and Managers can add items and set minimum levels. Employees can update existing stock quantities and log wastage, but they cannot add new items or change limits.',
+        q: 'Who can add items and set limits?',
+        a: 'Only Owners and Managers add items and set minimum stock levels. Workers only update counts and log usage.',
       },
       {
-        q: 'Can employees use it on a phone?',
-        a: 'Yes. The employee interface is built for mobile. No app download is needed. It runs in any mobile browser and is designed to be fast on a small screen.',
+        q: 'Can staff use it on a phone?',
+        a: 'Yes. It runs smoothly on any smartphone browser. No app download or installation is required.',
       },
       {
-        q: 'Does it work across multiple outlets?',
-        a: 'Yes. You can see all outlets in one dashboard, transfer stock between them, and get alerts for any outlet that goes below its minimum. If you run a single outlet, multi-outlet options stay quietly out of the way.',
+        q: 'Does it work without good internet?',
+        a: 'It requires a basic cellular connection to sync stock. Offline queuing is planned on our roadmap.',
+        confirm: true,
       },
       {
-        q: 'How are stock changes tracked?',
-        a: 'Every change - whether a usage update, a transfer, or a wastage entry - is recorded with the role of the person who made it, the timestamp, and a reason. You can see the full history for any item.',
+        q: 'Can I fix an entry mistake?',
+        a: 'Yes. Workers can immediately undo recent entries, and managers can record adjustments with a documented reason.',
+      },
+      {
+        q: 'How do I move stock between outlets?',
+        a: 'Select item, quantity, From outlet, and To outlet. Both outlet managers receive an instant confirmation record.',
       },
       {
         q: 'Is QR ordering available now?',
-        a: 'Not yet. QR ordering for customers is our next major feature. Inventory management, transfers, wastage tracking and the full dashboard are available today.',
+        a: 'Not yet. Table QR ordering is currently in active development and labelled Coming Soon on our roadmap.',
       },
       {
-        q: 'How much does it cost?',
-        a: 'Pricing starts at around \u20b92,499 per month for 1 to 2 outlets. All plans include a free 14-day trial. See the pricing section for full details. GST is extra.',
+        q: 'How does the free trial work?',
+        a: 'You get full access to all features for 14 days without entering credit card details.',
       },
       {
-        q: 'What happens to my data?',
-        a: 'Your data is yours. We store it securely and do not share it. If you ever want to leave, you can export your full data. We will also provide migration help.',
+        q: 'What happens to my data if I cancel?',
+        a: 'You can export your complete inventory ledger anytime. Your data remains private and will be deleted upon request.',
+      },
+      {
+        q: 'How long does setup take?',
+        a: 'Most kitchens set up their top 25 ingredients and are ready to log stock in under 30 minutes.',
+      },
+      {
+        q: 'Is our kitchen data safe?',
+        a: 'Yes. Encrypted with HTTPS, protected by role-based access, and backed up with an unalterable audit log.',
+        confirm: true,
       },
     ],
   },
 
+  // Section 11: Final CTA (Dark section)
   cta: {
     heading: 'Stop guessing your stock.',
-    subline:
-      'Book a short call and we will show you how KitchenWatch works for your setup. Free setup help for early partners.',
-    form: {
-      namePlaceholder: 'Your name',
-      businessPlaceholder: 'Restaurant or business name',
-      outletOptions: ['1 outlet', '2 outlets', '3 outlets', '4 outlets', '5 outlets', '6 to 10 outlets', 'More than 10 outlets'],
-      phonePlaceholder: 'Phone or WhatsApp number',
-      emailPlaceholder: 'Email address',
-      messagePlaceholder: 'Anything else you want to share (optional)',
-      submitLabel: 'Book a demo',
-      successHeading: 'We have received your request.',
-      successMessage:
-        'We will reach out within one business day. Look for a WhatsApp message or email from us.',
-    },
-    // TODO: Replace with real WhatsApp number before launch
-    whatsapp: {
-      number: 'TODO',
-      label: 'Chat on WhatsApp',
-    },
+    subheading: 'Book a 15-minute demo or start your 14-day free trial today.',
+    formHeading: 'Book a 15-minute demo',
+    whatsappButton: 'Chat on WhatsApp',
+    trialLinkText: 'or start a free trial directly',
+    responsePromise: 'We reply within 2 hours during kitchen operating hours.',
+    confirmPromise: true,
   },
 
+  // Global Footer
   footer: {
-    description: 'Inventory control for restaurants, cafes and cloud kitchens. Run one outlet or many.',
-    tagline: 'Know your stock. Move it where it\'s needed.',
+    tagline: 'Know your stock. Move it where it\'s needed. Manage every outlet.',
+    description:
+      'Inventory control and wastage tracking for restaurants, cafes, and multi-outlet food groups in India.',
+    copyright: '© 2026 KitchenWatch. All rights reserved.',
+    address: 'TODO: Add registered business address in Bengaluru / Mumbai before launch',
+    confirmAddress: true,
+    email: 'TODO: hello@kitchenwatch.in',
+    phone: 'TODO: +91 98765 43210',
     links: {
       product: [
-        { label: 'Product', href: '#product' },
-        { label: 'Features', href: '#features' },
-        { label: 'How it works', href: '#how-it-works' },
-        { label: 'Pricing', href: '#pricing' },
-        { label: 'Roadmap', href: '#roadmap' },
+        { label: 'Interactive Demo', href: '/#product' },
+        { label: 'Features', href: '/#features' },
+        { label: 'Savings Calculator', href: '/#calculator' },
+        { label: 'Pilot Program', href: '/#pilot' },
+        { label: 'Pricing Plans', href: '/pricing' },
       ],
       company: [
-        { label: 'About', href: '#about' },
-        { label: 'FAQ', href: '#faq' },
-        { label: 'Book a demo', href: '#cta' },
+        { label: 'About KitchenWatch', href: '/about' },
+        { label: 'Contact Us', href: '/contact' },
+        { label: 'Book Demo', href: '/contact#book' },
+        { label: 'FAQ', href: '/#faq' },
       ],
       legal: [
-        { label: 'Privacy policy', href: '/privacy' },
-        { label: 'Terms of service', href: '/terms' },
+        { label: 'Privacy Policy', href: '/privacy' },
+        { label: 'Terms of Service', href: '/terms' },
+        { label: 'Refund Policy', href: '/refund-policy' },
       ],
     },
-    // TODO: Add real contact details before launch
-    contact: {
-      email: 'TODO: hello@kitchenwatch.in',
-      whatsapp: 'TODO: WhatsApp number',
-    },
-    copyright: '\u00a9 2026 KitchenWatch. All rights reserved.',
   },
 } as const;
-
-export type Site = typeof site;

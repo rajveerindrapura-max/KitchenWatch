@@ -4,33 +4,89 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KitchenWatch - Inventory Control for Restaurant Groups</title>
-    <meta name="description" content="KitchenWatch gives restaurant owners one simple dashboard to control inventory, wastage and transfers across every outlet. Built for 2 to 10 outlets. Works alongside your existing POS." />
+    <title>KitchenWatch — Inventory Control for Restaurant Groups</title>
+    <meta
+      name="description"
+      content="Simple multi-outlet inventory control for restaurants, cafes and cloud kitchens in India. Know stock, stop wastage in rupees, track transfers. Works alongside your existing POS."
+    />
+    <link rel="canonical" href="https://kitchenwatch.in" />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="KitchenWatch - Inventory Control for Restaurant Groups" />
-    <meta property="og:description" content="One dashboard to control inventory, wastage and transfers across every outlet. Built for restaurant owners with 2 to 10 outlets." />
+    <meta property="og:title" content="KitchenWatch — Inventory Control for Restaurant Groups" />
+    <meta
+      property="og:description"
+      content="One dashboard to control inventory, wastage and transfers across every outlet. Built for restaurant owners with 1 to 10 outlets in India."
+    />
     <meta property="og:image" content="/og-image.png" />
     <meta property="og:url" content="https://kitchenwatch.in" />
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="KitchenWatch - Inventory Control for Restaurant Groups" />
-    <meta name="twitter:description" content="One dashboard to control inventory, wastage and transfers across every outlet." />
+    <meta name="twitter:title" content="KitchenWatch — Inventory Control for Restaurant Groups" />
+    <meta
+      name="twitter:description"
+      content="One simple dashboard to control inventory, wastage and transfers across every outlet."
+    />
     <meta name="twitter:image" content="/og-image.png" />
-    <!-- JSON-LD -->
+
+    <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "KitchenWatch",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "Inventory control for restaurant groups with 2 to 10 outlets. Control stock, wastage and transfers across every outlet from one dashboard.",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "INR"
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://kitchenwatch.in/#organization",
+            "name": "KitchenWatch",
+            "url": "https://kitchenwatch.in",
+            "logo": "https://kitchenwatch.in/logo.png",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "Customer Support",
+              "telephone": "+91-9876543210",
+              "areaServed": "IN"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://kitchenwatch.in/#website",
+            "url": "https://kitchenwatch.in",
+            "name": "KitchenWatch",
+            "publisher": {
+              "@id": "https://kitchenwatch.in/#organization"
+            }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://kitchenwatch.in/#software",
+            "name": "KitchenWatch",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "All modern browsers (Web, iOS, Android)",
+            "description": "Multi-outlet inventory control, transfer management, and wastage tracking in rupees for restaurants, cafes and cloud kitchens.",
+            "offers": [
+              {
+                "@type": "Offer",
+                "name": "Starter",
+                "price": "2499",
+                "priceCurrency": "INR"
+              },
+              {
+                "@type": "Offer",
+                "name": "Growth",
+                "price": "4999",
+                "priceCurrency": "INR"
+              },
+              {
+                "@type": "Offer",
+                "name": "Business",
+                "price": "8999",
+                "priceCurrency": "INR"
+              }
+            ]
+          }
+        ]
       }
-    }
     </script>
   </head>
   <body>

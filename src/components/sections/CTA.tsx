@@ -1,279 +1,109 @@
-import { useState, type FormEvent } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, CheckCircle, MessageCircle } from 'lucide-react';
+import { MessageSquare, Calendar, Sparkles, ShieldCheck } from 'lucide-react';
 import { site } from '../../content/site';
-import { submitLead, type LeadData } from '../../lib/submitLead';
-
-type FormState = 'idle' | 'loading' | 'success' | 'error';
-
-function InputField({
-  label,
-  id,
-  type = 'text',
-  placeholder,
-  value,
-  onChange,
-  required,
-  error,
-}: {
-  label: string;
-  id: string;
-  type?: string;
-  placeholder: string;
-  value: string;
-  onChange: (v: string) => void;
-  required?: boolean;
-  error?: string;
-}) {
-  return (
-    <div>
-      <label htmlFor={id} className="block text-sm font-jakarta font-semibold text-white/90 mb-1.5">
-        {label} {required && <span className="text-red-400">*</span>}
-      </label>
-      <input
-        id={id}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        required={required}
-        className={`w-full bg-[#0E172A] border rounded-xl px-4 py-3 text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all shadow-inner ${
-          error ? 'border-red-400 focus:ring-red-400' : 'border-white/15 hover:border-white/25'
-        }`}
-      />
-      {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
-    </div>
-  );
-}
+import Reveal from '../ui/Reveal';
+import LeadForm from '../ui/LeadForm';
 
 export default function CTA() {
-  const form = site.cta.form;
-  const [state, setState] = useState<FormState>('idle');
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const { heading, subheading, formHeading, whatsappButton, trialLinkText, responsePromise } =
+    site.cta;
 
-  const [fields, setFields] = useState<LeadData & { outlets: string }>({
-    name: '',
-    business: '',
-    outlets: '',
-    phone: '',
-    email: '',
-    message: '',
-  });
-
-  function set(key: keyof typeof fields, value: string) {
-    setFields((f) => ({ ...f, [key]: value }));
-    setErrors((e) => ({ ...e, [key]: '' }));
-  }
-
-  function validate(): boolean {
-    const newErrors: Record<string, string> = {};
-    if (!fields.name.trim()) newErrors.name = 'Your name is required.';
-    if (!fields.business.trim()) newErrors.business = 'Business name is required.';
-    if (!fields.outlets) newErrors.outlets = 'Please select an option.';
-    if (!fields.phone.trim()) {
-      newErrors.phone = 'Phone number is required.';
-    } else if (fields.phone.replace(/\D/g, '').length < 10) {
-      newErrors.phone = 'Enter a valid 10+ digit number.';
-    }
-    if (!fields.email.trim()) {
-      newErrors.email = 'Email address is required.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email)) {
-      newErrors.email = 'Enter a valid email address.';
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  }
-
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!validate()) return;
-    setState('loading');
-    try {
-      await submitLead(fields);
-      setState('success');
-    } catch {
-      setState('error');
-    }
-  }
+  const whatsappUrl = `https://wa.me/${site.config.whatsappNumber}?text=${encodeURIComponent(
+    site.config.whatsappPrefill
+  )}`;
 
   return (
-    <section id="cta" className="relative overflow-hidden bg-gradient-to-b from-[#070B14] via-[#091122] to-[#0A1124] px-6 py-16 md:py-24">
-      {/* Background ambient glows */}
+    <section
+      id="cta"
+      className="relative px-4 sm:px-6 py-20 md:py-28 bg-dark text-white overflow-hidden"
+    >
+      {/* Background Subtle Sky Glow */}
       <div
-        className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-blue/25 blur-3xl pointer-events-none"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute -bottom-32 -right-32 w-[30rem] h-[30rem] rounded-full bg-sky/20 blur-3xl pointer-events-none"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-7xl bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue/10 via-transparent to-transparent pointer-events-none"
+        className="pointer-events-none absolute -top-40 right-1/4 w-[500px] h-[500px] rounded-full opacity-20 blur-3xl"
+        style={{
+          background: 'radial-gradient(circle, #38BDF8 0%, #2563EB 50%, transparent 70%)',
+        }}
         aria-hidden="true"
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-start">
-        {/* Left */}
-        <div>
-          <h2
-            className="font-jakarta font-bold text-white tracking-tight mb-5"
-            style={{ fontSize: 'clamp(36px, 5vw, 72px)', lineHeight: 1.05 }}
-          >
-            {site.cta.heading}
-          </h2>
-          <p className="text-white/60 text-lg leading-relaxed mb-10">{site.cta.subline}</p>
-
-          {/* WhatsApp button */}
-          {site.cta.whatsapp.number !== 'TODO' && (
-            <a
-              href={`https://wa.me/${site.cta.whatsapp.number}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-pill border border-white/20 text-white hover:bg-white/5 transition-colors font-jakarta font-semibold text-sm"
-            >
-              <MessageCircle size={18} />
-              {site.cta.whatsapp.label}
-            </a>
-          )}
-          {site.cta.whatsapp.number === 'TODO' && (
-            <div className="text-xs text-amber-400/70 bg-amber-400/5 border border-amber-400/20 px-3 py-2 rounded-lg inline-block">
-              TODO: Add WhatsApp number in site.ts before launch
-            </div>
-          )}
-        </div>
-
-        {/* Right: Form Card */}
-        <div className="bg-white/[0.08] backdrop-blur-md border border-white/20 rounded-card p-7 md:p-8 shadow-2xl">
-          <AnimatePresence mode="wait">
-            {state === 'success' ? (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="py-10 text-center"
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left Column: Heading and Value Proposition */}
+          <div className="lg:col-span-6">
+            <Reveal>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-pill bg-white/10 border border-white/15 text-sky font-jakarta font-semibold text-xs tracking-wider uppercase mb-4">
+                <Sparkles size={13} />
+                Get Started Today
+              </span>
+              <h2
+                className="font-jakarta font-bold text-white tracking-tight mb-4"
+                style={{ fontSize: 'clamp(32px, 4.5vw, 56px)' }}
               >
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                  className="w-14 h-14 rounded-full bg-green-500/15 flex items-center justify-center mx-auto mb-5"
-                >
-                  <CheckCircle size={28} className="text-green-400" />
-                </motion.div>
-                <h3 className="font-jakarta font-bold text-white text-xl mb-2">
-                  {form.successHeading}
-                </h3>
-                <p className="text-white/60 text-sm leading-relaxed">{form.successMessage}</p>
-              </motion.div>
-            ) : (
-              <motion.form
-                key="form"
-                onSubmit={onSubmit}
-                noValidate
-                className="space-y-4"
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <InputField
-                    label="Your name"
-                    id="name"
-                    placeholder={form.namePlaceholder}
-                    value={fields.name}
-                    onChange={(v) => set('name', v)}
-                    required
-                    error={errors.name}
-                  />
-                  <InputField
-                    label="Business name"
-                    id="business"
-                    placeholder={form.businessPlaceholder}
-                    value={fields.business}
-                    onChange={(v) => set('business', v)}
-                    required
-                    error={errors.business}
-                  />
+                {heading}
+              </h2>
+              <p className="text-slate-300 text-base sm:text-lg leading-relaxed mb-8 max-w-lg">
+                {subheading}
+              </p>
+
+              {/* Direct WhatsApp Action */}
+              <div className="p-5 rounded-panel bg-white/5 border border-white/10 mb-8 max-w-lg">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald animate-pulse" />
+                    <span className="text-xs font-semibold text-emerald uppercase tracking-wider">
+                      Instant response
+                    </span>
+                  </div>
+                  <span className="text-[11px] text-slate-400">Founder direct line</span>
                 </div>
+                <p className="text-xs text-slate-300 mb-4 leading-relaxed">
+                  Prefer chatting? Talk with our team on WhatsApp directly to see if KitchenWatch fits your outlets.
+                </p>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-btn bg-[#25D366] text-slate-900 font-jakarta font-bold text-sm hover:bg-[#20bd5a] transition-colors w-full sm:w-auto"
+                >
+                  <MessageSquare size={17} />
+                  <span>{whatsappButton}</span>
+                </a>
+              </div>
 
-                <div>
-                  <label htmlFor="outlets" className="block text-sm font-jakarta font-semibold text-white/90 mb-1.5">
-                    Number of outlets <span className="text-red-400">*</span>
-                  </label>
-                  <select
-                    id="outlets"
-                    value={fields.outlets}
-                    onChange={(e) => set('outlets', e.target.value)}
-                    required
-                    className={`w-full bg-[#0E172A] border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all shadow-inner ${
-                      fields.outlets ? 'text-white' : 'text-slate-400'
-                    } ${errors.outlets ? 'border-red-400 focus:ring-red-400' : 'border-white/15 hover:border-white/25'}`}
+              {/* Trial link & Trust pledge */}
+              <div className="space-y-2 text-xs text-slate-400">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck size={15} className="text-emerald" />
+                  <span>{responsePromise}</span>
+                </div>
+                <div className="pt-2">
+                  <a
+                    href={`${site.config.appUrl}/signup`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sky hover:underline font-medium inline-flex items-center gap-1"
                   >
-                    <option value="" disabled className="text-slate-400 bg-[#0E172A]">Select number of outlets</option>
-                    {form.outletOptions.map((o) => (
-                      <option key={o} value={o} className="text-white bg-[#0E172A]">
-                        {o}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.outlets && <p className="text-xs text-red-400 mt-1">{errors.outlets}</p>}
+                    <span>{trialLinkText}</span> &rarr;
+                  </a>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Right Column: Lead Form Card */}
+          <div className="lg:col-span-6">
+            <Reveal delay={0.1}>
+              <div className="bg-[#0B1220]/90 border border-white/15 rounded-panel p-6 sm:p-8 shadow-2xl backdrop-blur-md ring-1 ring-sky/10">
+                <div className="flex items-center gap-2 mb-6 pb-4 border-b border-white/10">
+                  <Calendar size={18} className="text-sky" />
+                  <h3 className="font-jakarta font-bold text-white text-lg sm:text-xl">
+                    {formHeading}
+                  </h3>
                 </div>
 
-                <InputField
-                  label="Phone or WhatsApp"
-                  id="phone"
-                  type="tel"
-                  placeholder={form.phonePlaceholder}
-                  value={fields.phone}
-                  onChange={(v) => set('phone', v)}
-                  required
-                  error={errors.phone}
-                />
-                <InputField
-                  label="Email address"
-                  id="email"
-                  type="email"
-                  placeholder={form.emailPlaceholder}
-                  value={fields.email}
-                  onChange={(v) => set('email', v)}
-                  required
-                  error={errors.email}
-                />
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-jakarta font-semibold text-white/90 mb-1.5">
-                    Anything else (optional)
-                  </label>
-                  <textarea
-                    id="message"
-                    placeholder={form.messagePlaceholder}
-                    value={fields.message}
-                    onChange={(e) => set('message', e.target.value)}
-                    rows={3}
-                    className="w-full bg-[#0E172A] border border-white/15 hover:border-white/25 rounded-xl px-4 py-3 text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all resize-none shadow-inner"
-                  />
-                </div>
-
-                {state === 'error' && (
-                  <p className="text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl px-4 py-3">
-                    Something went wrong. Please try again or reach out directly.
-                  </p>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={state === 'loading'}
-                  className="w-full py-3.5 rounded-pill bg-blue text-white font-jakarta font-semibold text-sm hover:bg-blue-hover transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
-                >
-                  {state === 'loading' ? (
-                    <>
-                      <Loader2 size={16} className="animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    form.submitLabel
-                  )}
-                </button>
-              </motion.form>
-            )}
-          </AnimatePresence>
+                <LeadForm theme="dark" source="homepage-cta" />
+              </div>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>

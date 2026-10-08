@@ -16,9 +16,9 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Active section tracking
+  // Active section tracking on home page
   useEffect(() => {
-    const sectionIds = site.nav.links.map((l) => l.href.replace('#', ''));
+    const sectionIds = ['product', 'features', 'calculator', 'pricing', 'faq'];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -28,7 +28,7 @@ export default function Nav() {
         ([entry]) => {
           if (entry.isIntersecting) setActiveSection(id);
         },
-        { rootMargin: '-40% 0px -55% 0px' }
+        { rootMargin: '-30% 0px -55% 0px' }
       );
       obs.observe(el);
       observers.push(obs);
@@ -40,7 +40,7 @@ export default function Nav() {
   // Close mobile menu on resize
   useEffect(() => {
     const onResize = () => {
-      if (window.innerWidth >= 768) setMobileOpen(false);
+      if (window.innerWidth >= 1024) setMobileOpen(false);
     };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
@@ -48,27 +48,27 @@ export default function Nav() {
 
   return (
     <>
-      <nav
+      <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-surface/85 backdrop-blur-md border-b border-border py-3.5'
-            : 'bg-transparent py-5'
+            ? 'bg-surface/90 backdrop-blur-md border-b border-border py-3 shadow-sm'
+            : 'bg-transparent py-4'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           <Logo />
 
-          {/* Desktop links */}
-          <div className="hidden lg:flex items-center gap-7">
+          {/* Desktop links - exactly 5 links */}
+          <nav className="hidden lg:flex items-center gap-7" aria-label="Main navigation">
             {site.nav.links.map((link) => {
-              const id = link.href.replace('#', '');
+              const id = link.href.replace('/#', '').replace('#', '');
               const isActive = activeSection === id;
               return (
                 <a
                   key={link.label}
                   href={link.href}
-                  className={`relative text-sm font-medium transition-colors ${
-                    isActive ? 'text-blue' : 'text-ink-2 hover:text-ink'
+                  className={`relative text-sm font-medium transition-colors py-1 ${
+                    isActive ? 'text-blue font-semibold' : 'text-secondary hover:text-ink'
                   }`}
                 >
                   {link.label}
@@ -82,22 +82,22 @@ export default function Nav() {
                 </a>
               );
             })}
-          </div>
+          </nav>
 
-          {/* Desktop CTAs */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Desktop CTAs: Log in text link + Book a free demo button */}
+          <div className="hidden md:flex items-center gap-5">
+            <a
+              href={`${site.config.appUrl}/login`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-jakarta font-medium text-secondary hover:text-ink transition-colors px-2 py-1"
+            >
+              {site.nav.loginText}
+            </a>
             <MagneticButton>
               <a
                 href="#cta"
-                className="px-4 py-2 rounded-pill border border-border text-sm font-jakarta font-semibold text-ink hover:bg-slate-50 transition-colors"
-              >
-                {site.nav.ctaSecondary}
-              </a>
-            </MagneticButton>
-            <MagneticButton>
-              <a
-                href="#cta"
-                className="px-5 py-2 rounded-pill bg-blue text-white text-sm font-jakarta font-semibold hover:bg-blue-hover transition-colors shadow-sm"
+                className="px-4 py-2.5 rounded-btn bg-blue text-white text-sm font-jakarta font-semibold hover:bg-blue-hover transition-colors shadow-sm inline-flex items-center justify-center min-h-[44px]"
               >
                 {site.nav.ctaPrimary}
               </a>
@@ -106,62 +106,66 @@ export default function Nav() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 -mr-2 text-ink rounded-lg"
+            className="lg:hidden p-2.5 -mr-2 text-ink rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue min-h-[44px] min-w-[44px] flex items-center justify-center"
             onClick={() => setMobileOpen(true)}
             aria-label="Open navigation menu"
           >
-            <Menu size={22} />
+            <Menu size={24} />
           </button>
         </div>
-      </nav>
+      </header>
 
-      {/* Mobile full-screen menu */}
+      {/* Mobile full-screen drawer menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="fixed inset-0 bg-surface z-[60] flex flex-col p-6"
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="fixed inset-0 bg-surface z-[60] flex flex-col p-6 overflow-y-auto"
           >
-            <div className="flex items-center justify-between mb-12">
+            <div className="flex items-center justify-between pb-6 border-b border-border">
               <Logo />
               <button
                 onClick={() => setMobileOpen(false)}
-                className="p-2 text-ink rounded-lg"
+                className="p-2.5 text-ink rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
                 aria-label="Close navigation menu"
               >
-                <X size={22} />
+                <X size={24} />
               </button>
             </div>
-            <nav className="flex flex-col gap-2" aria-label="Mobile navigation">
+
+            <nav className="flex flex-col gap-2 py-8" aria-label="Mobile navigation">
               {site.nav.links.map((link, i) => (
                 <motion.a
                   key={link.label}
                   href={link.href}
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
+                  transition={{ delay: i * 0.04 }}
                   onClick={() => setMobileOpen(false)}
-                  className="text-2xl font-jakarta font-bold text-ink py-2 hover:text-blue transition-colors"
+                  className="text-2xl font-jakarta font-bold text-ink py-3 hover:text-blue transition-colors min-h-[44px] flex items-center"
                 >
                   {link.label}
                 </motion.a>
               ))}
             </nav>
-            <div className="mt-auto flex flex-col gap-3">
+
+            <div className="mt-auto pt-6 border-t border-border flex flex-col gap-3">
               <a
-                href="#cta"
+                href={`${site.config.appUrl}/login`}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
-                className="w-full text-center py-3.5 rounded-pill border border-border font-jakarta font-semibold text-ink"
+                className="w-full text-center py-3.5 rounded-btn border border-border font-jakarta font-semibold text-ink text-base min-h-[44px] flex items-center justify-center"
               >
-                {site.nav.ctaSecondary}
+                {site.nav.loginText}
               </a>
               <a
                 href="#cta"
                 onClick={() => setMobileOpen(false)}
-                className="w-full text-center py-3.5 rounded-pill bg-blue text-white font-jakarta font-semibold"
+                className="w-full text-center py-3.5 rounded-btn bg-blue text-white font-jakarta font-semibold text-base min-h-[44px] flex items-center justify-center"
               >
                 {site.nav.ctaPrimary}
               </a>

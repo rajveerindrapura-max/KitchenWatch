@@ -12,17 +12,35 @@
 :root {
   --bg: #FBFCFE;
   --surface: #FFFFFF;
+  --border: #E2E8F0;
   --ink: #0B1220;
   --ink-2: #475569;
   --muted: #64748B;
-  --border: #E2E8F0;
+  --cream: #FFF9F0;
+  --dark: #0B1220;
+
+  /* Meaningful Accents & Tints */
   --blue: #2563EB;
   --blue-hover: #1D4ED8;
+  --blue-tint: #EFF6FF;
+
   --sky: #38BDF8;
-  --dark: #0B1220;
-  --green: #15803D;
+  --sky-tint: #E0F2FE;
+
+  --teal: #0D9488;
+  --teal-tint: #CCFBF1;
+
+  --emerald: #15803D;
+  --emerald-tint: #DCFCE7;
+
   --amber: #B45309;
-  --red: #B91C1C;
+  --amber-tint: #FEF3C7;
+
+  --coral: #DC2626;
+  --coral-tint: #FEE2E2;
+
+  --violet: #7C3AED;
+  --violet-tint: #F3E8FF;
 }
 
 @layer base {

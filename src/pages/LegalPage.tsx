@@ -1,0 +1,157 @@
+import { useEffect } from 'react';
+import { AlertTriangle, ArrowLeft } from 'lucide-react';
+import Nav from '../components/layout/Nav';
+import Footer from '../components/layout/Footer';
+import { site } from '../content/site';
+
+interface LegalPageProps {
+  type: 'privacy' | 'terms' | 'refund-policy';
+}
+
+const titles = {
+  privacy: 'Privacy Policy',
+  terms: 'Terms of Service',
+  'refund-policy': 'Cancellation & Refund Policy',
+};
+
+export default function LegalPage({ type }: LegalPageProps) {
+  const title = titles[type];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = `${title} — KitchenWatch`;
+  }, [title]);
+
+  return (
+    <div className="min-h-screen bg-bg flex flex-col">
+      <Nav />
+      <main className="flex-1 pt-28 pb-20 px-4 sm:px-6">
+        <div className="max-w-3xl mx-auto">
+          {/* Breadcrumb back */}
+          <div className="mb-6">
+            <a
+              href="/"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue hover:underline"
+            >
+              <ArrowLeft size={14} /> Back to KitchenWatch
+            </a>
+          </div>
+
+          <h1 className="font-jakarta font-bold text-ink text-3xl sm:text-4xl mb-6">
+            {title}
+          </h1>
+
+          {/* Draft Disclaimer Banner */}
+          <div className="mb-8 p-4 rounded-card bg-amber-tint border border-amber/30 text-xs sm:text-sm text-amber-900 flex items-start gap-3">
+            <AlertTriangle size={18} className="text-amber shrink-0 mt-0.5" />
+            <div>
+              <p className="font-semibold mb-0.5">Draft Document — Pending Formal Legal Review</p>
+              <p className="text-xs text-amber-800 leading-relaxed">
+                This document is an operational draft outline for KitchenWatch's early pilot phase.
+                Final legally binding terms and privacy disclosures will be published prior to general public availability.
+              </p>
+            </div>
+          </div>
+
+          {/* Policy Content */}
+          <div className="bg-surface rounded-panel border border-border p-6 sm:p-10 shadow-xs prose prose-slate max-w-none text-sm leading-relaxed text-secondary space-y-6">
+            {type === 'privacy' && (
+              <>
+                <section>
+                  <h2 className="font-jakarta font-bold text-ink text-lg mb-2">1. Overview</h2>
+                  <p>
+                    KitchenWatch respects the privacy of your restaurant operations and data. We collect only
+                    the operational data required to calculate stock levels, record inter-outlet transfers,
+                    and provide wastage tracking.
+                  </p>
+                </section>
+                <section>
+                  <h2 className="font-jakarta font-bold text-ink text-lg mb-2">2. Data Ownership</h2>
+                  <p>
+                    All inventory items, quantities, costs, and logs entered by your team belong solely to you.
+                    We do not sell, rent, or share your proprietary restaurant pricing, recipes, or stock numbers
+                    with any third-party advertisers.
+                  </p>
+                </section>
+                <section>
+                  <h2 className="font-jakarta font-bold text-ink text-lg mb-2">3. Data Security & Storage</h2>
+                  <p>
+                    All transmissions are secured via HTTPS encryption. Access to data within your organization
+                    is enforced by strict role boundaries (Owner, Manager, Worker). You may request a complete
+                    export or deletion of your records at any time.
+                  </p>
+                </section>
+                <section>
+                  <h2 className="font-jakarta font-bold text-ink text-lg mb-2">4. Contact</h2>
+                  <p>
+                    For privacy inquiries, reach us at {site.footer.email}.
+                  </p>
+                </section>
+              </>
+            )}
+
+            {type === 'terms' && (
+              <>
+                <section>
+                  <h2 className="font-jakarta font-bold text-ink text-lg mb-2">1. Service Description</h2>
+                  <p>
+                    KitchenWatch provides inventory control, transfer management, and wastage tracking tools
+                    for food service operators. It works alongside your existing POS and does not provide
+                    direct tax filing, point-of-sale payment clearing, or statutory accounting services.
+                  </p>
+                </section>
+                <section>
+                  <h2 className="font-jakarta font-bold text-ink text-lg mb-2">2. User Roles & Conduct</h2>
+                  <p>
+                    Account administrators are responsible for designating appropriate access roles (Owner,
+                    Manager, Worker) and maintaining the security of team credentials.
+                  </p>
+                </section>
+                <section>
+                  <h2 className="font-jakarta font-bold text-ink text-lg mb-2">3. Subscription & Trials</h2>
+                  <p>
+                    KitchenWatch offers a 14-day free trial without credit card requirement. Continued usage
+                    following trial requires an active subscription tier corresponding to your outlet count.
+                  </p>
+                </section>
+                <section>
+                  <h2 className="font-jakarta font-bold text-ink text-lg mb-2">4. Contact</h2>
+                  <p>
+                    Questions regarding service terms should be directed to {site.footer.email}.
+                  </p>
+                </section>
+              </>
+            )}
+
+            {type === 'refund-policy' && (
+              <>
+                <section>
+                  <h2 className="font-jakarta font-bold text-ink text-lg mb-2">1. 14-Day Free Evaluation</h2>
+                  <p>
+                    Every new restaurant account receives a full 14-day free trial to verify that KitchenWatch
+                    satisfies your inventory workflow before any billing occurs.
+                  </p>
+                </section>
+                <section>
+                  <h2 className="font-jakarta font-bold text-ink text-lg mb-2">2. Subscription Cancellation</h2>
+                  <p>
+                    You can cancel your subscription at any time with one click from your account dashboard.
+                    Your access will continue until the end of your prepaid billing period.
+                  </p>
+                </section>
+                <section>
+                  <h2 className="font-jakarta font-bold text-ink text-lg mb-2">3. Refund Requests</h2>
+                  <p>
+                    If you experience unresolved technical issues during your first paid billing cycle, please
+                    contact our founder support line within 7 days of payment for a full refund evaluation.
+                  </p>
+                </section>
+              </>
+            )}
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}
