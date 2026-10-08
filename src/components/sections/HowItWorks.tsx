@@ -157,7 +157,11 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="bg-forest text-cream border-b border-ink/20">
+    <section
+      id="how-it-works"
+      className="bg-[#1F4D47] text-[#F6F3E4] border-b border-[#1C1B18]/20"
+      style={{ backgroundColor: '#1F4D47', color: '#F6F3E4' }}
+    >
       {/* Mobile: stacked */}
       <div className="md:hidden px-6 py-16">
         <div className="max-w-2xl mx-auto">
@@ -180,10 +184,10 @@ export default function HowItWorks() {
                     {step.number}
                   </span>
                   <div>
-                    <h3 className="font-serif text-xl font-normal text-cream mb-1">
+                    <h3 className="font-serif text-xl font-normal text-[#F6F3E4] mb-1">
                       {step.title}
                     </h3>
-                    <p className="text-cream/80 text-sm leading-relaxed">{step.desc}</p>
+                    <p className="text-[#F6F3E4]/90 text-sm leading-relaxed">{step.desc}</p>
                   </div>
                 </div>
                 <div className="flex justify-center pt-2">
@@ -192,7 +196,7 @@ export default function HowItWorks() {
               </div>
             ))}
           </div>
-          <p className="mt-8 text-cream/60 text-xs italic">{site.howItWorks.ruleNote}</p>
+          <p className="mt-8 text-[#F6F3E4]/70 text-xs italic">{site.howItWorks.ruleNote}</p>
         </div>
       </div>
 
@@ -224,28 +228,28 @@ export default function HowItWorks() {
                       onClick={() => setActiveStep(i)}
                       className={`block w-full text-left p-5 rounded-2xl border transition-all duration-200 cursor-pointer ${
                         isActive
-                          ? 'bg-cream/10 border-cream/30 shadow-sm'
-                          : 'bg-transparent border-transparent opacity-60 hover:opacity-85'
+                          ? 'bg-[#F6F3E4]/15 border-[#F6F3E4]/40 shadow-sm'
+                          : 'bg-transparent border-transparent opacity-80 hover:opacity-100'
                       }`}
                     >
                       <div className="flex items-start gap-4">
                         <span
-                          className={`font-serif text-2xl font-normal px-3 py-1 rounded-lg border border-ink/20 ${stepAccents[i].badgeBg} ${stepAccents[i].badgeText} shrink-0`}
+                          className={`font-serif text-2xl font-bold px-3 py-1 rounded-lg border border-[#1C1B18]/30 ${stepAccents[i].badgeBg} ${stepAccents[i].badgeText} shrink-0`}
                         >
                           {step.number}
                         </span>
                         <div>
-                          <h3 className="font-serif text-2xl font-normal text-cream mb-1">
+                          <h3 className="font-serif text-2xl font-normal text-[#F6F3E4] mb-1">
                             {step.title}
                           </h3>
-                          <p className="text-cream/80 text-sm leading-relaxed">{step.desc}</p>
+                          <p className="text-[#F6F3E4]/90 text-sm leading-relaxed">{step.desc}</p>
                         </div>
                       </div>
                     </button>
                   );
                 })}
               </div>
-              <p className="mt-8 text-cream/60 text-xs italic">{site.howItWorks.ruleNote}</p>
+              <p className="mt-8 text-[#F6F3E4]/70 text-xs italic">{site.howItWorks.ruleNote}</p>
             </div>
 
             {/* Phone mockup Right */}

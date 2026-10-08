@@ -14,6 +14,7 @@ export default {
           muted: '#6B6A62',
         },
         'deep-green': '#1F4D47',
+        forest: '#1F4D47',
         cream: '#F6F3E4',
 
         // Pastel Accents (Flat fills) + Ink Shades (Text & Icons)

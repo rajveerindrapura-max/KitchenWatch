@@ -3,7 +3,10 @@ import Logo from '../ui/Logo';
 
 export default function Footer() {
   return (
-    <footer className="bg-forest border-t border-ink/20 px-4 sm:px-6 py-16 text-cream pb-24 md:pb-16">
+    <footer
+      className="bg-[#1F4D47] border-t border-[#1C1B18]/20 px-4 sm:px-6 py-16 text-[#F6F3E4] pb-24 md:pb-16"
+      style={{ backgroundColor: '#1F4D47', color: '#F6F3E4' }}
+    >
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10 mb-12">
           {/* Brand */}

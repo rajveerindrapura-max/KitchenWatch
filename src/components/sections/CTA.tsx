@@ -14,7 +14,8 @@ export default function CTA() {
   return (
     <section
       id="cta"
-      className="relative px-4 sm:px-6 py-20 md:py-28 bg-forest text-cream border-b border-ink/20"
+      className="relative px-4 sm:px-6 py-20 md:py-28 bg-[#1F4D47] text-[#F6F3E4] border-b border-[#1C1B18]/20"
+      style={{ backgroundColor: '#1F4D47', color: '#F6F3E4' }}
     >
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
