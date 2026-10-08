@@ -138,10 +138,10 @@ export default function TransferScreen({ phase, onManualTransfer }: TransferScre
           type="button"
           id="demo-transfer-button"
           onClick={onManualTransfer}
-          className={`px-3 py-1.5 rounded-lg text-xs font-jakarta font-semibold flex items-center gap-1.5 transition-all ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-figtree font-bold border border-[#1C1B18] flex items-center gap-1.5 transition-all shadow-hard-sm ${
             isTransferred
-              ? 'bg-green-600 text-white'
-              : 'bg-blue text-white hover:bg-blue-hover shadow-sm'
+              ? 'bg-[#D9EAD3] text-[#2F6B3A]'
+              : 'bg-[#E9D8FD] text-[#1C1B18] hover:bg-[#d6bbf7]'
           }`}
         >
           {isTransferred ? (

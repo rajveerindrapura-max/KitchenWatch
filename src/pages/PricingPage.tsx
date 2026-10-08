@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Nav from '../components/layout/Nav';
+import AnnouncementStrip from '../components/layout/AnnouncementStrip';
 import Footer from '../components/layout/Footer';
 import Pricing from '../components/sections/Pricing';
 import SavingsCalculator from '../components/sections/SavingsCalculator';
@@ -15,9 +16,10 @@ export default function PricingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-bg flex flex-col">
+    <div className="min-h-screen bg-ivory flex flex-col">
+      <AnnouncementStrip />
       <Nav />
-      <main className="flex-1 pt-16">
+      <main className="flex-1">
         <Pricing />
         <SavingsCalculator />
         <FAQ />

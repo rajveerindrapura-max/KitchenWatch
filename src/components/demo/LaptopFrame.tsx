@@ -8,32 +8,32 @@ interface LaptopFrameProps {
 export default function LaptopFrame({ children, badge }: LaptopFrameProps) {
   return (
     <div className="w-full relative select-none">
-      {/* Laptop Screen Body */}
-      <div className="bg-[#0f172a] p-2.5 sm:p-3 rounded-2xl sm:rounded-[22px] shadow-2xl border border-slate-700/60">
-        {/* Top Camera Notch */}
-        <div className="flex items-center justify-between px-2 pb-1.5 pt-0.5">
+      {/* Laptop Screen Body with 2px ink outline */}
+      <div className="bg-[#1C1B18] p-2.5 sm:p-3 rounded-2xl sm:rounded-[22px] border-2 border-[#1C1B18] shadow-hard-lg">
+        {/* Top Header Dots & Badge */}
+        <div className="flex items-center justify-between px-2 pb-2 pt-0.5">
           <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-slate-600/80 inline-block" />
-            <span className="w-2 h-2 rounded-full bg-slate-600/80 inline-block" />
-            <span className="w-2 h-2 rounded-full bg-slate-600/80 inline-block" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#F6F3E4]/30 inline-block border border-[#1C1B18]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#F6F3E4]/30 inline-block border border-[#1C1B18]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#F6F3E4]/30 inline-block border border-[#1C1B18]" />
           </div>
           {badge && (
-            <span className="text-[10px] font-jakarta font-semibold tracking-wider uppercase text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded-full border border-slate-700/60">
+            <span className="text-[10px] font-figtree font-bold tracking-wider uppercase text-[#1C1B18] bg-[#FBEFB4] px-2.5 py-0.5 rounded-full border border-[#1C1B18]">
               {badge}
             </span>
           )}
           <div className="w-8" />
         </div>
 
-        {/* Display Viewport */}
-        <div className="bg-surface rounded-lg sm:rounded-xl overflow-hidden border border-border text-ink h-[320px] sm:h-[360px] md:h-[390px] flex flex-col relative font-inter">
+        {/* Display Viewport: Warm Ivory */}
+        <div className="bg-[#FFFEF2] rounded-lg sm:rounded-xl overflow-hidden border-[1.5px] border-[#1C1B18] text-[#1C1B18] h-[320px] sm:h-[360px] md:h-[390px] flex flex-col relative font-figtree">
           {children}
         </div>
       </div>
 
-      {/* Laptop Base/Hinge */}
-      <div className="relative mx-auto w-[106%] -ml-[3%] h-3.5 bg-gradient-to-b from-slate-300 via-slate-200 to-slate-400 rounded-b-xl border-t border-slate-300 shadow-md flex justify-center items-start">
-        <div className="w-16 sm:w-24 h-1 bg-slate-400/80 rounded-b-md" />
+      {/* Flat Laptop Base with hard ink outline */}
+      <div className="relative mx-auto w-[104%] -ml-[2%] h-3 bg-[#F7F5E4] rounded-b-xl border-2 border-t-0 border-[#1C1B18] shadow-hard flex justify-center items-start">
+        <div className="w-20 h-1 bg-[#1C1B18]/40 rounded-b-md" />
       </div>
     </div>
   );

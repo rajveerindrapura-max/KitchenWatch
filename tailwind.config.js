@@ -4,74 +4,95 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: 'var(--bg)',
-        surface: 'var(--surface)',
-        border: 'var(--border)',
+        // Base Warm Palette
+        ivory: '#FFFEF2',
+        paper: '#F7F5E4',
+        'card-warm': '#FFFDF5',
         ink: {
-          DEFAULT: 'var(--ink)',
-          2: 'var(--ink-2)',
+          DEFAULT: '#1C1B18',
+          secondary: '#4B4A44',
+          muted: '#6B6A62',
         },
-        muted: 'var(--muted)',
-        cream: 'var(--cream)',
-        dark: 'var(--dark)',
+        'deep-green': '#1F4D47',
+        cream: '#F6F3E4',
+
+        // Pastel Accents (Flat fills) + Ink Shades (Text & Icons)
+        lavender: {
+          DEFAULT: '#E9D8FD',
+          ink: '#5B3FA0',
+        },
+        sage: {
+          DEFAULT: '#D9EAD3',
+          ink: '#2F6B3A',
+        },
+        butter: {
+          DEFAULT: '#FBEFB4',
+          ink: '#8A5A00',
+        },
+        peach: {
+          DEFAULT: '#FAD9C8',
+          ink: '#B3412A',
+        },
+        'soft-sky': {
+          DEFAULT: '#D6E8F5',
+          ink: '#1F5C8A',
+        },
+
+        // Backward compatibility mappings directed to the warm palette
+        bg: '#FFFEF2',
+        surface: '#FFFDF5',
+        border: '#1C1B18',
+        secondary: '#4B4A44',
+        muted: '#6B6A62',
+        dark: '#1F4D47',
         blue: {
-          DEFAULT: 'var(--blue)',
-          hover: 'var(--blue-hover)',
-          tint: 'var(--blue-tint)',
-        },
-        sky: {
-          DEFAULT: 'var(--sky)',
-          tint: 'var(--sky-tint)',
-        },
-        teal: {
-          DEFAULT: 'var(--teal)',
-          tint: 'var(--teal-tint)',
+          DEFAULT: '#5B3FA0', // lavender ink for actions
+          tint: '#E9D8FD',
         },
         emerald: {
-          DEFAULT: 'var(--emerald)',
-          tint: 'var(--emerald-tint)',
+          DEFAULT: '#2F6B3A',
+          tint: '#D9EAD3',
         },
         amber: {
-          DEFAULT: 'var(--amber)',
-          tint: 'var(--amber-tint)',
+          DEFAULT: '#8A5A00',
+          tint: '#FBEFB4',
         },
         coral: {
-          DEFAULT: 'var(--coral)',
-          tint: 'var(--coral-tint)',
+          DEFAULT: '#B3412A',
+          tint: '#FAD9C8',
+        },
+        sky: {
+          DEFAULT: '#1F5C8A',
+          tint: '#D6E8F5',
         },
         violet: {
-          DEFAULT: 'var(--violet)',
-          tint: 'var(--violet-tint)',
+          DEFAULT: '#5B3FA0',
+          tint: '#E9D8FD',
         },
       },
       fontFamily: {
-        jakarta: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-        inter: ['Inter', 'system-ui', 'sans-serif'],
         serif: ['Instrument Serif', 'Georgia', 'serif'],
+        sans: ['Figtree', 'system-ui', 'sans-serif'],
+        figtree: ['Figtree', 'system-ui', 'sans-serif'],
+        jakarta: ['Figtree', 'system-ui', 'sans-serif'], // fallback mapping
       },
       fontSize: {
-        'hero-mobile': ['40px', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
-        'hero': ['clamp(56px, 6vw, 88px)', { lineHeight: '1.0', letterSpacing: '-0.025em' }],
-        'section': ['clamp(36px, 4vw, 56px)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-        'xl-body': ['18px', { lineHeight: '1.65' }],
-        'body': ['17px', { lineHeight: '1.7' }],
+        'hero-mobile': ['44px', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+        'hero': ['clamp(64px, 7vw, 104px)', { lineHeight: '0.98', letterSpacing: '-0.03em' }],
+        'section': ['clamp(36px, 4.5vw, 64px)', { lineHeight: '1.08', letterSpacing: '-0.02em' }],
+        'xl-body': ['18px', { lineHeight: '1.6' }],
+        'body': ['17px', { lineHeight: '1.6' }],
       },
       borderRadius: {
-        card: '24px',
-        panel: '20px',
+        btn: '12px',
+        card: '22px',
+        panel: '24px',
         pill: '999px',
       },
-      spacing: {
-        'section': '140px',
-        'section-mobile': '80px',
-      },
       boxShadow: {
-        'float': '0 20px 60px -10px rgba(11,18,32,0.12), 0 8px 20px -8px rgba(11,18,32,0.08)',
-        'card': '0 1px 3px rgba(11,18,32,0.06), 0 4px 12px rgba(11,18,32,0.04)',
-        'blue-glow': '0 8px 40px -8px rgba(37,99,235,0.3)',
-      },
-      backgroundImage: {
-        'radial-blue': 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(56,189,248,0.08) 0%, transparent 70%)',
+        'hard': '3px 3px 0px #1C1B18',
+        'hard-sm': '2px 2px 0px #1C1B18',
+        'hard-lg': '4px 4px 0px #1C1B18',
       },
     },
   },

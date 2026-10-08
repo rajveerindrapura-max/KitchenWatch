@@ -6,8 +6,8 @@ interface LogoProps {
 
 const heights = {
   sm: 'h-7',
-  md: 'h-9',
-  lg: 'h-11',
+  md: 'h-8 sm:h-9',
+  lg: 'h-10 sm:h-11',
 };
 
 export default function Logo({ size = 'md', dark = false, className = '' }: LogoProps) {
@@ -17,14 +17,17 @@ export default function Logo({ size = 'md', dark = false, className = '' }: Logo
     <a
       href="/"
       aria-label="KitchenWatch home"
-      className={`inline-flex items-center group transition-opacity hover:opacity-85 ${className}`}
+      className={`inline-flex items-center gap-2 group transition-opacity hover:opacity-85 ${className}`}
     >
       <img
         src="/logo-clean.png"
         alt="KitchenWatch"
-        className={`${h} w-auto object-contain transition-all ${
-          dark ? 'brightness-0 invert' : ''
-        }`}
+        className={`${h} w-auto object-contain transition-all`}
+        style={{
+          filter: dark
+            ? 'brightness(0) invert(1) sepia(0.15) hue-rotate(15deg)'
+            : 'brightness(0)',
+        }}
       />
     </a>
   );

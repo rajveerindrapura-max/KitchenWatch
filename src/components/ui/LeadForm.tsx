@@ -26,7 +26,7 @@ interface LeadFormProps {
   onSuccess?: () => void;
 }
 
-export default function LeadForm({ theme = 'dark', source = 'homepage', onSuccess }: LeadFormProps) {
+export default function LeadForm({ source = 'homepage', onSuccess }: LeadFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -43,8 +43,6 @@ export default function LeadForm({ theme = 'dark', source = 'homepage', onSucces
       botTrap: '',
     },
   });
-
-  const isDark = theme === 'dark';
 
   const onSubmit = async (data: LeadFormData) => {
     // If bot filled the hidden honeypot field, drop silently
@@ -86,17 +84,13 @@ export default function LeadForm({ theme = 'dark', source = 'homepage', onSucces
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className={`p-8 rounded-panel text-center ${
-          isDark
-            ? 'bg-slate-900 border border-emerald/30 text-white'
-            : 'bg-emerald-tint/50 border border-emerald/30 text-ink'
-        }`}
+        className="p-8 rounded-2xl text-center bg-sage border-1.5 border-ink text-ink shadow-hard-sm"
       >
-        <div className="w-14 h-14 rounded-full bg-emerald-tint text-emerald mx-auto flex items-center justify-center mb-4">
+        <div className="w-14 h-14 rounded-full bg-card border border-ink/20 text-sage-ink mx-auto flex items-center justify-center mb-4">
           <CheckCircle2 size={32} />
         </div>
-        <h3 className="font-jakarta font-bold text-xl mb-2">Demo Request Received</h3>
-        <p className="text-sm opacity-80 max-w-md mx-auto mb-6 leading-relaxed">
+        <h3 className="font-serif text-2xl font-normal text-ink mb-2">Demo Request Received</h3>
+        <p className="text-sm text-secondary max-w-md mx-auto mb-6 leading-relaxed">
           {site.cta.responsePromise}
         </p>
         <div className="inline-flex gap-3">
@@ -106,7 +100,7 @@ export default function LeadForm({ theme = 'dark', source = 'homepage', onSucces
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2 rounded-btn bg-emerald text-white text-xs font-jakarta font-semibold hover:bg-emerald-700 transition-colors"
+            className="px-5 py-2.5 rounded-xl bg-card text-ink text-xs font-bold border border-ink/30 hover:bg-paper transition-all shadow-hard-sm"
           >
             Open WhatsApp chat now
           </a>
@@ -115,18 +109,13 @@ export default function LeadForm({ theme = 'dark', source = 'homepage', onSucces
     );
   }
 
-  const inputStyles = `w-full rounded-btn px-3.5 py-3 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue ${
-    isDark
-      ? 'bg-[#0E172A] border border-white/15 text-white placeholder:text-slate-500 focus:border-blue'
-      : 'bg-surface border border-border text-ink placeholder:text-muted focus:border-blue'
-  }`;
+  const inputStyles =
+    'w-full rounded-xl px-3.5 py-3 text-sm bg-paper border-1.5 border-ink/40 text-ink placeholder:text-muted focus:outline-none focus:border-ink focus:bg-card transition-all';
 
-  const labelStyles = `block text-xs font-jakarta font-semibold mb-1.5 ${
-    isDark ? 'text-slate-300' : 'text-ink'
-  }`;
+  const labelStyles = 'block text-xs font-bold uppercase tracking-wider text-muted mb-1.5';
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left" noValidate>
       {/* Honeypot field (hidden from legitimate humans) */}
       <div className="hidden" aria-hidden="true">
         <label htmlFor="botTrap">Do not fill this</label>
@@ -147,7 +136,7 @@ export default function LeadForm({ theme = 'dark', source = 'homepage', onSucces
             {...register('name')}
           />
           {errors.name && (
-            <p className="text-coral text-xs mt-1 flex items-center gap-1">
+            <p className="text-peach-ink text-xs mt-1 flex items-center gap-1 font-medium">
               <AlertCircle size={11} /> {errors.name.message}
             </p>
           )}
@@ -165,7 +154,7 @@ export default function LeadForm({ theme = 'dark', source = 'homepage', onSucces
             {...register('business')}
           />
           {errors.business && (
-            <p className="text-coral text-xs mt-1 flex items-center gap-1">
+            <p className="text-peach-ink text-xs mt-1 flex items-center gap-1 font-medium">
               <AlertCircle size={11} /> {errors.business.message}
             </p>
           )}
@@ -185,7 +174,7 @@ export default function LeadForm({ theme = 'dark', source = 'homepage', onSucces
             <option value="7+">7 or more outlets</option>
           </select>
           {errors.outlets && (
-            <p className="text-coral text-xs mt-1 flex items-center gap-1">
+            <p className="text-peach-ink text-xs mt-1 flex items-center gap-1 font-medium">
               <AlertCircle size={11} /> {errors.outlets.message}
             </p>
           )}
@@ -203,7 +192,7 @@ export default function LeadForm({ theme = 'dark', source = 'homepage', onSucces
             {...register('phone')}
           />
           {errors.phone && (
-            <p className="text-coral text-xs mt-1 flex items-center gap-1">
+            <p className="text-peach-ink text-xs mt-1 flex items-center gap-1 font-medium">
               <AlertCircle size={11} /> {errors.phone.message}
             </p>
           )}
@@ -223,14 +212,14 @@ export default function LeadForm({ theme = 'dark', source = 'homepage', onSucces
           {...register('email')}
         />
         {errors.email && (
-          <p className="text-coral text-xs mt-1 flex items-center gap-1">
+          <p className="text-peach-ink text-xs mt-1 flex items-center gap-1 font-medium">
             <AlertCircle size={11} /> {errors.email.message}
           </p>
         )}
       </div>
 
       {submitError && (
-        <div className="p-3 rounded-btn bg-coral-tint text-coral text-xs flex items-center gap-2">
+        <div className="p-3 rounded-xl bg-peach text-peach-ink text-xs border border-ink/20 flex items-center gap-2">
           <AlertCircle size={14} />
           <span>{submitError}</span>
         </div>
@@ -240,7 +229,7 @@ export default function LeadForm({ theme = 'dark', source = 'homepage', onSucces
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full py-3.5 px-6 rounded-btn bg-blue text-white font-jakarta font-semibold text-sm hover:bg-blue-hover transition-colors shadow-sm flex items-center justify-center gap-2 min-h-[44px] disabled:opacity-70 cursor-pointer"
+        className="w-full py-3.5 px-6 rounded-xl bg-lavender text-ink font-semibold text-sm border-2 border-ink shadow-hard-sm hover:shadow-hard transition-all flex items-center justify-center gap-2 min-h-[44px] disabled:opacity-70 cursor-pointer active:translate-y-0.5"
       >
         {isSubmitting ? (
           <>

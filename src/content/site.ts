@@ -41,6 +41,13 @@ export const site = {
     showTestimonials: false, // No fake reviews allowed; kept false
     showCustomerLogos: false, // No fake logos allowed; kept false
     showStats: false, // No fake metrics; kept false
+    showAnnouncement: true, // Deep green announcement strip at top
+  },
+
+  announcement: {
+    text: 'Early Access Cohort now onboarding Indian restaurant groups.',
+    linkText: 'Apply for pilot access ›',
+    linkHref: '#pilot',
   },
 
   meta: {

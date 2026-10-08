@@ -18,9 +18,11 @@ export default function Tabs({ tabs, activeId, onChange, dark = false }: TabsPro
   return (
     <div
       role="tablist"
-      aria-label="Role tabs"
-      className={`inline-flex gap-1 p-1 rounded-pill ${
-        dark ? 'bg-white/10' : 'bg-slate-100'
+      aria-label="Selection tabs"
+      className={`inline-flex items-center gap-1.5 p-1 rounded-full border ${
+        dark
+          ? 'bg-[#1F4D47]/60 border-[#F6F3E4]/20'
+          : 'bg-[#F7F5E4] border-[#1C1B18]/40'
       }`}
     >
       {tabs.map((tab) => {
@@ -33,25 +35,27 @@ export default function Tabs({ tabs, activeId, onChange, dark = false }: TabsPro
             aria-selected={isActive}
             aria-controls={`tabpanel-${tab.id}`}
             onClick={() => onChange(tab.id)}
-            className={`relative px-5 py-2 text-sm font-jakarta font-semibold rounded-pill transition-colors focus-visible:outline ${
+            className={`relative px-4 sm:px-5 py-2 text-xs sm:text-sm font-figtree font-semibold rounded-full transition-colors z-10 ${
               isActive
                 ? dark
-                  ? 'text-dark'
-                  : 'text-ink'
+                  ? 'text-[#1F4D47] font-bold'
+                  : 'text-[#1C1B18] font-bold'
                 : dark
-                ? 'text-white/50 hover:text-white/80'
-                : 'text-muted hover:text-ink'
+                ? 'text-[#F6F3E4]/70 hover:text-[#F6F3E4]'
+                : 'text-[#4B4A44] hover:text-[#1C1B18]'
             }`}
           >
             {isActive && (
               <motion.span
                 layoutId="tab-indicator"
-                className={`absolute inset-0 rounded-pill ${dark ? 'bg-white' : 'bg-surface'}`}
-                style={{ zIndex: 0 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+                className={`absolute inset-0 rounded-full ${
+                  dark ? 'bg-[#F6F3E4]' : 'bg-[#E9D8FD] border-[1.5px] border-[#1C1B18]'
+                }`}
+                style={{ zIndex: -1 }}
+                transition={{ type: 'spring', stiffness: 420, damping: 32 }}
               />
             )}
-            <span className="relative z-10">{tab.label}</span>
+            <span>{tab.label}</span>
           </button>
         );
       })}

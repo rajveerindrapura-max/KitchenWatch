@@ -37,8 +37,8 @@ export default function ProductDemo() {
   // Animated cursor state (for scenario 2)
   const [cursorPos, setCursorPos] = useState({ x: 40, y: 40, clicking: false, visible: false });
 
-  // 3D Tilt state
-  const [tilt, setTilt] = useState({ x: 3, y: -6 });
+  // Flat presentation (no 3D tilt per eye-comfort rules)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<HTMLDivElement>(null);
 
@@ -223,18 +223,21 @@ export default function ProductDemo() {
   };
 
   return (
-    <section id="product" className="px-6 py-16 md:py-24 overflow-hidden bg-bg" ref={containerRef}>
+    <section id="product" className="px-4 sm:px-6 py-20 md:py-28 overflow-hidden bg-[#FFFEF2] border-b border-[#1C1B18]/15" ref={containerRef}>
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <Reveal>
-          <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
+          <div className="text-center mb-12 md:mb-16 max-w-3xl mx-auto">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D6E8F5] border-[1.5px] border-[#1C1B18] text-[#1F5C8A] font-figtree font-bold text-xs tracking-wider uppercase mb-3 shadow-hard-sm">
+              Live Product Demo
+            </span>
             <h2
-              className="font-jakarta font-bold tracking-tight text-ink mb-3"
-              style={{ fontSize: 'clamp(28px, 4vw, 50px)' }}
+              className="font-serif text-[#1C1B18] mb-3"
+              style={{ fontSize: 'clamp(32px, 4.5vw, 56px)' }}
             >
               {heading}
             </h2>
-            <p className="text-base sm:text-lg text-ink-2">
+            <p className="text-base sm:text-lg text-[#4B4A44] font-figtree">
               {subheading}
             </p>
           </div>
@@ -263,29 +266,27 @@ export default function ProductDemo() {
                     handleUserActivity();
                     switchScenario(i);
                   }}
-                  className={`text-left p-4 sm:p-5 rounded-2xl border transition-all relative overflow-hidden group focus-visible:outline-blue ${
+                  className={`text-left p-4 sm:p-5 rounded-card border-[1.5px] transition-all relative overflow-hidden group focus-visible:outline-[#1C1B18] ${
                     isActive
-                      ? 'bg-surface border-blue/40 shadow-card'
-                      : 'bg-surface/60 border-border/70 hover:bg-surface hover:border-border'
+                      ? 'bg-[#E9D8FD] border-[#1C1B18] shadow-hard'
+                      : 'bg-[#FFFDF5] border-[#1C1B18]/40 hover:border-[#1C1B18] hover:bg-[#F7F5E4]'
                   }`}
                 >
                   <div className="flex items-start gap-3.5 relative z-10">
                     <span
-                      className={`font-jakarta font-bold text-sm sm:text-base px-2 py-0.5 rounded-md shrink-0 transition-colors ${
-                        isActive ? 'bg-blue text-white' : 'bg-slate-100 text-muted group-hover:text-ink'
+                      className={`font-figtree font-bold text-sm sm:text-base px-2.5 py-0.5 rounded-md shrink-0 border border-[#1C1B18]/30 transition-colors ${
+                        isActive ? 'bg-[#1C1B18] text-[#F6F3E4]' : 'bg-[#F7F5E4] text-[#4B4A44]'
                       }`}
                     >
                       {sc.number}
                     </span>
                     <div className="flex-1">
                       <h3
-                        className={`font-jakarta font-bold text-sm sm:text-base mb-1 transition-colors ${
-                          isActive ? 'text-ink' : 'text-slate-700'
-                        }`}
+                        className="font-figtree font-bold text-base mb-1 text-[#1C1B18]"
                       >
                         {sc.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-ink-2 leading-relaxed">
+                      <p className="text-xs sm:text-sm text-[#4B4A44] leading-relaxed font-figtree">
                         {sc.desc}
                       </p>
                     </div>
@@ -293,9 +294,9 @@ export default function ProductDemo() {
 
                   {/* Scenario Progress Bar */}
                   {isActive && !shouldReduce && (
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-blue/10">
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#1C1B18]/15">
                       <div
-                        className="h-full bg-blue transition-all duration-75"
+                        className="h-full bg-[#1C1B18] transition-all duration-75"
                         style={{ width: `${progress * 100}%` }}
                       />
                     </div>
@@ -306,7 +307,7 @@ export default function ProductDemo() {
 
             {/* Play/Pause & Replay Controls */}
             {!shouldReduce && (
-              <div className="flex items-center justify-between pt-2 px-1 text-xs text-muted">
+              <div className="flex items-center justify-between pt-2 px-1 text-xs text-[#6B6A62]">
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
@@ -314,10 +315,10 @@ export default function ProductDemo() {
                       setIsPlaying(!isPlaying);
                       if (!isPlaying) progressStartTimeRef.current = Date.now() - progress * SCENARIO_DURATION;
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-surface hover:bg-slate-50 text-ink font-medium transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#1C1B18] bg-[#F7F5E4] hover:bg-[#FFFEF2] text-[#1C1B18] font-figtree font-bold transition-all shadow-hard-sm"
                     aria-label={isPlaying ? 'Pause scenario walkthrough' : 'Play scenario walkthrough'}
                   >
-                    {isPlaying ? <Pause size={13} /> : <Play size={13} />}
+                    {isPlaying ? <Pause size={12} /> : <Play size={12} />}
                     <span>{isPlaying ? 'Pause' : 'Play'}</span>
                   </button>
 
@@ -327,15 +328,15 @@ export default function ProductDemo() {
                       resetScenarioState(activeScenarioIndex);
                       setIsPlaying(true);
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-surface hover:bg-slate-50 text-ink font-medium transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#1C1B18] bg-[#F7F5E4] hover:bg-[#FFFEF2] text-[#1C1B18] font-figtree font-bold transition-all shadow-hard-sm"
                     aria-label="Replay current scenario"
                   >
-                    <RotateCcw size={13} />
+                    <RotateCcw size={12} />
                     <span>Replay</span>
                   </button>
                 </div>
 
-                <span className="text-[11px] text-slate-400 font-mono">
+                <span className="text-[11px] text-[#6B6A62] font-mono font-bold">
                   {activeScenario.number} / 03
                 </span>
               </div>

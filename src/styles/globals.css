@@ -1,51 +1,36 @@
-@import '@fontsource/plus-jakarta-sans/600.css';
-@import '@fontsource/plus-jakarta-sans/700.css';
-@import '@fontsource/plus-jakarta-sans/800.css';
-@import '@fontsource/inter/400.css';
-@import '@fontsource/inter/500.css';
-@import '@fontsource/instrument-serif/400-italic.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg: #FBFCFE;
-  --surface: #FFFFFF;
-  --border: #E2E8F0;
-  --ink: #0B1220;
-  --ink-2: #475569;
-  --muted: #64748B;
-  --cream: #FFF9F0;
-  --dark: #0B1220;
+  --bg: #FFFEF2;
+  --paper: #F7F5E4;
+  --surface: #FFFDF5;
+  --ink: #1C1B18;
+  --secondary: #4B4A44;
+  --muted: #6B6A62;
+  --border: #1C1B18;
 
-  /* Meaningful Accents & Tints */
-  --blue: #2563EB;
-  --blue-hover: #1D4ED8;
-  --blue-tint: #EFF6FF;
+  --deep-green: #1F4D47;
+  --cream: #F6F3E4;
 
-  --sky: #38BDF8;
-  --sky-tint: #E0F2FE;
-
-  --teal: #0D9488;
-  --teal-tint: #CCFBF1;
-
-  --emerald: #15803D;
-  --emerald-tint: #DCFCE7;
-
-  --amber: #B45309;
-  --amber-tint: #FEF3C7;
-
-  --coral: #DC2626;
-  --coral-tint: #FEE2E2;
-
-  --violet: #7C3AED;
-  --violet-tint: #F3E8FF;
+  /* Pastel Accents (Flat fills) + Ink Shades (Text & Icons) */
+  --lavender: #E9D8FD;
+  --lavender-ink: #5B3FA0;
+  --sage: #D9EAD3;
+  --sage-ink: #2F6B3A;
+  --butter: #FBEFB4;
+  --butter-ink: #8A5A00;
+  --peach: #FAD9C8;
+  --peach-ink: #B3412A;
+  --soft-sky: #D6E8F5;
+  --sky-ink: #1F5C8A;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: var(--bg);
   }
 
   html.lenis {
@@ -63,115 +48,89 @@
   body {
     background-color: var(--bg);
     color: var(--ink);
-    font-family: 'Inter', 'system-ui', sans-serif;
+    font-family: 'Figtree', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
+    font-size: 17px;
   }
 
+  /* Eye-comfort focus ring: visible ink outline */
   *:focus-visible {
-    outline: 2px solid var(--blue);
-    outline-offset: 3px;
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
     border-radius: 4px;
   }
 
   ::selection {
-    background: rgba(37, 99, 235, 0.15);
+    background: #E9D8FD;
+    color: #1C1B18;
   }
 }
 
-@layer utilities {
-  .font-jakarta {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-  }
-
-  .font-serif-italic {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-  }
-
-  .text-ink {
-    color: var(--ink);
-  }
-
-  .text-ink-2 {
-    color: var(--ink-2);
-  }
-
-  .text-muted {
-    color: var(--muted);
-  }
-
-  .text-blue {
-    color: var(--blue);
-  }
-
-  .bg-surface {
-    background-color: var(--surface);
-  }
-
-  .bg-blue {
-    background-color: var(--blue);
-  }
-
-  .bg-blue-hover {
-    background-color: var(--blue-hover);
-  }
-
-  .bg-dark {
-    background-color: var(--dark);
-  }
-
-  .border-border {
-    border-color: var(--border);
-  }
+/* Warm Paper & Editorial Components */
+.font-serif {
+  font-family: 'Instrument Serif', Georgia, serif;
 }
 
-/* Smooth scroll cue bounce */
-@keyframes scrollBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
+.font-sans,
+.font-figtree,
+.font-jakarta {
+  font-family: 'Figtree', system-ui, sans-serif;
 }
 
-.scroll-bounce {
-  animation: scrollBounce 2s ease-in-out infinite;
+/* Hard outline button & card utility classes */
+.btn-primary {
+  background-color: var(--lavender);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 600;
+  transition: transform 120ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 120ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Word highlight for problem section */
-.word-dim {
-  opacity: 0.15;
-  transition: opacity 0.3s ease;
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0px var(--ink);
 }
 
-.word-lit {
-  opacity: 1;
+.btn-secondary {
+  background-color: var(--bg);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 600;
+  transition: transform 120ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 120ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Bento tile glow */
-.tile-glow {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(37,99,235,0.07) 0%, transparent 60%);
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0px var(--ink);
 }
 
-/* Carousel perspective */
-.carousel-track {
-  perspective: 1200px;
-  perspective-origin: center center;
+.card-paper {
+  background-color: var(--surface);
+  border: 1.5px solid var(--ink);
+  border-radius: 22px;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Phone frame safe area */
-.phone-screen {
-  border-radius: 28px;
-  overflow: hidden;
+.card-paper:hover {
+  transform: translateY(-3px) rotate(-0.5deg);
+  box-shadow: 3px 3px 0px var(--ink);
 }
 
-/* Reduced motion */
+/* Global Animation Pause */
+html.animations-paused *,
+html.animations-paused *::before,
+html.animations-paused *::after {
+  animation-play-state: paused !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

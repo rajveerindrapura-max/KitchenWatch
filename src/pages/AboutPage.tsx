@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Nav from '../components/layout/Nav';
+import AnnouncementStrip from '../components/layout/AnnouncementStrip';
 import Footer from '../components/layout/Footer';
 import About from '../components/sections/About';
 import Roadmap from '../components/sections/Roadmap';
@@ -14,9 +15,10 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-bg flex flex-col">
+    <div className="min-h-screen bg-ivory flex flex-col">
+      <AnnouncementStrip />
       <Nav />
-      <main className="flex-1 pt-16">
+      <main className="flex-1">
         <About />
         <Roadmap />
         <CTA />

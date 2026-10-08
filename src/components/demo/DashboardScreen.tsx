@@ -189,25 +189,25 @@ export default function DashboardScreen({
               >
                 <div className="flex items-center gap-2">
                   <span
-                    className={`w-1.5 h-1.5 rounded-full ${
-                      it.status === 'expiring' ? 'bg-red-500' : 'bg-amber-500'
+                    className={`w-2 h-2 rounded-full border border-[#1C1B18]/40 ${
+                      it.status === 'expiring' ? 'bg-[#B3412A]' : 'bg-[#8A5A00]'
                     }`}
                   />
                   <div>
-                    <p className="font-semibold text-[11px] text-ink">{it.name}</p>
-                    <p className="text-[9px] text-muted">{it.qty}</p>
+                    <p className="font-figtree font-bold text-[11px] text-[#1C1B18]">{it.name}</p>
+                    <p className="text-[9px] text-[#4B4A44]">{it.qty}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[9px] text-muted px-1.5 py-0.5 rounded bg-white border border-border font-medium">
+                  <span className="text-[9px] text-[#4B4A44] px-1.5 py-0.5 rounded bg-[#F7F5E4] border border-[#1C1B18]/30 font-medium">
                     {it.outlet}
                   </span>
                   <span
-                    className={`text-[9px] px-1.5 py-0.5 rounded-full font-semibold ${
+                    className={`text-[9px] px-1.5 py-0.5 rounded-full font-bold border border-[#1C1B18]/30 ${
                       it.status === 'expiring'
-                        ? 'bg-red-50 text-red-700'
-                        : 'bg-amber-50 text-amber-700'
+                        ? 'bg-[#FAD9C8] text-[#B3412A]'
+                        : 'bg-[#FBEFB4] text-[#8A5A00]'
                     }`}
                   >
                     {it.status}

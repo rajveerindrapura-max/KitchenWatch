@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useLenis } from './lib/useLenis';
 import Nav from './components/layout/Nav';
+import AnnouncementStrip from './components/layout/AnnouncementStrip';
 import Footer from './components/layout/Footer';
 import FloatingWhatsApp from './components/layout/FloatingWhatsApp';
 import MobileBottomBar from './components/layout/MobileBottomBar';
@@ -29,6 +30,7 @@ import NotFoundPage from './pages/NotFoundPage';
 function HomePage() {
   return (
     <div className="min-h-screen bg-bg flex flex-col">
+      <AnnouncementStrip />
       <Nav />
       <main className="flex-1">
         {/* Section 1: Hero (Approved headline, serif italic, 3D scene) */}
