@@ -13,31 +13,31 @@ export default function MiniPhoneFrame({
 }: MiniPhoneFrameProps) {
   return (
     <div
-      className={`relative bg-[#1C1B18] rounded-[30px] p-2 border-2 border-[#1C1B18] shadow-hard-lg overflow-hidden flex flex-col ${className}`}
+      className={`relative bg-[#101218] rounded-[30px] p-2 border border-slate-800 shadow-float overflow-hidden flex flex-col ${className}`}
       style={{
         width: '210px',
         height: '350px',
       }}
     >
-      {/* Top speaker & camera pill */}
+      {/* Top speaker & camera island */}
       <div className="flex items-center justify-between px-3 pt-1 pb-1 shrink-0 z-20">
-        <span className="text-[9px] text-[#F6F3E4]/60 font-mono font-medium">9:41</span>
-        <div className="w-16 h-3 bg-[#2D2C28] rounded-full flex items-center justify-end pr-1.5" />
+        <span className="text-[9px] text-slate-400 font-mono font-medium">9:41</span>
+        <div className="w-14 h-2.5 bg-slate-800 rounded-full flex items-center justify-end pr-1" />
         {badge ? (
-          <span className="text-[8px] text-[#E9D8FD] font-bold uppercase">{badge}</span>
+          <span className="text-[8px] text-blue font-semibold uppercase">{badge}</span>
         ) : (
           <div className="w-4" />
         )}
       </div>
 
       {/* Screen area */}
-      <div className="flex-1 bg-[#FFFEF2] rounded-[22px] overflow-hidden flex flex-col relative text-[#1C1B18] border-[1.5px] border-[#1C1B18]">
+      <div className="flex-1 bg-surface rounded-[22px] overflow-hidden flex flex-col relative text-ink border border-hairline">
         {children}
       </div>
 
       {/* Home indicator */}
       <div className="pt-1.5 pb-0.5 flex justify-center shrink-0">
-        <div className="w-16 h-1 bg-[#F6F3E4]/40 rounded-full" />
+        <div className="w-14 h-1 bg-slate-700/50 rounded-full" />
       </div>
     </div>
   );

@@ -276,7 +276,7 @@ export async function submitLead(data: LeadData): Promise<void> {
     roles: [
       { id: 'owner', label: 'Owner', title: 'For Owners', desc: 'See the big picture.', capabilities: ['Dashboard access', 'Reports'] },
       { id: 'manager', label: 'Manager', title: 'For Managers', desc: 'Run the show.', capabilities: ['Stock transfers', 'Alerts'] },
-      { id: 'worker', label: 'Worker', title: 'For Staff', desc: 'Do the work.', capabilities: ['Log wastage', 'Receive stock'] }
+      { id: 'employee', label: 'Employee', title: 'For Staff', desc: 'Do the work.', capabilities: ['Log wastage', 'Receive stock'] }
     ]
   },
   roadmap: {

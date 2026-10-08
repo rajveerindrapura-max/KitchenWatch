@@ -15,7 +15,7 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-ivory flex flex-col">
+    <div className="min-h-screen bg-bg flex flex-col font-sans">
       <AnnouncementStrip />
       <Nav />
       <main className="flex-1">

@@ -44,12 +44,12 @@ export default function DashboardScreen({
       : allAttention.filter((item) => item.outlet === currentOutlet);
 
   return (
-    <div className="h-full flex flex-col p-3 sm:p-4 bg-slate-50/40 text-xs overflow-hidden select-none">
+    <div className="h-full flex flex-col p-3 sm:p-4 bg-[#F5F5F7]/50 text-xs overflow-hidden select-none font-sans">
       {/* Top Bar: Title & Outlets */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-border/80">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-border">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-blue" />
-          <h4 className="font-jakarta font-bold text-ink text-sm sm:text-base">
+          <h4 className="font-sans font-semibold text-ink text-sm sm:text-base">
             Inventory Overview
           </h4>
           <span className="text-[10px] text-muted font-medium hidden sm:inline">
@@ -68,10 +68,10 @@ export default function DashboardScreen({
                   type="button"
                   onClick={() => handleSelect(outletName)}
                   disabled={!interactive}
-                  className={`px-2 sm:px-2.5 py-1 rounded-md text-[11px] font-jakarta transition-all ${
+                  className={`px-2 sm:px-2.5 py-1 rounded-md text-[11px] transition-all font-medium ${
                     active
-                      ? 'bg-surface text-ink font-bold shadow-xs'
-                      : 'text-muted hover:text-ink font-medium'
+                      ? 'bg-surface text-ink font-semibold shadow-xs'
+                      : 'text-muted hover:text-ink'
                   }`}
                 >
                   {outletName}
@@ -85,7 +85,7 @@ export default function DashboardScreen({
       {/* KPI Cards (Rupee Stock Value, Low Stock, Expiring, Wastage) */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 my-2.5">
         {/* Total Value in Rupees */}
-        <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border/80 shadow-xs">
+        <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border shadow-xs">
           <div className="flex items-center justify-between text-muted text-[10px] mb-1">
             <span>Stock value</span>
             <Layers size={11} className="text-blue" />
@@ -96,21 +96,21 @@ export default function DashboardScreen({
               initial={{ opacity: 0, y: 3 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -3 }}
-              className="text-xs sm:text-sm font-jakarta font-extrabold text-ink tabular-nums"
+              className="text-xs sm:text-sm font-mono font-semibold text-ink tabular-nums"
             >
               {formatINR(stats.stockValue)}
             </motion.p>
           </AnimatePresence>
-          <span className="text-[9px] text-emerald font-medium flex items-center gap-0.5">
+          <span className="text-[9px] text-emerald-700 font-medium flex items-center gap-0.5">
             <Sparkles size={9} /> Total tracked
           </span>
         </div>
 
         {/* Low Stock Items */}
-        <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border/80 shadow-xs">
+        <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border shadow-xs">
           <div className="flex items-center justify-between text-muted text-[10px] mb-1">
             <span>Low stock</span>
-            <AlertCircle size={11} className="text-amber-500" />
+            <AlertCircle size={11} className="text-amber-600" />
           </div>
           <AnimatePresence mode="wait">
             <motion.p
@@ -118,7 +118,7 @@ export default function DashboardScreen({
               initial={{ opacity: 0, y: 3 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -3 }}
-              className="text-xs sm:text-sm font-jakarta font-extrabold text-amber-700 tabular-nums"
+              className="text-xs sm:text-sm font-mono font-semibold text-amber-700 tabular-nums"
             >
               {stats.lowStock} {stats.lowStock === 1 ? 'item' : 'items'}
             </motion.p>
@@ -127,10 +127,10 @@ export default function DashboardScreen({
         </div>
 
         {/* Expiring Soon */}
-        <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border/80 shadow-xs">
+        <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border shadow-xs">
           <div className="flex items-center justify-between text-muted text-[10px] mb-1">
             <span>Expiring soon</span>
-            <Clock size={11} className="text-red-500" />
+            <Clock size={11} className="text-rose-600" />
           </div>
           <AnimatePresence mode="wait">
             <motion.p
@@ -138,19 +138,19 @@ export default function DashboardScreen({
               initial={{ opacity: 0, y: 3 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -3 }}
-              className="text-xs sm:text-sm font-jakarta font-extrabold text-red-700 tabular-nums"
+              className="text-xs sm:text-sm font-mono font-semibold text-rose-700 tabular-nums"
             >
               {stats.expiring} items
             </motion.p>
           </AnimatePresence>
-          <span className="text-[9px] text-red-600 font-medium">Next 48 hours</span>
+          <span className="text-[9px] text-rose-600 font-medium">Next 48 hours</span>
         </div>
 
         {/* Wastage */}
-        <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border/80 shadow-xs">
+        <div className="p-2 sm:p-2.5 rounded-xl bg-surface border border-border shadow-xs">
           <div className="flex items-center justify-between text-muted text-[10px] mb-1">
             <span>Wastage cost</span>
-            <TrendingDown size={11} className="text-slate-500" />
+            <TrendingDown size={11} className="text-muted" />
           </div>
           <AnimatePresence mode="wait">
             <motion.p
@@ -158,7 +158,7 @@ export default function DashboardScreen({
               initial={{ opacity: 0, y: 3 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -3 }}
-              className="text-xs sm:text-sm font-jakarta font-extrabold text-ink tabular-nums"
+              className="text-xs sm:text-sm font-mono font-semibold text-ink tabular-nums"
             >
               {formatINR(stats.wastage)}
             </motion.p>
@@ -168,9 +168,9 @@ export default function DashboardScreen({
       </div>
 
       {/* Needs Attention List */}
-      <div className="flex-1 rounded-xl bg-surface border border-border/80 p-2 sm:p-2.5 overflow-hidden flex flex-col">
+      <div className="flex-1 rounded-xl bg-surface border border-border p-2 sm:p-2.5 overflow-hidden flex flex-col">
         <div className="flex items-center justify-between mb-1.5 pb-1 border-b border-border/60">
-          <span className="text-[10px] font-jakarta font-bold uppercase tracking-wider text-muted">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-muted">
             Needs Attention ({items.length})
           </span>
           <span className="text-[9px] text-muted">Auto-refreshed</span>
@@ -185,29 +185,29 @@ export default function DashboardScreen({
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 6 }}
                 transition={{ duration: 0.2, delay: idx * 0.05 }}
-                className="flex items-center justify-between p-1.5 rounded-lg bg-slate-50/70 border border-slate-100 hover:border-border transition-colors"
+                className="flex items-center justify-between p-2 rounded-lg bg-[#F5F5F7] border border-border/50 hover:border-border transition-colors"
               >
                 <div className="flex items-center gap-2">
                   <span
-                    className={`w-2 h-2 rounded-full border border-[#1C1B18]/40 ${
-                      it.status === 'expiring' ? 'bg-[#B3412A]' : 'bg-[#8A5A00]'
+                    className={`w-2 h-2 rounded-full ${
+                      it.status === 'expiring' ? 'bg-rose-500' : 'bg-amber-500'
                     }`}
                   />
                   <div>
-                    <p className="font-figtree font-bold text-[11px] text-[#1C1B18]">{it.name}</p>
-                    <p className="text-[9px] text-[#4B4A44]">{it.qty}</p>
+                    <p className="font-medium text-[11px] text-ink">{it.name}</p>
+                    <p className="text-[9px] text-muted font-mono">{it.qty}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[9px] text-[#4B4A44] px-1.5 py-0.5 rounded bg-[#F7F5E4] border border-[#1C1B18]/30 font-medium">
+                  <span className="text-[9px] text-secondary px-1.5 py-0.5 rounded bg-surface border border-border font-medium">
                     {it.outlet}
                   </span>
                   <span
-                    className={`text-[9px] px-1.5 py-0.5 rounded-full font-bold border border-[#1C1B18]/30 ${
+                    className={`text-[9px] px-2 py-0.5 rounded-full font-medium ${
                       it.status === 'expiring'
-                        ? 'bg-[#FAD9C8] text-[#B3412A]'
-                        : 'bg-[#FBEFB4] text-[#8A5A00]'
+                        ? 'bg-rose-50 text-rose-700 border border-rose-200/60'
+                        : 'bg-amber-50 text-amber-700 border border-amber-200/60'
                     }`}
                   >
                     {it.status}

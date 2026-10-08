@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, ArrowRight } from 'lucide-react';
+import { ArrowRight, X } from 'lucide-react';
 import { site } from '../../content/site';
 
 export default function AnnouncementStrip() {
@@ -8,29 +8,33 @@ export default function AnnouncementStrip() {
   if (!site.flags.showAnnouncement || dismissed) return null;
 
   return (
-    <div
-      role="region"
+    <aside
       aria-label="Announcement"
-      className="w-full bg-[#1F4D47] text-[#F6F3E4] text-xs sm:text-sm py-2.5 px-4 relative z-50 flex items-center justify-center font-figtree border-b border-[#1C1B18]/30"
+      className="bg-[#101218] text-[#F5F5F7] px-4 py-2 text-xs font-sans border-b border-[#242834] relative z-50"
     >
-      <div className="flex items-center justify-center gap-2 text-center pr-6 sm:pr-0">
-        <span className="font-medium">{site.announcement.text}</span>
-        <a
-          href={site.announcement.linkHref}
-          className="font-semibold underline underline-offset-4 hover:opacity-85 inline-flex items-center gap-1 shrink-0"
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        <div className="flex-1 text-center sm:text-left flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+          <span className="font-medium text-[#F5F5F7]">
+            {site.announcement.text}
+          </span>
+          <a
+            href={site.announcement.linkHref}
+            className="text-blue-tint hover:underline font-semibold inline-flex items-center gap-1"
+          >
+            <span>{site.announcement.linkText}</span>
+            <ArrowRight size={12} strokeWidth={2} />
+          </a>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setDismissed(true)}
+          aria-label="Dismiss announcement"
+          className="text-[#A7AEBB] hover:text-[#F5F5F7] p-1 rounded transition-colors"
         >
-          <span>{site.announcement.linkText}</span>
-          <ArrowRight size={13} />
-        </a>
+          <X size={14} strokeWidth={1.5} />
+        </button>
       </div>
-      <button
-        type="button"
-        onClick={() => setDismissed(true)}
-        aria-label="Dismiss announcement"
-        className="absolute right-3 sm:right-6 p-1 text-[#F6F3E4]/70 hover:text-[#F6F3E4] transition-colors rounded"
-      >
-        <X size={15} />
-      </button>
-    </div>
+    </aside>
   );
 }

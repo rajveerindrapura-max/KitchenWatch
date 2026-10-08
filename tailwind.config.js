@@ -4,96 +4,72 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Base Warm Palette
-        ivory: '#FFFEF2',
-        paper: '#F7F5E4',
-        'card-warm': '#FFFDF5',
+        // Stripe Meets Apple Neutrals
+        bg: '#FBFBFD',
+        'section-alt': '#F5F5F7',
+        surface: '#FFFFFF',
+        border: '#E4E7EC',
+        hairline: '#EDEFF3',
+
         ink: {
-          DEFAULT: '#1C1B18',
-          secondary: '#4B4A44',
-          muted: '#6B6A62',
+          DEFAULT: '#1D1D1F',
+          secondary: '#4B5563',
+          muted: '#6B7280',
         },
-        'deep-green': '#1F4D47',
-        forest: '#1F4D47',
-        cream: '#F6F3E4',
+        secondary: '#4B5563',
+        muted: '#6B7280',
 
-        // Pastel Accents (Flat fills) + Ink Shades (Text & Icons)
-        lavender: {
-          DEFAULT: '#E9D8FD',
-          ink: '#5B3FA0',
-        },
-        sage: {
-          DEFAULT: '#D9EAD3',
-          ink: '#2F6B3A',
-        },
-        butter: {
-          DEFAULT: '#FBEFB4',
-          ink: '#8A5A00',
-        },
-        peach: {
-          DEFAULT: '#FAD9C8',
-          ink: '#B3412A',
-        },
-        'soft-sky': {
-          DEFAULT: '#D6E8F5',
-          ink: '#1F5C8A',
+        // Dark section
+        dark: {
+          DEFAULT: '#101218',
+          text: '#F5F5F7',
+          secondary: '#A7AEBB',
         },
 
-        // Backward compatibility mappings directed to the warm palette
-        bg: '#FFFEF2',
-        surface: '#FFFDF5',
-        border: '#1C1B18',
-        secondary: '#4B4A44',
-        muted: '#6B6A62',
-        dark: '#1F4D47',
+        // Brand
         blue: {
-          DEFAULT: '#5B3FA0', // lavender ink for actions
-          tint: '#E9D8FD',
+          DEFAULT: '#2F6BFF',
+          hover: '#1F55E0',
+          tint: '#EEF3FF',
         },
-        emerald: {
-          DEFAULT: '#2F6B3A',
-          tint: '#D9EAD3',
+        navy: '#0B2A66',
+
+        // Meaning colors (Product mockups, ledger, status)
+        green: {
+          DEFAULT: '#15803D',
+          tint: '#E8F6EC',
         },
         amber: {
-          DEFAULT: '#8A5A00',
-          tint: '#FBEFB4',
+          DEFAULT: '#B45309',
+          tint: '#FEF3DC',
         },
-        coral: {
-          DEFAULT: '#B3412A',
-          tint: '#FAD9C8',
+        red: {
+          DEFAULT: '#B91C1C',
+          tint: '#FDECEC',
         },
-        sky: {
-          DEFAULT: '#1F5C8A',
-          tint: '#D6E8F5',
+        teal: {
+          DEFAULT: '#0F766E',
+          tint: '#E0F5F2',
         },
         violet: {
-          DEFAULT: '#5B3FA0',
-          tint: '#E9D8FD',
+          DEFAULT: '#6D4AE0',
+          tint: '#F1EDFE',
         },
       },
       fontFamily: {
-        serif: ['Instrument Serif', 'Georgia', 'serif'],
-        sans: ['Figtree', 'system-ui', 'sans-serif'],
-        figtree: ['Figtree', 'system-ui', 'sans-serif'],
-        jakarta: ['Figtree', 'system-ui', 'sans-serif'], // fallback mapping
-      },
-      fontSize: {
-        'hero-mobile': ['44px', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
-        'hero': ['clamp(64px, 7vw, 104px)', { lineHeight: '0.98', letterSpacing: '-0.03em' }],
-        'section': ['clamp(36px, 4.5vw, 64px)', { lineHeight: '1.08', letterSpacing: '-0.02em' }],
-        'xl-body': ['18px', { lineHeight: '1.6' }],
-        'body': ['17px', { lineHeight: '1.6' }],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       borderRadius: {
-        btn: '12px',
-        card: '22px',
+        pill: '9999px',
+        card: '14px',
         panel: '24px',
-        pill: '999px',
       },
       boxShadow: {
-        'hard': '3px 3px 0px #1C1B18',
-        'hard-sm': '2px 2px 0px #1C1B18',
-        'hard-lg': '4px 4px 0px #1C1B18',
+        // Apple & Stripe soft layered depth for floating mockups
+        float: '0 30px 60px -24px rgba(16, 18, 24, 0.22), 0 8px 20px -8px rgba(16, 18, 24, 0.08)',
+        subtle: '0 1px 3px 0 rgba(16, 18, 24, 0.04), 0 1px 2px -1px rgba(16, 18, 24, 0.04)',
+        card: '0 4px 12px 0 rgba(16, 18, 24, 0.05)',
       },
     },
   },

@@ -1,49 +1,36 @@
-# KitchenWatch — Content Confirmation Checklist (CONTENT_TODO.md)
+# KitchenWatch — Content & Founder Confirmation Checklist
 
-This document tracks all placeholder copy, environment endpoints, founder details, and commercial terms in `src/content/site.ts` marked with `confirm: true`.
+This document tracks all copy, links, contact details, and flags marked with `confirm: true` or `TODO` in `src/content/site.ts`. The founder should confirm or update these items before launching publicly.
 
-Before launching publicly, the founder or team must confirm or replace each of the items below. When an item is confirmed, update `src/content/site.ts` and set its `confirm` flag to `false`.
+## 1. Domain & App Routing
+- [ ] **Production Domain:** Confirm whether `kitchenwatch.in` is the final domain.
+- [ ] **App URL (`appUrl`):** Currently set to `https://app.kitchenwatch.in`. Confirm dashboard login/signup URL.
+- [ ] **Booking URL (`bookingUrl`):** Currently set to `https://cal.com/kitchenwatch/demo`. Provide Cal.com or Calendly link.
 
----
+## 2. Customer Contact Channels
+- [ ] **WhatsApp Number (`whatsappNumber`):** Currently set to `919876543210`. Provide verified WhatsApp business phone number.
+- [ ] **Contact Email (`email`):** Currently set to `hello@kitchenwatch.in`.
+- [ ] **Support Phone (`phone`):** Currently placeholder `+91 98765 43210`.
+- [ ] **Operating Address (`address`):** Add registered office or business address in India for legal footer requirements.
 
-## 1. External URLs & Environment Endpoints (`site.config`)
-| Item | Current Value | Required Action / Confirmation |
-| :--- | :--- | :--- |
-| **WhatsApp Business Number** | `919876543210` | Replace with actual business WhatsApp number (with country code `91`, without `+` or spaces). |
-| **Demo Booking Link** | `https://cal.com/kitchenwatch/demo` | Connect founder's Cal.com or Calendly booking link for 15-minute screen share. |
-| **Web App URL** | `https://app.kitchenwatch.in` | Verify production domain for dashboard sign-in (`/login`) and trial signup (`/signup`). |
-| **Lead Webhook Endpoint** | `/api/lead` | Configure webhook URL (Zapier, Make, Slack, or CRM webhook) in `.env` as `VITE_LEAD_ENDPOINT`. |
+## 3. Commercials & Pricing Plans
+- [ ] **Starter Tier:** Currently ₹2,499/mo (₹1,999/mo yearly). Confirm pricing for 1-2 outlets.
+- [ ] **Growth Tier (Recommended):** Currently ₹4,999/mo (₹3,999/mo yearly). Confirm pricing for up to 6 outlets.
+- [ ] **Business Tier:** Currently ₹8,999/mo (₹7,499/mo yearly). Confirm pricing for 7+ outlets.
+- [ ] **GST Treatment:** Confirm that GST is charged extra on all invoices.
 
----
+## 4. Founder & Pilot Program
+- [ ] **Founder Name:** Currently placeholder in `site.ts`. Set `flags.showFounder: true` once name, bio, and photo are provided.
+- [ ] **Founder Bio & Photo:** Place founder portrait at `/public/founder.jpg`.
+- [ ] **Founder Video (Optional):** 30–60 second video explaining why KitchenWatch was built (`flags.showFounderVideo: true`).
+- [ ] **Pilot Terms:** Confirm pilot benefits (free setup, direct founder line, locked lifetime rate).
 
-## 2. Founder Identity & Social Proof Flags (`site.flags`)
-| Item | Current Flag | Required Action |
-| :--- | :--- | :--- |
-| **Founder Name & Bio** | `showFounder: false` | Set to `true` in `site.flags` after providing real founder full name, role, bio, and headshot in `public/founder-placeholder.jpg`. *(Auto-hides fake names when false).* |
-| **Founder Video** | `showFounderVideo: false` | Set to `true` when a 30-60 second Loom / YouTube walkthrough is recorded. |
-| **Customer Logos** | `showCustomerLogos: false` | Kept `false` until pilot customers provide formal logo permission. *(Never display fake logos).* |
-| **Customer Testimonials** | `showTestimonials: false` | Kept `false` until verified pilot reviews are gathered. *(Never display fake reviews).* |
+## 5. Technical & Operational Claims
+- [ ] **Response Time Promise:** Currently "Replies within 2 hours during kitchen operating hours". Confirm SLA.
+- [ ] **Offline Mode Sync:** FAQ honestly discloses that mobile phone internet is needed to sync, with offline queuing planned.
+- [ ] **Lead Endpoint (`leadEndpoint`):** Connect `/api/lead` to Google Sheets, CRM, or email relay.
 
----
-
-## 3. Commercial Pricing & Terms (`site.pricing`)
-| Plan Tier | Outlets | Monthly (INR) | Yearly (INR) | Confirmation Needed |
-| :--- | :--- | :--- | :--- | :--- |
-| **Starter** | 1 to 2 outlets | ₹2,499 | ₹1,999/mo | Confirm base subscription pricing & tax inclusion (GST extra). |
-| **Growth (Recommended)** | Up to 6 outlets | ₹4,999 | ₹3,999/mo | Confirm recommended tier pricing for multi-outlet restaurants. |
-| **Business** | 7+ outlets | ₹8,999 | ₹7,499/mo | Confirm large group tier pricing. |
-
----
-
-## 4. Pilot Program Commitments (`site.pilot`)
-- [ ] Confirm whether all early pilot partners receive **free 1-on-1 setup assistance**.
-- [ ] Confirm availability of **direct WhatsApp founder communication**.
-- [ ] Confirm **founding-partner locked lifetime pricing**.
-
----
-
-## 5. Contact Details & Legal Disclaimers (`site.footer`)
-- [ ] **Registered Business Address**: Provide legal entity name and registered office address (e.g., Bengaluru / Mumbai).
-- [ ] **Support Email**: Confirm official inbound email address (currently `hello@kitchenwatch.in`).
-- [ ] **Support Phone**: Confirm official inbound helpline number.
-- [ ] **Legal Review**: Complete formal legal counsel review of `/privacy`, `/terms`, and `/refund-policy` before removing the `Draft Document` disclaimer banner.
+## 6. Legal & Regulatory Review
+- [ ] **Privacy Policy:** Review `src/pages/LegalPage.tsx` with a legal professional.
+- [ ] **Terms of Service:** Review SaaS subscription and limitation of liability terms.
+- [ ] **Refund Policy:** Confirm 14-day free trial policy and payment cancellation terms.

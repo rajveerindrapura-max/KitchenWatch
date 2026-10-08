@@ -26,10 +26,12 @@ interface LeadFormProps {
   onSuccess?: () => void;
 }
 
-export default function LeadForm({ source = 'homepage', onSuccess }: LeadFormProps) {
+export default function LeadForm({ theme = 'dark', source = 'homepage', onSuccess }: LeadFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const isDark = theme === 'dark';
 
   const {
     register,
@@ -84,13 +86,17 @@ export default function LeadForm({ source = 'homepage', onSuccess }: LeadFormPro
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="p-8 rounded-2xl text-center bg-sage border-1.5 border-ink text-ink shadow-hard-sm"
+        className={`p-8 rounded-2xl text-center border ${
+          isDark
+            ? 'bg-white/5 border-white/15 text-white'
+            : 'bg-emerald-50 border-emerald-200 text-ink shadow-subtle'
+        }`}
       >
-        <div className="w-14 h-14 rounded-full bg-card border border-ink/20 text-sage-ink mx-auto flex items-center justify-center mb-4">
-          <CheckCircle2 size={32} />
+        <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 mx-auto flex items-center justify-center mb-4">
+          <CheckCircle2 size={28} />
         </div>
-        <h3 className="font-serif text-2xl font-normal text-ink mb-2">Demo Request Received</h3>
-        <p className="text-sm text-secondary max-w-md mx-auto mb-6 leading-relaxed">
+        <h3 className="font-sans font-semibold text-xl text-white mb-2">Demo Request Received</h3>
+        <p className="text-sm text-slate-300 max-w-md mx-auto mb-6 leading-relaxed">
           {site.cta.responsePromise}
         </p>
         <div className="inline-flex gap-3">
@@ -100,19 +106,22 @@ export default function LeadForm({ source = 'homepage', onSuccess }: LeadFormPro
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-5 py-2.5 rounded-xl bg-card text-ink text-xs font-bold border border-ink/30 hover:bg-paper transition-all shadow-hard-sm"
+            className="px-5 py-2.5 rounded-full bg-white text-ink text-xs font-semibold hover:bg-slate-100 transition-colors shadow-xs"
           >
-            Open WhatsApp chat now
+            Open WhatsApp chat now &rarr;
           </a>
         </div>
       </motion.div>
     );
   }
 
-  const inputStyles =
-    'w-full rounded-xl px-3.5 py-3 text-sm bg-paper border-1.5 border-ink/40 text-ink placeholder:text-muted focus:outline-none focus:border-ink focus:bg-card transition-all';
+  const inputStyles = isDark
+    ? 'w-full rounded-xl px-3.5 py-3 text-sm bg-white/5 border border-white/15 text-white placeholder:text-slate-500 focus:outline-none focus:border-blue focus:bg-white/10 transition-colors'
+    : 'w-full rounded-xl px-3.5 py-3 text-sm bg-surface border border-border text-ink placeholder:text-muted focus:outline-none focus:border-blue transition-colors shadow-xs';
 
-  const labelStyles = 'block text-xs font-bold uppercase tracking-wider text-muted mb-1.5';
+  const labelStyles = `block text-xs font-medium uppercase tracking-wider mb-1.5 ${
+    isDark ? 'text-slate-300' : 'text-muted'
+  }`;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left" noValidate>
@@ -136,7 +145,7 @@ export default function LeadForm({ source = 'homepage', onSuccess }: LeadFormPro
             {...register('name')}
           />
           {errors.name && (
-            <p className="text-peach-ink text-xs mt-1 flex items-center gap-1 font-medium">
+            <p className="text-rose-400 text-xs mt-1 flex items-center gap-1 font-medium">
               <AlertCircle size={11} /> {errors.name.message}
             </p>
           )}
@@ -154,7 +163,7 @@ export default function LeadForm({ source = 'homepage', onSuccess }: LeadFormPro
             {...register('business')}
           />
           {errors.business && (
-            <p className="text-peach-ink text-xs mt-1 flex items-center gap-1 font-medium">
+            <p className="text-rose-400 text-xs mt-1 flex items-center gap-1 font-medium">
               <AlertCircle size={11} /> {errors.business.message}
             </p>
           )}
@@ -168,13 +177,13 @@ export default function LeadForm({ source = 'homepage', onSuccess }: LeadFormPro
             Number of Outlets *
           </label>
           <select id="lead-outlets" className={inputStyles} {...register('outlets')}>
-            <option value="1">1 outlet</option>
-            <option value="2-3">2 to 3 outlets</option>
-            <option value="4-6">4 to 6 outlets</option>
-            <option value="7+">7 or more outlets</option>
+            <option value="1" className={isDark ? 'bg-slate-900 text-white' : ''}>1 outlet</option>
+            <option value="2-3" className={isDark ? 'bg-slate-900 text-white' : ''}>2 to 3 outlets</option>
+            <option value="4-6" className={isDark ? 'bg-slate-900 text-white' : ''}>4 to 6 outlets</option>
+            <option value="7+" className={isDark ? 'bg-slate-900 text-white' : ''}>7 or more outlets</option>
           </select>
           {errors.outlets && (
-            <p className="text-peach-ink text-xs mt-1 flex items-center gap-1 font-medium">
+            <p className="text-rose-400 text-xs mt-1 flex items-center gap-1 font-medium">
               <AlertCircle size={11} /> {errors.outlets.message}
             </p>
           )}
@@ -192,7 +201,7 @@ export default function LeadForm({ source = 'homepage', onSuccess }: LeadFormPro
             {...register('phone')}
           />
           {errors.phone && (
-            <p className="text-peach-ink text-xs mt-1 flex items-center gap-1 font-medium">
+            <p className="text-rose-400 text-xs mt-1 flex items-center gap-1 font-medium">
               <AlertCircle size={11} /> {errors.phone.message}
             </p>
           )}
@@ -212,24 +221,24 @@ export default function LeadForm({ source = 'homepage', onSuccess }: LeadFormPro
           {...register('email')}
         />
         {errors.email && (
-          <p className="text-peach-ink text-xs mt-1 flex items-center gap-1 font-medium">
+          <p className="text-rose-400 text-xs mt-1 flex items-center gap-1 font-medium">
             <AlertCircle size={11} /> {errors.email.message}
           </p>
         )}
       </div>
 
       {submitError && (
-        <div className="p-3 rounded-xl bg-peach text-peach-ink text-xs border border-ink/20 flex items-center gap-2">
+        <div className="p-3 rounded-xl bg-rose-500/10 text-rose-300 text-xs border border-rose-500/20 flex items-center gap-2">
           <AlertCircle size={14} />
           <span>{submitError}</span>
         </div>
       )}
 
-      {/* Submit button */}
+      {/* Blue Pill Submit button */}
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full py-3.5 px-6 rounded-xl bg-lavender text-ink font-semibold text-sm border-2 border-ink shadow-hard-sm hover:shadow-hard transition-all flex items-center justify-center gap-2 min-h-[44px] disabled:opacity-70 cursor-pointer active:translate-y-0.5"
+        className="w-full py-3.5 px-6 rounded-full bg-blue hover:bg-blueHover text-white font-medium text-sm shadow-xs transition-colors flex items-center justify-center gap-2 min-h-[44px] disabled:opacity-70 cursor-pointer active:scale-[0.99]"
       >
         {isSubmitting ? (
           <>

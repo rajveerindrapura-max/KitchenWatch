@@ -6,42 +6,42 @@ import TiltCard from '../ui/TiltCard';
 
 function DashboardMiniVisual() {
   const outlets = [
-    { name: 'Outlet 1', val: '₹1,42,000', pct: 80 },
-    { name: 'Outlet 2', val: '₹1,18,000', pct: 65 },
-    { name: 'Outlet 3', val: '₹88,500', pct: 50 },
+    { name: 'Outlet 1 (Main Kitchen)', val: '₹1,42,000', pct: 80 },
+    { name: 'Outlet 2 (Express Cafe)', val: '₹1,18,000', pct: 65 },
+    { name: 'Outlet 3 (Cloud Unit)', val: '₹88,500', pct: 50 },
   ];
 
   return (
-    <div className="w-full h-full flex flex-col justify-between p-4 sm:p-5 rounded-card bg-[#FFFDF5] border-[1.5px] border-[#1C1B18] shadow-hard-sm">
+    <div className="w-full h-full flex flex-col justify-between p-4 sm:p-5 rounded-xl bg-[#F5F5F7] border border-hairline">
       <div>
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between mb-3">
           <div>
-            <span className="text-[10px] font-figtree font-bold uppercase tracking-wider text-[#6B6A62] block">
+            <span className="text-[10px] font-medium uppercase tracking-wider text-muted block">
               Stock Value by Outlet
             </span>
-            <span className="text-base sm:text-lg font-figtree font-extrabold text-[#1C1B18] tabular-nums">
+            <span className="text-lg sm:text-xl font-mono font-bold text-ink tabular-nums">
               ₹3,48,500
             </span>
           </div>
-          <span className="text-[9px] font-bold text-[#1F5C8A] bg-[#D6E8F5] px-2 py-0.5 rounded-full border border-[#1C1B18]/30">
+          <span className="text-[10px] font-medium text-blue bg-blue-tint px-2.5 py-0.5 rounded-full border border-blue/20">
             3 outlets active
           </span>
         </div>
 
-        <div className="space-y-2.5 my-2">
+        <div className="space-y-3 my-3">
           {outlets.map((item, i) => (
             <div key={item.name} className="space-y-1">
-              <div className="flex items-center justify-between text-[11px] font-figtree">
-                <span className="font-bold text-[#1C1B18]">{item.name}</span>
-                <span className="font-extrabold text-[#1C1B18] tabular-nums">{item.val}</span>
+              <div className="flex items-center justify-between text-xs font-medium">
+                <span className="text-secondary">{item.name}</span>
+                <span className="text-ink font-mono font-semibold tabular-nums">{item.val}</span>
               </div>
-              <div className="w-full bg-[#E5E0CB] rounded-full h-2 overflow-hidden border border-[#1C1B18]/20">
+              <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   whileInView={{ width: `${item.pct}%` }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.9, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
-                  className="h-full rounded-full bg-[#1F5C8A]"
+                  className="h-full rounded-full bg-blue"
                 />
               </div>
             </div>
@@ -49,10 +49,10 @@ function DashboardMiniVisual() {
         </div>
       </div>
 
-      <div className="pt-2 border-t border-[#1C1B18]/15 flex items-center justify-between text-[10px] text-[#4B4A44] font-figtree">
+      <div className="pt-2.5 border-t border-hairline flex items-center justify-between text-[11px] text-muted">
         <span>142 total items tracked</span>
-        <span className="text-[#2F6B3A] font-bold bg-[#D9EAD3] px-1.5 py-0.5 rounded border border-[#1C1B18]/20">
-          Sync verified
+        <span className="text-emerald-700 font-medium bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">
+          Sync active
         </span>
       </div>
     </div>
@@ -61,20 +61,20 @@ function DashboardMiniVisual() {
 
 function LedgerMiniVisual() {
   const entries = [
-    { role: 'Worker', action: 'Used Tomatoes', qty: '-2 kg', color: '#8A5A00' },
-    { role: 'Manager', action: 'Received Cooking oil', qty: '+5 L', color: '#2F6B3A' },
-    { role: 'Worker', action: 'Wasted Bread', qty: '-8 pcs', color: '#B3412A' },
+    { role: 'Employee', action: 'Used Tomatoes', qty: '-2 kg', color: 'text-amber-600', dot: 'bg-amber-500' },
+    { role: 'Manager', action: 'Received Cooking oil', qty: '+5 L', color: 'text-emerald-700', dot: 'bg-emerald-500' },
+    { role: 'Employee', action: 'Wasted Bread', qty: '-8 pcs', color: 'text-rose-600', dot: 'bg-rose-500' },
   ];
   return (
-    <div className="w-full space-y-1.5">
+    <div className="w-full space-y-2">
       {entries.map((e, i) => (
-        <div key={i} className="flex items-center gap-2 text-[11px] p-2 rounded-btn bg-[#FFFDF5] border border-[#1C1B18]/30 shadow-hard-sm">
-          <div className="w-2 h-2 rounded-full shrink-0 border border-[#1C1B18]/40" style={{ background: e.color }} />
-          <span className="font-bold text-[#1C1B18] text-[10px] px-1.5 py-0.5 rounded bg-[#F7F5E4] border border-[#1C1B18]/30">
+        <div key={i} className="flex items-center gap-2.5 text-xs p-2.5 rounded-xl bg-[#F5F5F7] border border-hairline">
+          <div className={`w-2 h-2 rounded-full shrink-0 ${e.dot}`} />
+          <span className="font-medium text-ink text-[10px] px-1.5 py-0.5 rounded bg-surface border border-border">
             {e.role}
           </span>
-          <span className="text-[#4B4A44] text-[11px] truncate font-medium">{e.action}</span>
-          <span className="ml-auto font-bold text-[11px] tabular-nums" style={{ color: e.color }}>
+          <span className="text-secondary text-xs truncate">{e.action}</span>
+          <span className={`ml-auto font-mono font-semibold text-xs tabular-nums ${e.color}`}>
             {e.qty}
           </span>
         </div>
@@ -85,18 +85,18 @@ function LedgerMiniVisual() {
 
 function AlertMiniVisual() {
   return (
-    <div className="flex items-center gap-3 p-2.5 rounded-btn bg-[#FFFDF5] border border-[#1C1B18]/30 shadow-hard-sm w-full">
+    <div className="flex items-center gap-3 p-3 rounded-xl bg-[#F5F5F7] border border-hairline w-full">
       <motion.div
-        animate={{ scale: [1, 1.1, 1] }}
+        animate={{ scale: [1, 1.08, 1] }}
         transition={{ repeat: Infinity, duration: 2.2, ease: [0.22, 1, 0.36, 1] }}
-        className="w-8 h-8 rounded-full bg-[#FBEFB4] border border-[#1C1B18] flex items-center justify-center shrink-0"
+        className="w-8 h-8 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0"
       >
-        <div className="w-3 h-3 rounded-full bg-[#8A5A00]" />
+        <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
       </motion.div>
-      <div className="min-w-0 font-figtree">
-        <p className="text-xs font-bold text-[#1C1B18]">Low-stock warning</p>
-        <p className="text-[11px] text-[#8A5A00] leading-tight truncate font-medium">
-          Cooking oil at Outlet 2 is low (4 L left)
+      <div className="min-w-0">
+        <p className="text-xs font-semibold text-ink">Low-stock warning</p>
+        <p className="text-[11px] text-amber-700 leading-tight truncate font-medium">
+          Cooking oil at Outlet 2 (4 L left)
         </p>
       </div>
     </div>
@@ -105,20 +105,20 @@ function AlertMiniVisual() {
 
 function ExpiryMiniVisual() {
   return (
-    <div className="space-y-1.5 w-full bg-[#FFFDF5] p-2.5 rounded-btn border border-[#1C1B18]/30 shadow-hard-sm">
+    <div className="space-y-2 w-full bg-[#F5F5F7] p-3 rounded-xl border border-hairline">
       {[
-        { label: 'Milk (2 days left)', pct: 28, color: '#B3412A' },
-        { label: 'Chicken (4 days left)', pct: 52, color: '#8A5A00' },
-        { label: 'Paneer (8 days left)', pct: 85, color: '#2F6B3A' },
+        { label: 'Milk (2 days left)', pct: 28, color: 'bg-rose-500' },
+        { label: 'Chicken (4 days left)', pct: 52, color: 'bg-amber-500' },
+        { label: 'Paneer (8 days left)', pct: 85, color: 'bg-emerald-500' },
       ].map((item, i) => (
-        <div key={i} className="space-y-0.5 font-figtree">
-          <div className="flex justify-between text-[10px] text-[#4B4A44]">
-            <span className="font-semibold">{item.label}</span>
+        <div key={i} className="space-y-1">
+          <div className="flex justify-between text-[10px] text-muted font-medium">
+            <span>{item.label}</span>
           </div>
-          <div className="h-1.5 w-full bg-[#E5E0CB] rounded-full overflow-hidden border border-[#1C1B18]/20">
+          <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
             <div
-              className="h-full rounded-full"
-              style={{ width: `${item.pct}%`, background: item.color }}
+              className={`h-full rounded-full ${item.color}`}
+              style={{ width: `${item.pct}%` }}
             />
           </div>
         </div>
@@ -129,25 +129,25 @@ function ExpiryMiniVisual() {
 
 function TransferMiniVisual() {
   return (
-    <div className="flex items-center gap-2.5 w-full p-2.5 rounded-btn bg-[#FFFDF5] border border-[#1C1B18]/30 shadow-hard-sm">
+    <div className="flex items-center gap-3 w-full p-3 rounded-xl bg-[#F5F5F7] border border-hairline">
       <div className="flex flex-col items-center gap-1 shrink-0">
-        <div className="w-7 h-7 rounded-md bg-[#D6E8F5] border border-[#1C1B18] flex items-center justify-center">
-          <span className="text-[#1F5C8A] text-[10px] font-bold">O-1</span>
+        <div className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center shadow-xs">
+          <span className="text-teal-700 text-xs font-semibold">O-1</span>
         </div>
-        <span className="text-[9px] text-[#4B4A44] font-bold">Warehouse</span>
+        <span className="text-[10px] text-muted">Warehouse</span>
       </div>
-      <div className="flex-1 relative h-1.5 bg-[#E5E0CB] rounded-full overflow-visible border border-[#1C1B18]/20">
+      <div className="flex-1 relative h-1 bg-slate-200 rounded-full overflow-visible">
         <motion.div
-          className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#1F5C8A] border border-[#1C1B18]"
+          className="absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-teal-600 shadow-xs"
           animate={{ left: ['0%', '85%'] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: [0.22, 1, 0.36, 1], repeatDelay: 0.4 }}
         />
       </div>
       <div className="flex flex-col items-center gap-1 shrink-0">
-        <div className="w-7 h-7 rounded-md bg-[#D6E8F5] border border-[#1C1B18] flex items-center justify-center">
-          <span className="text-[#1F5C8A] text-[10px] font-bold">O-2</span>
+        <div className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center shadow-xs">
+          <span className="text-teal-700 text-xs font-semibold">O-2</span>
         </div>
-        <span className="text-[9px] text-[#4B4A44] font-bold">Branch</span>
+        <span className="text-[10px] text-muted">Branch</span>
       </div>
     </div>
   );
@@ -155,31 +155,31 @@ function TransferMiniVisual() {
 
 function WastageMiniVisual() {
   return (
-    <div className="text-center w-full p-2.5 rounded-btn bg-[#FFFDF5] border border-[#1C1B18]/30 shadow-hard-sm">
+    <div className="text-center w-full p-3 rounded-xl bg-[#F5F5F7] border border-hairline">
       <motion.div
         animate={{ scale: [1, 1.03, 1] }}
         transition={{ repeat: Infinity, duration: 2.5, ease: [0.22, 1, 0.36, 1] }}
-        className="text-xl font-figtree font-extrabold text-[#B3412A] tabular-nums"
+        className="text-xl font-mono font-bold text-rose-600 tabular-nums"
       >
         ₹4,200
       </motion.div>
-      <p className="text-[10px] text-[#4B4A44] font-medium mt-0.5">Logged wastage this month</p>
+      <p className="text-[10px] text-muted font-medium mt-0.5">Logged wastage this month</p>
     </div>
   );
 }
 
 function RolesMiniVisual() {
   const roles = [
-    { label: 'Owner', desc: 'Full control', bg: 'bg-[#E9D8FD] text-[#5B3FA0]' },
-    { label: 'Manager', desc: 'Outlet level', bg: 'bg-[#D6E8F5] text-[#1F5C8A]' },
-    { label: 'Worker', desc: 'Fast updates', bg: 'bg-[#F7F5E4] text-[#1C1B18]' },
+    { label: 'Owner', desc: 'Full control', bg: 'bg-blue-tint text-blue border-blue/20' },
+    { label: 'Manager', desc: 'Outlet level', bg: 'bg-teal-50 text-teal-700 border-teal-200/60' },
+    { label: 'Employee', desc: 'Fast updates', bg: 'bg-slate-100 text-slate-700 border-slate-200' },
   ];
   return (
-    <div className="flex gap-1.5 flex-wrap w-full font-figtree">
+    <div className="flex gap-1.5 flex-wrap w-full">
       {roles.map((r) => (
         <div
           key={r.label}
-          className={`px-2 py-1 rounded-md text-[10px] font-bold border border-[#1C1B18]/40 shadow-hard-sm ${r.bg}`}
+          className={`px-2.5 py-1 rounded-md text-[11px] font-medium border ${r.bg}`}
         >
           {r.label}
         </div>
@@ -190,18 +190,18 @@ function RolesMiniVisual() {
 
 function QRMiniVisual() {
   return (
-    <div className="w-full flex items-center justify-center p-2 rounded-btn bg-[#FFFDF5] border border-[#1C1B18]/30 shadow-hard-sm">
-      <svg width="44" height="44" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-        <rect x="8" y="8" width="20" height="20" rx="2" stroke="#1C1B18" strokeWidth="2.5" />
-        <rect x="14" y="14" width="8" height="8" rx="1" fill="#1C1B18" />
-        <rect x="36" y="8" width="20" height="20" rx="2" stroke="#1C1B18" strokeWidth="2.5" />
-        <rect x="42" y="14" width="8" height="8" rx="1" fill="#1C1B18" />
-        <rect x="8" y="36" width="20" height="20" rx="2" stroke="#1C1B18" strokeWidth="2.5" />
-        <rect x="14" y="42" width="8" height="8" rx="1" fill="#1C1B18" />
-        <rect x="36" y="36" width="6" height="6" rx="1" fill="#1C1B18" />
-        <rect x="46" y="36" width="6" height="6" rx="1" fill="#1C1B18" />
-        <rect x="36" y="46" width="6" height="6" rx="1" fill="#1C1B18" />
-        <rect x="46" y="46" width="6" height="6" rx="1" fill="#1C1B18" />
+    <div className="w-full flex items-center justify-center p-3 rounded-xl bg-[#F5F5F7] border border-hairline">
+      <svg width="40" height="40" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <rect x="8" y="8" width="20" height="20" rx="3" stroke="#1D1D1F" strokeWidth="2.5" />
+        <rect x="14" y="14" width="8" height="8" rx="1.5" fill="#1D1D1F" />
+        <rect x="36" y="8" width="20" height="20" rx="3" stroke="#1D1D1F" strokeWidth="2.5" />
+        <rect x="42" y="14" width="8" height="8" rx="1.5" fill="#1D1D1F" />
+        <rect x="8" y="36" width="20" height="20" rx="3" stroke="#1D1D1F" strokeWidth="2.5" />
+        <rect x="14" y="42" width="8" height="8" rx="1.5" fill="#1D1D1F" />
+        <rect x="36" y="36" width="6" height="6" rx="1" fill="#1D1D1F" />
+        <rect x="46" y="36" width="6" height="6" rx="1" fill="#1D1D1F" />
+        <rect x="36" y="46" width="6" height="6" rx="1" fill="#1D1D1F" />
+        <rect x="46" y="46" width="6" height="6" rx="1" fill="#1D1D1F" />
       </svg>
     </div>
   );
@@ -218,17 +218,6 @@ const miniVisuals: Record<string, React.ReactNode> = {
   qr: <QRMiniVisual />,
 };
 
-const tileBgStyles: Record<string, string> = {
-  dashboard: 'bg-[#D9EAD3]', // Stock value -> sage
-  ledger: 'bg-[#F7F5E4]', // Ledger -> paper
-  alerts: 'bg-[#FBEFB4]', // Low stock -> butter
-  expiry: 'bg-[#FBEFB4]', // Expiry -> butter
-  transfers: 'bg-[#D6E8F5]', // Transfers -> sky
-  wastage: 'bg-[#FAD9C8]', // Wastage -> peach
-  roles: 'bg-[#E9D8FD]', // Roles -> lavender
-  qr: 'bg-[#F7F5E4]', // QR -> paper
-};
-
 const sizeClasses: Record<string, string> = {
   large: 'md:col-span-2 md:row-span-2',
   medium: 'md:col-span-2',
@@ -237,46 +226,46 @@ const sizeClasses: Record<string, string> = {
 
 export default function BentoGrid() {
   return (
-    <section id="features" className="px-4 sm:px-6 py-20 md:py-28 bg-[#FFFEF2] border-b border-[#1C1B18]/15">
+    <section id="features" className="px-4 sm:px-6 py-20 md:py-28 bg-[#FBFBFD] border-b border-hairline">
       <div className="max-w-7xl mx-auto">
         {/* Heading */}
         <Reveal>
           <div className="mb-12 md:mb-16 max-w-3xl text-center md:text-left">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D9EAD3] border-[1.5px] border-[#1C1B18] text-[#2F6B3A] font-figtree font-bold text-xs tracking-wider uppercase mb-3 shadow-hard-sm">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-tint border border-blue/20 text-blue font-sans font-medium text-xs tracking-wide uppercase mb-3">
               Operational Toolkit
             </span>
             <h2
-              className="font-serif text-[#1C1B18] mb-3"
-              style={{ fontSize: 'clamp(32px, 4.5vw, 56px)' }}
+              className="font-sans font-semibold text-ink tracking-[-0.035em] mb-3"
+              style={{ fontSize: 'clamp(32px, 4.5vw, 54px)' }}
             >
               {site.features.heading}
             </h2>
-            <p className="text-base sm:text-lg text-[#4B4A44] font-figtree">{site.features.subheading}</p>
+            <p className="text-base sm:text-lg text-secondary">{site.features.subheading}</p>
           </div>
         </Reveal>
 
-        {/* Grid */}
+        {/* Bento Grid with White Surface Cards and 1px borders */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5 auto-rows-[minmax(190px,auto)]">
           {site.features.tiles.map((tile, i) => (
             <Reveal key={tile.id} delay={i * 0.04} className={sizeClasses[tile.size]}>
-              <TiltCard className={`h-full rounded-card border-[1.5px] border-[#1C1B18] ${tileBgStyles[tile.id] ?? 'bg-[#FFFDF5]'} shadow-hard-sm hover:shadow-hard transition-all`}>
+              <TiltCard className="h-full rounded-2xl border border-border bg-surface shadow-subtle hover:shadow-float transition-all duration-300">
                 <div className="h-full flex flex-col justify-between p-5 md:p-6">
                   {/* Mini visual */}
-                  <div className="flex-1 flex items-center justify-start mb-3 min-h-[90px] w-full">
+                  <div className="flex-1 flex items-center justify-start mb-4 min-h-[90px] w-full">
                     {miniVisuals[tile.id]}
                   </div>
 
                   {/* Tile copy */}
                   <div>
                     {'badge' in tile && tile.badge && (
-                      <span className="inline-block mb-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-figtree font-bold bg-[#FFFEF2] text-[#1C1B18] border border-[#1C1B18]">
+                      <span className="inline-block mb-2 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[#F5F5F7] text-secondary border border-border">
                         {tile.badge}
                       </span>
                     )}
-                    <h3 className="font-serif text-[#1C1B18] text-xl sm:text-2xl mb-1">
+                    <h3 className="font-sans font-semibold text-ink text-lg sm:text-xl tracking-tight mb-1">
                       {tile.title}
                     </h3>
-                    <p className="text-xs sm:text-[14px] text-[#4B4A44] leading-relaxed font-figtree">
+                    <p className="text-xs sm:text-[13px] text-secondary leading-relaxed">
                       {tile.desc}
                     </p>
                   </div>

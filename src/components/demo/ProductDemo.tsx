@@ -14,7 +14,7 @@ import LaptopFrame from './LaptopFrame';
 import MiniPhoneFrame from './MiniPhoneFrame';
 import DashboardScreen from './DashboardScreen';
 import TransferScreen from './TransferScreen';
-import WorkerScreen from './WorkerScreen';
+import EmployeeScreen from './EmployeeScreen';
 import ActivityScreen from './ActivityScreen';
 import AnimatedCursor from './AnimatedCursor';
 
@@ -32,13 +32,13 @@ export default function ProductDemo() {
 
   // Scripted phase state for Scenario 2 & 3
   const [transferPhase, setTransferPhase] = useState<'idle' | 'stepped' | 'confirmed' | 'recorded'>('idle');
-  const [workerPhase, setWorkerPhase] = useState<'idle' | 'stepped' | 'updated' | 'confirmed'>('idle');
+  const [employeePhase, setEmployeePhase] = useState<'idle' | 'stepped' | 'updated' | 'confirmed'>('idle');
 
   // Animated cursor state (for scenario 2)
   const [cursorPos, setCursorPos] = useState({ x: 40, y: 40, clicking: false, visible: false });
 
-  // Flat presentation (no 3D tilt per eye-comfort rules)
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  // Subtle 3D tilt (max 3-4° for Apple-like gentle perspective)
+  const [tilt, setTilt] = useState({ x: 2, y: -4 });
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<HTMLDivElement>(null);
 
@@ -59,11 +59,11 @@ export default function ProductDemo() {
 
       if (idx === 0) {
         setTransferPhase('idle');
-        setWorkerPhase('idle');
+        setEmployeePhase('idle');
         setCursorPos({ x: 40, y: 40, clicking: false, visible: false });
       } else if (idx === 1) {
         setTransferPhase(shouldReduce ? 'recorded' : 'idle');
-        setWorkerPhase('idle');
+        setEmployeePhase('idle');
         setCursorPos(
           shouldReduce
             ? { x: 0, y: 0, clicking: false, visible: false }
@@ -71,7 +71,7 @@ export default function ProductDemo() {
         );
       } else if (idx === 2) {
         setTransferPhase('idle');
-        setWorkerPhase(shouldReduce ? 'confirmed' : 'idle');
+        setEmployeePhase(shouldReduce ? 'confirmed' : 'idle');
         setCursorPos({ x: 0, y: 0, clicking: false, visible: false });
       }
     },
@@ -98,7 +98,11 @@ export default function ProductDemo() {
   const handleUserActivity = useCallback(() => {
     if (shouldReduce) return;
     setIsPlaying(false);
-    if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
+
+    if (inactivityTimerRef.current) {
+      clearTimeout(inactivityTimerRef.current);
+    }
+
     inactivityTimerRef.current = setTimeout(() => {
       if (!isHoveredRef.current && !isOffscreenRef.current) {
         setIsPlaying(true);
@@ -107,44 +111,42 @@ export default function ProductDemo() {
     }, RESUME_DELAY);
   }, [shouldReduce]);
 
-  // Main animation / progress loop
+  // Progress loop & scripted events
   useEffect(() => {
-    if (!isPlaying || shouldReduce) {
-      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
-      return;
-    }
+    if (!isPlaying || shouldReduce) return;
+
+    progressStartTimeRef.current = Date.now() - progress * SCENARIO_DURATION;
 
     const tick = () => {
-      const now = Date.now();
-      const elapsed = now - progressStartTimeRef.current;
+      const elapsed = Date.now() - progressStartTimeRef.current;
       const currentProgress = Math.min(1, elapsed / SCENARIO_DURATION);
       setProgress(currentProgress);
 
-      // Scripted sequence for Scenario 2 (Transfers)
+      // Scenario 2 scripted phases
       if (activeScenarioIndex === 1) {
-        if (currentProgress < 0.25) {
-          setCursorPos({ x: 120, y: 140, clicking: false, visible: true });
-          setTransferPhase('idle');
-        } else if (currentProgress < 0.5) {
-          setCursorPos({ x: 210, y: 190, clicking: currentProgress > 0.35 && currentProgress < 0.45, visible: true });
-          if (currentProgress > 0.4) setTransferPhase('stepped');
-        } else if (currentProgress < 0.75) {
-          setCursorPos({ x: 380, y: 190, clicking: currentProgress > 0.65 && currentProgress < 0.72, visible: true });
-          if (currentProgress > 0.68) setTransferPhase('confirmed');
-        } else {
-          setCursorPos({ x: 380, y: 260, clicking: false, visible: false });
+        if (currentProgress >= 0.25 && currentProgress < 0.5) {
+          setCursorPos({ x: 65, y: 72, clicking: false, visible: true });
+        } else if (currentProgress >= 0.5 && currentProgress < 0.75) {
+          setCursorPos({ x: 65, y: 72, clicking: true, visible: true });
+          setTransferPhase('confirmed');
+        } else if (currentProgress >= 0.75) {
+          setCursorPos({ x: 65, y: 72, clicking: false, visible: false });
           setTransferPhase('recorded');
+        } else {
+          setTransferPhase('idle');
         }
       }
 
-      // Scripted sequence for Scenario 3 (Mobile Worker)
+      // Scenario 3 scripted employee actions
       if (activeScenarioIndex === 2) {
-        if (currentProgress < 0.3) {
-          setWorkerPhase('idle');
-        } else if (currentProgress < 0.6) {
-          setWorkerPhase('stepped');
+        if (currentProgress >= 0.3 && currentProgress < 0.6) {
+          setEmployeePhase('stepped');
+        } else if (currentProgress >= 0.6 && currentProgress < 0.85) {
+          setEmployeePhase('updated');
+        } else if (currentProgress >= 0.85) {
+          setEmployeePhase('confirmed');
         } else {
-          setWorkerPhase('confirmed');
+          setEmployeePhase('idle');
         }
       }
 
@@ -156,59 +158,49 @@ export default function ProductDemo() {
     };
 
     rafIdRef.current = requestAnimationFrame(tick);
+
     return () => {
       if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
     };
   }, [isPlaying, activeScenarioIndex, nextScenario, shouldReduce]);
 
-  // Pause when offscreen or tab hidden
+  // IntersectionObserver to pause when off-screen
   useEffect(() => {
+    if (!containerRef.current) return;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        isOffscreenRef.current = !entry.isIntersecting;
-        if (!entry.isIntersecting) {
-          setIsPlaying(false);
-        } else if (!isHoveredRef.current && !shouldReduce) {
-          setIsPlaying(true);
-          progressStartTimeRef.current = Date.now();
-        }
+      (entries) => {
+        entries.forEach((entry) => {
+          isOffscreenRef.current = !entry.isIntersecting;
+          if (!entry.isIntersecting) {
+            setIsPlaying(false);
+          } else if (!shouldReduce && !isHoveredRef.current) {
+            setIsPlaying(true);
+            progressStartTimeRef.current = Date.now() - progress * SCENARIO_DURATION;
+          }
+        });
       },
-      { threshold: 0.15 }
+      { threshold: 0.25 }
     );
 
-    if (containerRef.current) observer.observe(containerRef.current);
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [progress, shouldReduce]);
 
-    const onVisibility = () => {
-      if (document.hidden) {
-        setIsPlaying(false);
-      } else if (!isOffscreenRef.current && !isHoveredRef.current && !shouldReduce) {
-        setIsPlaying(true);
-        progressStartTimeRef.current = Date.now();
-      }
-    };
-
-    document.addEventListener('visibilitychange', onVisibility);
-    return () => {
-      observer.disconnect();
-      document.removeEventListener('visibilitychange', onVisibility);
-    };
-  }, [shouldReduce]);
-
-  // Mouse tilt on desktop
+  // Subtle mouse parallax
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (shouldReduce || !sceneRef.current) return;
     const rect = sceneRef.current.getBoundingClientRect();
     const xRatio = (e.clientX - rect.left) / rect.width - 0.5;
     const yRatio = (e.clientY - rect.top) / rect.height - 0.5;
     setTilt({
-      x: 3 - yRatio * 5,
-      y: -6 + xRatio * 6,
+      x: 2 - yRatio * 4,
+      y: -4 + xRatio * 5,
     });
   };
 
   const handleMouseLeave = () => {
     isHoveredRef.current = false;
-    setTilt({ x: 3, y: -6 });
+    setTilt({ x: 2, y: -4 });
   };
 
   // Keyboard navigation for scenario tabs
@@ -223,21 +215,21 @@ export default function ProductDemo() {
   };
 
   return (
-    <section id="product" className="px-4 sm:px-6 py-20 md:py-28 overflow-hidden bg-[#FFFEF2] border-b border-[#1C1B18]/15" ref={containerRef}>
+    <section id="product" className="px-4 sm:px-6 py-20 md:py-28 overflow-hidden bg-bg border-b border-hairline" ref={containerRef}>
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <Reveal>
           <div className="text-center mb-12 md:mb-16 max-w-3xl mx-auto">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D6E8F5] border-[1.5px] border-[#1C1B18] text-[#1F5C8A] font-figtree font-bold text-xs tracking-wider uppercase mb-3 shadow-hard-sm">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-tint border border-blue/20 text-blue font-sans font-medium text-xs tracking-wide uppercase mb-3">
               Live Product Demo
             </span>
             <h2
-              className="font-serif text-[#1C1B18] mb-3"
-              style={{ fontSize: 'clamp(32px, 4.5vw, 56px)' }}
+              className="font-sans font-semibold text-ink tracking-[-0.035em] mb-3"
+              style={{ fontSize: 'clamp(32px, 4.5vw, 54px)' }}
             >
               {heading}
             </h2>
-            <p className="text-base sm:text-lg text-[#4B4A44] font-figtree">
+            <p className="text-base sm:text-lg text-secondary">
               {subheading}
             </p>
           </div>
@@ -247,7 +239,7 @@ export default function ProductDemo() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* LEFT COLUMN: 3 Scenario Tabs + Controls (~5/12) */}
           <div
-            className="lg:col-span-5 flex flex-col gap-3 order-2 lg:order-1"
+            className="lg:col-span-5 flex flex-col gap-3.5 order-2 lg:order-1"
             role="tablist"
             aria-label="Interactive workflow scenarios"
             onKeyDown={handleKeyDown}
@@ -266,27 +258,27 @@ export default function ProductDemo() {
                     handleUserActivity();
                     switchScenario(i);
                   }}
-                  className={`text-left p-4 sm:p-5 rounded-card border-[1.5px] transition-all relative overflow-hidden group focus-visible:outline-[#1C1B18] ${
+                  className={`text-left p-4 sm:p-5 rounded-2xl border transition-all duration-200 relative overflow-hidden group focus-visible:outline-blue ${
                     isActive
-                      ? 'bg-[#E9D8FD] border-[#1C1B18] shadow-hard'
-                      : 'bg-[#FFFDF5] border-[#1C1B18]/40 hover:border-[#1C1B18] hover:bg-[#F7F5E4]'
+                      ? 'bg-surface border-blue shadow-subtle ring-1 ring-blue/30'
+                      : 'bg-surface/80 border-border hover:border-slate-300 hover:bg-surface'
                   }`}
                 >
                   <div className="flex items-start gap-3.5 relative z-10">
                     <span
-                      className={`font-figtree font-bold text-sm sm:text-base px-2.5 py-0.5 rounded-md shrink-0 border border-[#1C1B18]/30 transition-colors ${
-                        isActive ? 'bg-[#1C1B18] text-[#F6F3E4]' : 'bg-[#F7F5E4] text-[#4B4A44]'
+                      className={`font-mono text-xs font-semibold px-2.5 py-1 rounded-lg shrink-0 transition-colors ${
+                        isActive ? 'bg-blue text-white' : 'bg-[#F5F5F7] text-muted border border-border'
                       }`}
                     >
                       {sc.number}
                     </span>
                     <div className="flex-1">
                       <h3
-                        className="font-figtree font-bold text-base mb-1 text-[#1C1B18]"
+                        className="font-sans font-semibold text-base mb-1 text-ink"
                       >
                         {sc.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-[#4B4A44] leading-relaxed font-figtree">
+                      <p className="text-xs sm:text-sm text-secondary leading-relaxed">
                         {sc.desc}
                       </p>
                     </div>
@@ -294,9 +286,9 @@ export default function ProductDemo() {
 
                   {/* Scenario Progress Bar */}
                   {isActive && !shouldReduce && (
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#1C1B18]/15">
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue/15">
                       <div
-                        className="h-full bg-[#1C1B18] transition-all duration-75"
+                        className="h-full bg-blue transition-all duration-75"
                         style={{ width: `${progress * 100}%` }}
                       />
                     </div>
@@ -307,7 +299,7 @@ export default function ProductDemo() {
 
             {/* Play/Pause & Replay Controls */}
             {!shouldReduce && (
-              <div className="flex items-center justify-between pt-2 px-1 text-xs text-[#6B6A62]">
+              <div className="flex items-center justify-between pt-2 px-1 text-xs text-muted">
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
@@ -315,7 +307,7 @@ export default function ProductDemo() {
                       setIsPlaying(!isPlaying);
                       if (!isPlaying) progressStartTimeRef.current = Date.now() - progress * SCENARIO_DURATION;
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#1C1B18] bg-[#F7F5E4] hover:bg-[#FFFEF2] text-[#1C1B18] font-figtree font-bold transition-all shadow-hard-sm"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-surface hover:bg-[#F5F5F7] text-ink font-medium transition-all shadow-xs"
                     aria-label={isPlaying ? 'Pause scenario walkthrough' : 'Play scenario walkthrough'}
                   >
                     {isPlaying ? <Pause size={12} /> : <Play size={12} />}
@@ -328,7 +320,7 @@ export default function ProductDemo() {
                       resetScenarioState(activeScenarioIndex);
                       setIsPlaying(true);
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#1C1B18] bg-[#F7F5E4] hover:bg-[#FFFEF2] text-[#1C1B18] font-figtree font-bold transition-all shadow-hard-sm"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-surface hover:bg-[#F5F5F7] text-ink font-medium transition-all shadow-xs"
                     aria-label="Replay current scenario"
                   >
                     <RotateCcw size={12} />
@@ -336,7 +328,7 @@ export default function ProductDemo() {
                   </button>
                 </div>
 
-                <span className="text-[11px] text-[#6B6A62] font-mono font-bold">
+                <span className="text-[11px] text-muted font-mono">
                   {activeScenario.number} / 03
                 </span>
               </div>
@@ -403,9 +395,9 @@ export default function ProductDemo() {
                   </div>
                 )}
 
-                {/* Scenario 3: Live Activity Stream (Worker updates on phone) */}
+                {/* Scenario 3: Live Activity Stream (Employee updates on phone) */}
                 {activeScenarioIndex === 2 && (
-                  <ActivityScreen hasNewActivity={workerPhase === 'confirmed' || workerPhase === 'updated'} />
+                  <ActivityScreen hasNewActivity={employeePhase === 'confirmed' || employeePhase === 'updated'} />
                 )}
               </LaptopFrame>
 
@@ -420,16 +412,16 @@ export default function ProductDemo() {
               >
                 <MiniPhoneFrame badge={sampleDataBadge}>
                   {activeScenarioIndex === 2 ? (
-                    <WorkerScreen
-                      phase={workerPhase}
+                    <EmployeeScreen
+                      phase={employeePhase}
                       onManualUpdate={() => {
                         handleUserActivity();
-                        setWorkerPhase('confirmed');
+                        setEmployeePhase('confirmed');
                       }}
                     />
                   ) : (
-                    // Subtle background worker overview for Scenario 1 & 2
-                    <div className="p-3 h-full flex flex-col justify-between bg-slate-50/70 text-[10px]">
+                    // Subtle background employee overview for Scenario 1 & 2
+                    <div className="p-3 h-full flex flex-col justify-between bg-[#F5F5F7] text-[10px] font-sans">
                       <div>
                         <div className="flex items-center gap-1.5 pb-1.5 border-b border-border text-ink font-semibold">
                           <Smartphone size={11} className="text-blue" />
@@ -439,9 +431,9 @@ export default function ProductDemo() {
                           Staff updates stock and wastage directly on their smartphone.
                         </p>
                       </div>
-                      <div className="p-2 rounded-lg bg-surface border border-border text-center">
-                        <span className="font-bold text-ink text-xs block">Outlet 1 Ready</span>
-                        <span className="text-[9px] text-green-700">No app install required</span>
+                      <div className="p-2 rounded-lg bg-surface border border-border text-center shadow-xs">
+                        <span className="font-semibold text-ink text-xs block">Outlet 1 Ready</span>
+                        <span className="text-[9px] text-emerald-700">No app install required</span>
                       </div>
                     </div>
                   )}
@@ -458,7 +450,7 @@ export default function ProductDemo() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -5 }}
                   transition={{ duration: 0.3 }}
-                  className="text-xs sm:text-sm font-jakarta font-medium text-slate-600 inline-flex items-center gap-2 bg-surface px-4 py-1.5 rounded-full border border-border shadow-xs"
+                  className="text-xs sm:text-sm font-sans font-medium text-secondary inline-flex items-center gap-2 bg-surface px-4 py-1.5 rounded-full border border-border shadow-xs"
                 >
                   <Laptop size={14} className="text-blue shrink-0" />
                   <span>{activeScenario.caption}</span>

@@ -30,32 +30,28 @@ function AccordionRow({
 
   return (
     <div
-      className={`transition-all duration-200 ${
-        isOpen
-          ? dark
-            ? 'bg-[#1F4D47]/80 rounded-card px-5 my-2 border border-[#F6F3E4]/30'
-            : 'bg-[#F7F5E4] rounded-card px-5 my-2 border border-[#1C1B18]/30 shadow-hard-sm'
-          : `border-b ${dark ? 'border-[#F6F3E4]/15' : 'border-[#1C1B18]/15'} px-3`
-      }`}
+      className={`border-b transition-colors duration-200 ${
+        dark ? 'border-white/10' : 'border-border'
+      } px-1 sm:px-2`}
     >
       <button
         id={headingId}
         aria-expanded={isOpen}
         aria-controls={panelId}
         onClick={onToggle}
-        className={`w-full flex items-center justify-between py-4 sm:py-5 text-left gap-4 group ${
-          dark ? 'text-[#F6F3E4]' : 'text-[#1C1B18]'
+        className={`w-full flex items-center justify-between py-4 sm:py-5 text-left gap-4 group cursor-pointer ${
+          dark ? 'text-white' : 'text-ink'
         }`}
       >
-        <span className="font-figtree font-bold text-base md:text-lg pr-4 leading-snug">
+        <span className="font-sans font-semibold text-base sm:text-lg pr-4 leading-snug">
           {item.q}
         </span>
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className={`shrink-0 ${dark ? 'text-[#F6F3E4]/70' : 'text-[#6B6A62]'}`}
+          className={`shrink-0 ${dark ? 'text-white/60' : 'text-muted'}`}
         >
-          <ChevronDown size={20} strokeWidth={2} />
+          <ChevronDown size={18} strokeWidth={2} />
         </motion.span>
       </button>
       <AnimatePresence initial={false}>
@@ -71,8 +67,8 @@ function AccordionRow({
             className="overflow-hidden"
           >
             <p
-              className={`pb-5 text-[16px] sm:text-[17px] leading-relaxed ${
-                dark ? 'text-[#F6F3E4]/80' : 'text-[#4B4A44]'
+              className={`pb-5 text-[15px] sm:text-[16px] leading-relaxed ${
+                dark ? 'text-[#A7AEBB]' : 'text-secondary'
               }`}
             >
               {item.a}
@@ -88,7 +84,7 @@ export default function Accordion({ items, dark = false }: AccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div className="space-y-1">
+    <div className="divide-y divide-border/60">
       {items.map((item, i) => (
         <AccordionRow
           key={i}

@@ -41,12 +41,12 @@ export const site = {
     showTestimonials: false, // No fake reviews allowed; kept false
     showCustomerLogos: false, // No fake logos allowed; kept false
     showStats: false, // No fake metrics; kept false
-    showAnnouncement: true, // Deep green announcement strip at top
+    showAnnouncement: true, // Announcement line above nav
   },
 
   announcement: {
-    text: 'Early Access Cohort now onboarding Indian restaurant groups.',
-    linkText: 'Apply for pilot access ›',
+    text: 'Now onboarding early partners. Free setup help for the first restaurants.',
+    linkText: 'Apply for pilot access',
     linkHref: '#pilot',
   },
 
@@ -74,21 +74,20 @@ export const site = {
     ctaSecondary: 'Start free trial',
   },
 
-  // Section 1: Hero (Approved copy preserved; trust line updated)
+  // Section 1: Hero (Stripe meets Apple typography)
   hero: {
-    pill: 'Now onboarding early partners',
-    headlinePre: 'Know your',
-    headlineSerif: 'stock.',
-    headlinePost: 'Move it where it\'s needed.',
+    eyebrow: 'INVENTORY CONTROL FOR RESTAURANTS',
+    headlineLine1: 'Know your stock.',
+    headlineLine2: 'Move it where it\'s needed.',
     subheadline:
-      'KitchenWatch gives restaurant owners one simple dashboard to control inventory, wastage and transfers across every outlet.',
+      'One simple dashboard to control inventory, wastage and transfers across every outlet.',
     ctaPrimary: 'Book a free demo',
     ctaSecondary: 'Start free trial',
     trustLine:
       'For restaurants, cafes and cloud kitchens. From one outlet to many. Works alongside your existing POS.',
   },
 
-  // Common marquee items (Neutral, real kitchen goods)
+  // Common items (Neutral sample data)
   commonItems: [
     'Chicken',
     'Cooking oil',
@@ -98,8 +97,6 @@ export const site = {
     'Flour',
     'Bread',
     'Butter',
-    'Paneer',
-    'Onions',
   ],
 
   // Section 2: Problem & Benefits (Single animated story)
@@ -233,9 +230,9 @@ export const site = {
         id: 'mobile-update',
         number: '03',
         title: 'Update stock from a phone',
-        desc: 'Workers log usage and wastage on their phone in seconds with undo.',
+        desc: 'Employees log usage and wastage on their phone in seconds with undo.',
         caption: 'Your team updates in seconds. You see it immediately.',
-        workerItem: 'Tomatoes',
+        employeeItem: 'Tomatoes',
         initialStock: 18,
         usedAmount: 3,
         unit: 'kg',
@@ -245,14 +242,14 @@ export const site = {
           qty: '-3 kg',
           item: 'Tomatoes',
           outlet: 'Outlet 1',
-          role: 'Worker',
+          role: 'Employee',
           time: 'Just now',
         },
       },
     ],
   },
 
-  // Section 4: Features Bento Grid (Semantic color mapped)
+  // Section 4: Features Bento Grid (Realistic UI tiles)
   features: {
     heading: 'Everything you need. Nothing you do not.',
     subheading: 'Run one outlet or many. Built specifically for kitchen operations.',
@@ -296,13 +293,13 @@ export const site = {
         id: 'wastage',
         title: 'Wastage with rupee cost',
         desc: 'Log reasons and see total rupees wasted before month end.',
-        colorToken: 'coral',
+        colorToken: 'red',
         size: 'small' as const,
       },
       {
         id: 'roles',
         title: 'Roles and permissions',
-        desc: 'Owners configure items. Workers log usage on mobile.',
+        desc: 'Owners configure items. Employees log usage on mobile.',
         colorToken: 'violet',
         size: 'small' as const,
       },
@@ -310,14 +307,14 @@ export const site = {
         id: 'qr',
         title: 'QR ordering',
         desc: 'Customers scan table QR to order directly.',
-        colorToken: 'sky',
+        colorToken: 'blue',
         size: 'small' as const,
         badge: 'Coming soon',
       },
     ],
   },
 
-  // Section 5: How It Works (Dark #0B1220 section)
+  // Section 5: How It Works (Dark #101218 Apple pinned scroll)
   howItWorks: {
     heading: 'Simple by design.',
     subheading: 'No week-long setup. Up and running in 30 minutes.',
@@ -326,22 +323,22 @@ export const site = {
         number: '01',
         title: 'Set up in minutes',
         desc: 'Add only the items you want to track and set minimum levels.',
-        accent: 'sky',
+        accent: 'blue',
       },
       {
         number: '02',
-        title: 'Team updates in seconds',
-        desc: 'Workers record usage and wastage from their phone browser.',
+        title: 'Employees update in seconds',
+        desc: 'Employees record usage and wastage from their phone browser.',
         accent: 'teal',
       },
       {
         number: '03',
         title: 'You see everything',
         desc: 'Alerts, stock value and movements across all outlets live.',
-        accent: 'emerald',
+        accent: 'green',
       },
     ],
-    ruleNote: 'Owners and managers add items. Workers only update stock.',
+    ruleNote: 'Owners and managers add items. Employees only update stock.',
   },
 
   // Section 6: Savings Estimator (id="calculator")
@@ -417,9 +414,9 @@ export const site = {
         ],
       },
       {
-        id: 'worker',
-        label: 'Worker',
-        title: 'For Kitchen Staff',
+        id: 'employee',
+        label: 'Employee',
+        title: 'For Kitchen Employees',
         desc: 'Tap-to-update on any phone. Fast, large buttons, no training needed.',
         capabilities: [
           'Quick usage deduction in 3 taps',
@@ -451,7 +448,7 @@ export const site = {
           kitchenwatch: 'Automatic warning badges',
         },
         {
-          feature: 'Kitchen staff update speed',
+          feature: 'Employee update speed',
           manual: 'Pen and paper notebook',
           spreadsheet: 'Unusable during rush hour',
           kitchenwatch: 'Under 5 seconds on mobile',
@@ -482,13 +479,13 @@ export const site = {
       {
         phase: 'Now',
         label: 'Available today',
-        accent: 'emerald',
+        accent: 'green',
         items: [
           'Inventory control & alerts',
           'Stock movements ledger',
           'Inter-outlet transfers',
           'Wastage tracking with rupees',
-          'Owner, Manager & Worker roles',
+          'Owner, Manager & Employee roles',
           'Full activity audit trail',
         ],
       },
@@ -535,22 +532,22 @@ export const site = {
     principles: [
       {
         number: '01',
-        title: 'Floor speed first',
+        title: 'Simple',
         desc: 'Any stock deduction or wastage entry takes under 5 seconds on any mobile browser.',
       },
       {
         number: '02',
-        title: 'Live visibility',
+        title: 'Fast',
         desc: 'Know exactly what raw materials you have in every branch without calling managers.',
       },
       {
         number: '03',
-        title: 'Works with your POS',
-        desc: 'No replacing your cash counter. KitchenWatch runs alongside your existing POS.',
+        title: 'Traceable',
+        desc: 'Every movement records who, what, when and why with permanent role-based logs.',
       },
       {
         number: '04',
-        title: 'Rupees, not percentages',
+        title: 'Useful',
         desc: 'Track wasted items with exact rupee costs so kitchen teams see the direct financial impact.',
       },
     ],
@@ -583,7 +580,7 @@ export const site = {
           'Stock movements & ledger',
           'Low-stock alerts',
           'Wastage tracking with cost',
-          'Owner, Manager & Worker roles',
+          'Owner, Manager & Employee roles',
           'Mobile browser access for staff',
           'Email & WhatsApp support',
         ],
@@ -653,15 +650,15 @@ export const site = {
         a: 'No. Single outlets use it daily to prevent stock-outs and track waste. Multi-outlet features activate when you expand.',
       },
       {
-        q: 'Do I have to enter every ingredient?',
+        q: 'Do I enter every ingredient?',
         a: 'No. You choose what to track. Start with high-cost or high-wastage items, then expand as your team gets comfortable.',
       },
       {
         q: 'Who can add items and set limits?',
-        a: 'Only Owners and Managers add items and set minimum stock levels. Workers only update counts and log usage.',
+        a: 'Only Owners and Managers add items and set minimum stock levels. Employees only update counts and log usage.',
       },
       {
-        q: 'Can staff use it on a phone?',
+        q: 'Can employees use it on a phone?',
         a: 'Yes. It runs smoothly on any smartphone browser. No app download or installation is required.',
       },
       {
@@ -670,8 +667,8 @@ export const site = {
         confirm: true,
       },
       {
-        q: 'Can I fix an entry mistake?',
-        a: 'Yes. Workers can immediately undo recent entries, and managers can record adjustments with a documented reason.',
+        q: 'Can I fix a mistake?',
+        a: 'Yes. Employees can immediately undo recent entries, and managers can record adjustments with a documented reason.',
       },
       {
         q: 'How do I move stock between outlets?',
@@ -682,11 +679,11 @@ export const site = {
         a: 'Not yet. Table QR ordering is currently in active development and labelled Coming Soon on our roadmap.',
       },
       {
-        q: 'How does the free trial work?',
+        q: 'Cost and free trial?',
         a: 'You get full access to all features for 14 days without entering credit card details.',
       },
       {
-        q: 'What happens to my data if I cancel?',
+        q: 'What happens to my data if I stop?',
         a: 'You can export your complete inventory ledger anytime. Your data remains private and will be deleted upon request.',
       },
       {
@@ -694,14 +691,14 @@ export const site = {
         a: 'Most kitchens set up their top 25 ingredients and are ready to log stock in under 30 minutes.',
       },
       {
-        q: 'Is our kitchen data safe?',
+        q: 'Is my data safe?',
         a: 'Yes. Encrypted with HTTPS, protected by role-based access, and backed up with an unalterable audit log.',
         confirm: true,
       },
     ],
   },
 
-  // Section 11: Final CTA (Dark section)
+  // Section 11: Final CTA (Dark section with soft mesh gradient)
   cta: {
     heading: 'Stop guessing your stock.',
     subheading: 'Book a 15-minute demo or start your 14-day free trial today.',

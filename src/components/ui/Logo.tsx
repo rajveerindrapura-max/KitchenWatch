@@ -24,9 +24,7 @@ export default function Logo({ size = 'md', dark = false, className = '' }: Logo
         alt="KitchenWatch"
         className={`${h} w-auto object-contain transition-all`}
         style={{
-          filter: dark
-            ? 'brightness(0) invert(1) sepia(0.15) hue-rotate(15deg)'
-            : 'brightness(0)',
+          filter: dark ? 'brightness(0) invert(1)' : 'brightness(0)',
         }}
       />
     </a>

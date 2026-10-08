@@ -12,7 +12,8 @@
   "dependencies": {
     "@fontsource/figtree": "^5.3.0",
     "@fontsource/instrument-serif": "^5.0.0",
-    "@fontsource/inter": "^5.0.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
     "@fontsource/plus-jakarta-sans": "^5.0.0",
     "@hookform/resolvers": "^5.9.1",
     "@react-three/drei": "^9.105.6",

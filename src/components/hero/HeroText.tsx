@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowRight, ChevronRight } from 'lucide-react';
 import { site } from '../../content/site';
 
 export default function HeroText() {
@@ -6,65 +7,75 @@ export default function HeroText() {
 
   return (
     <div className="flex flex-col items-center text-center max-w-4xl mx-auto relative z-20">
-      {/* Eyebrow Label: small uppercase, letter-spaced 0.12em, muted color */}
+      {/* Eyebrow Label: small uppercase, tracking 0.1em, muted */}
       <motion.div
         initial={shouldReduce ? {} : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
         className="mb-4 sm:mb-5"
       >
-        <span className="text-[11px] sm:text-xs font-figtree font-semibold tracking-[0.14em] uppercase text-[#6B6A62]">
-          KITCHENWATCH INVENTORY
+        <span className="text-[12px] sm:text-[13px] font-sans font-semibold tracking-[0.1em] uppercase text-muted">
+          {site.hero.eyebrow}
         </span>
       </motion.div>
 
-      {/* Headline: High-contrast Editorial Serif with Roman Line 1 and Italic Line 2 */}
+      {/* Headline: Apple-style tightly tracked, Line 1 in ink, Line 2 in #6B7280 */}
       <motion.h1
         initial={shouldReduce ? {} : { opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.05 }}
-        className="font-serif text-[#1C1B18] tracking-tight leading-[0.98] mb-5 sm:mb-6"
-        style={{ fontSize: 'clamp(44px, 7vw, 100px)' }}
+        className="font-sans font-semibold text-ink tracking-[-0.04em] leading-[1.02] mb-5 sm:mb-6"
+        style={{ fontSize: 'clamp(44px, 7.5vw, 104px)' }}
       >
-        <span className="block font-normal">
-          {site.hero.headlinePre} {site.hero.headlineSerif}
-        </span>
-        <span className="block italic font-normal">
-          {site.hero.headlinePost}
-        </span>
+        <span className="block text-ink">{site.hero.headlineLine1}</span>
+        <span className="block text-[#6B7280]">{site.hero.headlineLine2}</span>
       </motion.h1>
 
-      {/* Subheadline: One short line (max 14 words), Figtree sans, warm ink */}
+      {/* Subheadline: Max 14 words, clean Apple/Stripe copy */}
       <motion.p
         initial={shouldReduce ? {} : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.15 }}
-        className="text-[17px] sm:text-[19px] text-[#4B4A44] max-w-xl mx-auto mb-8 leading-relaxed font-figtree"
+        className="text-[18px] sm:text-[20px] text-secondary max-w-xl mx-auto mb-8 sm:mb-10 leading-relaxed font-sans"
       >
         {site.hero.subheadline}
       </motion.p>
 
-      {/* Two Buttons: Lavender Primary + Ivory Secondary */}
+      {/* Buttons: Blue pill primary + Outlined pill secondary + Tertiary link */}
       <motion.div
         initial={shouldReduce ? {} : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.25 }}
         className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-6 w-full sm:w-auto"
       >
-        {/* Primary button: 12px radius, 2px ink outline, flat lavender fill, ink text */}
+        {/* Primary blue pill with sliding arrow */}
         <a
           href="#cta"
-          className="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 rounded-btn bg-[#E9D8FD] text-[#1C1B18] font-figtree font-bold text-base border-2 border-[#1C1B18] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-hard active:translate-y-0 active:shadow-none inline-flex items-center justify-center min-h-[48px]"
+          className="group w-full sm:w-auto px-7 py-3.5 rounded-pill bg-blue hover:bg-blue-hover text-white font-sans font-medium text-base transition-all duration-150 shadow-subtle hover:shadow-card inline-flex items-center justify-center gap-2 min-h-[48px]"
         >
-          {site.hero.ctaPrimary}
+          <span>{site.hero.ctaPrimary}</span>
+          <ArrowRight
+            size={16}
+            strokeWidth={2}
+            className="transition-transform duration-150 group-hover:translate-x-1"
+          />
         </a>
 
-        {/* Secondary button: 12px radius, 2px ink outline, ivory fill, ink text */}
+        {/* Secondary outlined pill */}
         <a
           href="#cta"
-          className="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 rounded-btn bg-[#FFFEF2] text-[#1C1B18] font-figtree font-semibold text-base border-2 border-[#1C1B18] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-hard active:translate-y-0 active:shadow-none inline-flex items-center justify-center min-h-[48px]"
+          className="w-full sm:w-auto px-7 py-3.5 rounded-pill bg-white hover:bg-[#F5F5F7] text-ink font-sans font-medium text-base border border-border transition-all duration-150 shadow-subtle inline-flex items-center justify-center min-h-[48px]"
         >
           {site.hero.ctaSecondary}
+        </a>
+
+        {/* Tertiary blue link with chevron (Apple style) */}
+        <a
+          href="#product"
+          className="text-blue hover:text-blue-hover font-sans font-medium text-[15px] inline-flex items-center gap-0.5 px-3 py-2 transition-colors"
+        >
+          <span>See interactive demo</span>
+          <ChevronRight size={15} strokeWidth={2} />
         </a>
       </motion.div>
 
@@ -73,7 +84,7 @@ export default function HeroText() {
         initial={shouldReduce ? {} : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.35 }}
-        className="text-xs sm:text-[13px] text-[#6B6A62] leading-relaxed max-w-md mx-auto font-figtree"
+        className="text-xs sm:text-[13px] text-muted leading-relaxed max-w-md mx-auto font-sans"
       >
         {site.hero.trustLine}
       </motion.p>

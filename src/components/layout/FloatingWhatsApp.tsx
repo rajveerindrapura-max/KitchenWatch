@@ -15,14 +15,15 @@ export default function FloatingWhatsApp() {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="group flex items-center gap-2.5 px-4 py-2.5 bg-card text-ink border-1.5 border-ink rounded-full shadow-hard-sm hover:shadow-hard hover:-translate-y-0.5 transition-all duration-150"
+        className="group flex items-center gap-2.5 px-4 py-2.5 bg-surface text-ink border border-border rounded-full shadow-subtle hover:shadow-float hover:-translate-y-0.5 transition-all duration-200"
         aria-label="Chat with KitchenWatch team on WhatsApp"
       >
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sage-ink" />
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
         </span>
-        <MessageSquare size={16} className="text-sage-ink" />
-        <span className="text-xs font-bold text-ink">
+        <MessageSquare size={15} className="text-emerald-600" />
+        <span className="text-xs font-semibold text-ink">
           Chat on WhatsApp
         </span>
       </a>

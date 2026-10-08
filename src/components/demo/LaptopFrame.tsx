@@ -8,32 +8,32 @@ interface LaptopFrameProps {
 export default function LaptopFrame({ children, badge }: LaptopFrameProps) {
   return (
     <div className="w-full relative select-none">
-      {/* Laptop Screen Body with 2px ink outline */}
-      <div className="bg-[#1C1B18] p-2.5 sm:p-3 rounded-2xl sm:rounded-[22px] border-2 border-[#1C1B18] shadow-hard-lg">
+      {/* Laptop Screen Body with Apple-style slate finish and soft float shadow */}
+      <div className="bg-[#101218] p-2 sm:p-2.5 rounded-2xl sm:rounded-[20px] border border-slate-800/80 shadow-float">
         {/* Top Header Dots & Badge */}
-        <div className="flex items-center justify-between px-2 pb-2 pt-0.5">
+        <div className="flex items-center justify-between px-2 pb-1.5 pt-0.5">
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#F6F3E4]/30 inline-block border border-[#1C1B18]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#F6F3E4]/30 inline-block border border-[#1C1B18]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#F6F3E4]/30 inline-block border border-[#1C1B18]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-slate-700/80 inline-block" />
+            <span className="w-2.5 h-2.5 rounded-full bg-slate-700/80 inline-block" />
+            <span className="w-2.5 h-2.5 rounded-full bg-slate-700/80 inline-block" />
           </div>
           {badge && (
-            <span className="text-[10px] font-figtree font-bold tracking-wider uppercase text-[#1C1B18] bg-[#FBEFB4] px-2.5 py-0.5 rounded-full border border-[#1C1B18]">
+            <span className="text-[10px] font-sans font-medium tracking-wide uppercase text-slate-400 bg-slate-800/80 px-2.5 py-0.5 rounded-full border border-slate-700/50">
               {badge}
             </span>
           )}
           <div className="w-8" />
         </div>
 
-        {/* Display Viewport: Warm Ivory */}
-        <div className="bg-[#FFFEF2] rounded-lg sm:rounded-xl overflow-hidden border-[1.5px] border-[#1C1B18] text-[#1C1B18] h-[320px] sm:h-[360px] md:h-[390px] flex flex-col relative font-figtree">
+        {/* Display Viewport */}
+        <div className="bg-surface rounded-lg sm:rounded-xl overflow-hidden border border-hairline text-ink h-[320px] sm:h-[360px] md:h-[390px] flex flex-col relative font-sans">
           {children}
         </div>
       </div>
 
-      {/* Flat Laptop Base with hard ink outline */}
-      <div className="relative mx-auto w-[104%] -ml-[2%] h-3 bg-[#F7F5E4] rounded-b-xl border-2 border-t-0 border-[#1C1B18] shadow-hard flex justify-center items-start">
-        <div className="w-20 h-1 bg-[#1C1B18]/40 rounded-b-md" />
+      {/* Sleek Aluminum Laptop Base */}
+      <div className="relative mx-auto w-[104%] -ml-[2%] h-2.5 bg-gradient-to-b from-slate-200 to-slate-300 rounded-b-xl border-t border-slate-400/30 shadow-subtle flex justify-center items-start">
+        <div className="w-16 h-1 bg-slate-400/40 rounded-b-md" />
       </div>
     </div>
   );

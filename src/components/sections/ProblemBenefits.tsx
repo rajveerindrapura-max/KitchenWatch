@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { BookOpen, FileSpreadsheet, MessageCircle, ArrowRight, CheckCircle2, TrendingDown, Store } from 'lucide-react';
+import { BookOpen, FileSpreadsheet, MessageCircle, ChevronRight, CheckCircle2, TrendingDown, Store } from 'lucide-react';
 import { site } from '../../content/site';
 import Reveal from '../ui/Reveal';
 
@@ -16,20 +16,20 @@ export default function ProblemBenefits() {
   return (
     <section
       id="problem"
-      className="relative px-4 sm:px-6 py-20 md:py-28 bg-gradient-to-b from-[#FFFEF2] via-[#FAD9C8]/35 to-[#FFFEF2] border-b border-[#1C1B18]/15"
+      className="relative px-4 sm:px-6 py-20 md:py-28 bg-[#FBFBFD] border-b border-hairline overflow-hidden"
     >
       <div className="max-w-6xl mx-auto" ref={containerRef}>
         {/* Top Problem Header */}
-        <div className="max-w-4xl mx-auto text-center mb-14 md:mb-18">
+        <div className="max-w-4xl mx-auto text-center mb-14 md:mb-20">
           <Reveal>
-            <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#FAD9C8] border-[1.5px] border-[#1C1B18] text-[#B3412A] font-figtree font-bold text-xs tracking-wider uppercase mb-5 shadow-hard-sm">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200/60 text-rose-700 font-sans font-medium text-xs tracking-wide uppercase mb-4">
               {site.problemBenefits.sectionLabel}
             </span>
           </Reveal>
 
-          {/* Word-by-word scroll reveal editorial heading */}
+          {/* Word-by-word scroll reveal Apple headline */}
           <h2
-            className="font-serif text-[#1C1B18] leading-[1.08] tracking-tight mb-8"
+            className="font-sans font-semibold text-ink leading-[1.12] tracking-[-0.035em] mb-8"
             style={{ fontSize: 'clamp(32px, 4.5vw, 56px)' }}
             aria-label={site.problemBenefits.problemStatement}
           >
@@ -46,44 +46,50 @@ export default function ProblemBenefits() {
           </h2>
 
           {/* 3 Chaos Cards & Draining stock bar */}
-          <Reveal delay={0.2}>
-            <div className="bg-[#FFFDF5] border-[1.5px] border-[#1C1B18] rounded-panel p-5 sm:p-7 shadow-hard-sm max-w-2xl mx-auto">
-              <p className="text-xs font-figtree font-bold uppercase tracking-wider text-[#6B6A62] mb-4">
+          <Reveal delay={0.15}>
+            <div className="bg-surface border border-border rounded-2xl p-5 sm:p-7 shadow-subtle max-w-2xl mx-auto text-left">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted mb-4 text-center">
                 How stock gets lost today
               </p>
-              <div className="grid grid-cols-3 gap-3 mb-6">
-                <div className="flex flex-col items-center p-3 rounded-card bg-[#FBEFB4] border-[1.5px] border-[#1C1B18] text-center shadow-hard-sm">
-                  <BookOpen className="text-[#8A5A00] mb-1.5" size={22} />
-                  <span className="text-xs font-figtree font-bold text-[#1C1B18]">Notebook</span>
-                  <span className="text-[11px] text-[#4B4A44]">Forgotten</span>
+              <div className="grid grid-cols-3 gap-3 mb-5">
+                <div className="flex flex-col items-center p-3.5 rounded-xl bg-[#F5F5F7] border border-hairline text-center">
+                  <div className="w-8 h-8 rounded-lg bg-white border border-border flex items-center justify-center mb-2 shadow-xs">
+                    <BookOpen className="text-amber-600" size={17} strokeWidth={1.5} />
+                  </div>
+                  <span className="text-xs font-semibold text-ink">Notebook</span>
+                  <span className="text-[11px] text-muted">Forgotten</span>
                 </div>
-                <div className="flex flex-col items-center p-3 rounded-card bg-[#D9EAD3] border-[1.5px] border-[#1C1B18] text-center shadow-hard-sm">
-                  <FileSpreadsheet className="text-[#2F6B3A] mb-1.5" size={22} />
-                  <span className="text-xs font-figtree font-bold text-[#1C1B18]">Spreadsheet</span>
-                  <span className="text-[11px] text-[#4B4A44]">Outdated</span>
+                <div className="flex flex-col items-center p-3.5 rounded-xl bg-[#F5F5F7] border border-hairline text-center">
+                  <div className="w-8 h-8 rounded-lg bg-white border border-border flex items-center justify-center mb-2 shadow-xs">
+                    <FileSpreadsheet className="text-emerald-600" size={17} strokeWidth={1.5} />
+                  </div>
+                  <span className="text-xs font-semibold text-ink">Spreadsheet</span>
+                  <span className="text-[11px] text-muted">Outdated</span>
                 </div>
-                <div className="flex flex-col items-center p-3 rounded-card bg-[#FAD9C8] border-[1.5px] border-[#1C1B18] text-center shadow-hard-sm">
-                  <MessageCircle className="text-[#B3412A] mb-1.5" size={22} />
-                  <span className="text-xs font-figtree font-bold text-[#1C1B18]">WhatsApp</span>
-                  <span className="text-[11px] text-[#4B4A44]">Lost in chat</span>
+                <div className="flex flex-col items-center p-3.5 rounded-xl bg-[#F5F5F7] border border-hairline text-center">
+                  <div className="w-8 h-8 rounded-lg bg-white border border-border flex items-center justify-center mb-2 shadow-xs">
+                    <MessageCircle className="text-rose-600" size={17} strokeWidth={1.5} />
+                  </div>
+                  <span className="text-xs font-semibold text-ink">WhatsApp</span>
+                  <span className="text-[11px] text-muted">Lost in chat</span>
                 </div>
               </div>
 
               {/* Draining stock bar animation */}
-              <div className="bg-[#F7F5E4] rounded-btn p-3 border border-[#1C1B18]/40">
-                <div className="flex justify-between items-center text-xs mb-1.5 font-figtree">
-                  <span className="text-[#1C1B18] font-bold">Tomatoes (Outlet 1)</span>
-                  <span className="text-[#B3412A] font-extrabold flex items-center gap-1">
-                    <TrendingDown size={14} /> Critical: 2 kg left
+              <div className="bg-[#F5F5F7] rounded-xl p-3.5 border border-hairline">
+                <div className="flex justify-between items-center text-xs mb-1.5 font-medium">
+                  <span className="text-ink font-semibold">Tomatoes (Outlet 1)</span>
+                  <span className="text-rose-600 font-semibold flex items-center gap-1 font-mono text-[11px]">
+                    <TrendingDown size={13} strokeWidth={1.5} /> Critical: 2 kg left
                   </span>
                 </div>
-                <div className="w-full bg-[#E5E0CB] h-3 rounded-full overflow-hidden border border-[#1C1B18]/30">
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
                   <motion.div
                     initial={{ width: '85%' }}
                     whileInView={{ width: '12%' }}
                     viewport={{ once: true }}
                     transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
-                    className="h-full bg-[#B3412A] rounded-full"
+                    className="h-full bg-rose-600 rounded-full"
                   />
                 </div>
               </div>
@@ -94,124 +100,127 @@ export default function ProblemBenefits() {
         {/* Transition divider to Benefits */}
         <div className="text-center my-14 md:my-20">
           <Reveal>
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E9D8FD] border-[1.5px] border-[#1C1B18] text-[#5B3FA0] font-figtree font-bold text-xs tracking-wider uppercase mb-3 shadow-hard-sm">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-tint border border-blue/20 text-blue font-sans font-medium text-xs tracking-wide uppercase mb-3">
               The solution
             </span>
-            <h3 className="font-serif text-[#1C1B18] text-3xl sm:text-4xl md:text-5xl">
+            <h3
+              className="font-sans font-semibold text-ink tracking-[-0.03em] max-w-2xl mx-auto"
+              style={{ fontSize: 'clamp(28px, 4vw, 44px)' }}
+            >
               {site.problemBenefits.benefitsHeading}
             </h3>
           </Reveal>
         </div>
 
-        {/* 4 Benefits with Micro-visuals in flat pastel fills */}
+        {/* 4 Benefits with Realistic Product UI Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Benefit 1: Sage fill */}
+          {/* Benefit 1: Live Count */}
           <Reveal delay={0.05}>
-            <div className="h-full flex flex-col justify-between bg-[#D9EAD3] border-[1.5px] border-[#1C1B18] rounded-panel p-6 sm:p-7 shadow-hard hover:-translate-y-1 transition-transform">
+            <div className="h-full flex flex-col justify-between bg-surface border border-border rounded-2xl p-6 sm:p-7 shadow-subtle hover:shadow-float transition-all duration-300">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-bold text-[#2F6B3A] tracking-wider uppercase font-figtree">
-                    01 • LIVE COUNT
+                  <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/60 uppercase tracking-wider">
+                    01 • Live Count
                   </span>
                   <a
                     href="#features"
-                    className="text-xs text-[#2F6B3A] font-bold hover:underline inline-flex items-center gap-1"
+                    className="text-xs text-blue hover:text-blueHover font-medium inline-flex items-center gap-0.5"
                   >
-                    Details <ArrowRight size={12} />
+                    Details <ChevronRight size={13} strokeWidth={2} />
                   </a>
                 </div>
-                <h4 className="font-serif text-[#1C1B18] text-2xl sm:text-3xl mb-2">
+                <h4 className="font-sans font-semibold text-ink text-xl sm:text-2xl tracking-tight mb-2">
                   {site.problemBenefits.benefits[0].heading}
                 </h4>
-                <p className="text-[#4B4A44] text-[15px] leading-relaxed mb-6 font-figtree">
+                <p className="text-secondary text-sm leading-relaxed mb-6">
                   {site.problemBenefits.benefits[0].supporting}
                 </p>
               </div>
-              <div className="mt-auto pt-4 border-t border-[#1C1B18]/20">
+              <div className="mt-auto pt-4 border-t border-hairline">
                 <LiveBarFill />
               </div>
             </div>
           </Reveal>
 
-          {/* Benefit 2: Peach fill */}
+          {/* Benefit 2: Rupee Wastage */}
           <Reveal delay={0.1}>
-            <div className="h-full flex flex-col justify-between bg-[#FAD9C8] border-[1.5px] border-[#1C1B18] rounded-panel p-6 sm:p-7 shadow-hard hover:-translate-y-1 transition-transform">
+            <div className="h-full flex flex-col justify-between bg-surface border border-border rounded-2xl p-6 sm:p-7 shadow-subtle hover:shadow-float transition-all duration-300">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-bold text-[#B3412A] tracking-wider uppercase font-figtree">
-                    02 • RUPEE WASTAGE
+                  <span className="text-xs font-semibold text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200/60 uppercase tracking-wider">
+                    02 • Rupee Wastage
                   </span>
                   <a
                     href="#features"
-                    className="text-xs text-[#B3412A] font-bold hover:underline inline-flex items-center gap-1"
+                    className="text-xs text-blue hover:text-blueHover font-medium inline-flex items-center gap-0.5"
                   >
-                    Details <ArrowRight size={12} />
+                    Details <ChevronRight size={13} strokeWidth={2} />
                   </a>
                 </div>
-                <h4 className="font-serif text-[#1C1B18] text-2xl sm:text-3xl mb-2">
+                <h4 className="font-sans font-semibold text-ink text-xl sm:text-2xl tracking-tight mb-2">
                   {site.problemBenefits.benefits[1].heading}
                 </h4>
-                <p className="text-[#4B4A44] text-[15px] leading-relaxed mb-6 font-figtree">
+                <p className="text-secondary text-sm leading-relaxed mb-6">
                   {site.problemBenefits.benefits[1].supporting}
                 </p>
               </div>
-              <div className="mt-auto pt-4 border-t border-[#1C1B18]/20">
+              <div className="mt-auto pt-4 border-t border-hairline">
                 <LiveRupeeCounter />
               </div>
             </div>
           </Reveal>
 
-          {/* Benefit 3: Soft Sky fill */}
+          {/* Benefit 3: Transfers */}
           <Reveal delay={0.15}>
-            <div className="h-full flex flex-col justify-between bg-[#D6E8F5] border-[1.5px] border-[#1C1B18] rounded-panel p-6 sm:p-7 shadow-hard hover:-translate-y-1 transition-transform">
+            <div className="h-full flex flex-col justify-between bg-surface border border-border rounded-2xl p-6 sm:p-7 shadow-subtle hover:shadow-float transition-all duration-300">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-bold text-[#1F5C8A] tracking-wider uppercase font-figtree">
-                    03 • TRANSFERS
+                  <span className="text-xs font-semibold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200/60 uppercase tracking-wider">
+                    03 • Transfers
                   </span>
                   <a
                     href="#features"
-                    className="text-xs text-[#1F5C8A] font-bold hover:underline inline-flex items-center gap-1"
+                    className="text-xs text-blue hover:text-blueHover font-medium inline-flex items-center gap-0.5"
                   >
-                    Details <ArrowRight size={12} />
+                    Details <ChevronRight size={13} strokeWidth={2} />
                   </a>
                 </div>
-                <h4 className="font-serif text-[#1C1B18] text-2xl sm:text-3xl mb-2">
+                <h4 className="font-sans font-semibold text-ink text-xl sm:text-2xl tracking-tight mb-2">
                   {site.problemBenefits.benefits[2].heading}
                 </h4>
-                <p className="text-[#4B4A44] text-[15px] leading-relaxed mb-6 font-figtree">
+                <p className="text-secondary text-sm leading-relaxed mb-6">
                   {site.problemBenefits.benefits[2].supporting}
                 </p>
               </div>
-              <div className="mt-auto pt-4 border-t border-[#1C1B18]/20">
+              <div className="mt-auto pt-4 border-t border-hairline">
                 <LiveTransferPacket />
               </div>
             </div>
           </Reveal>
 
-          {/* Benefit 4: Lavender fill */}
+          {/* Benefit 4: Multi-Outlet */}
           <Reveal delay={0.2}>
-            <div className="h-full flex flex-col justify-between bg-[#E9D8FD] border-[1.5px] border-[#1C1B18] rounded-panel p-6 sm:p-7 shadow-hard hover:-translate-y-1 transition-transform">
+            <div className="h-full flex flex-col justify-between bg-surface border border-border rounded-2xl p-6 sm:p-7 shadow-subtle hover:shadow-float transition-all duration-300">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-bold text-[#5B3FA0] tracking-wider uppercase font-figtree">
-                    04 • MULTI-OUTLET
+                  <span className="text-xs font-semibold text-blue bg-blue-tint px-2.5 py-0.5 rounded-full border border-blue/20 uppercase tracking-wider">
+                    04 • Multi-Outlet
                   </span>
                   <a
                     href="#features"
-                    className="text-xs text-[#5B3FA0] font-bold hover:underline inline-flex items-center gap-1"
+                    className="text-xs text-blue hover:text-blueHover font-medium inline-flex items-center gap-0.5"
                   >
-                    Details <ArrowRight size={12} />
+                    Details <ChevronRight size={13} strokeWidth={2} />
                   </a>
                 </div>
-                <h4 className="font-serif text-[#1C1B18] text-2xl sm:text-3xl mb-2">
+                <h4 className="font-sans font-semibold text-ink text-xl sm:text-2xl tracking-tight mb-2">
                   {site.problemBenefits.benefits[3].heading}
                 </h4>
-                <p className="text-[#4B4A44] text-[15px] leading-relaxed mb-6 font-figtree">
+                <p className="text-secondary text-sm leading-relaxed mb-6">
                   {site.problemBenefits.benefits[3].supporting}
                 </p>
               </div>
-              <div className="mt-auto pt-4 border-t border-[#1C1B18]/20">
+              <div className="mt-auto pt-4 border-t border-hairline">
                 <LiveOutletToggle />
               </div>
             </div>
@@ -253,20 +262,20 @@ function ScrollWord({
 // Micro-visual 1: Filling stock bar
 function LiveBarFill() {
   return (
-    <div className="bg-[#FFFDF5] rounded-card p-3.5 border-[1.5px] border-[#1C1B18] shadow-hard-sm">
-      <div className="flex justify-between items-center text-xs mb-2 font-figtree">
-        <span className="font-bold text-[#1C1B18]">Rice (Basmati)</span>
-        <span className="font-bold text-[#2F6B3A] flex items-center gap-1">
-          <CheckCircle2 size={13} /> 24 kg / 25 kg Healthy
+    <div className="bg-[#F5F5F7] rounded-xl p-3 border border-hairline">
+      <div className="flex justify-between items-center text-xs mb-2">
+        <span className="font-semibold text-ink">Basmati Rice</span>
+        <span className="font-semibold text-emerald-700 flex items-center gap-1 font-mono text-[11px]">
+          <CheckCircle2 size={12} strokeWidth={2} /> 24 / 25 kg
         </span>
       </div>
-      <div className="w-full bg-[#E5E0CB] h-2.5 rounded-full overflow-hidden border border-[#1C1B18]/30">
+      <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
         <motion.div
           initial={{ width: '25%' }}
           whileInView={{ width: '96%' }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-          className="h-full bg-[#2F6B3A] rounded-full"
+          className="h-full bg-emerald-600 rounded-full"
         />
       </div>
     </div>
@@ -293,16 +302,16 @@ function LiveRupeeCounter() {
   }, []);
 
   return (
-    <div className="bg-[#FFFDF5] rounded-card p-3.5 border-[1.5px] border-[#1C1B18] shadow-hard-sm flex items-center justify-between">
+    <div className="bg-[#F5F5F7] rounded-xl p-3 border border-hairline flex items-center justify-between">
       <div>
-        <p className="text-[11px] font-figtree font-bold text-[#B3412A] uppercase tracking-wide">
+        <p className="text-[10px] font-semibold text-muted uppercase tracking-wider">
           Month-to-date waste
         </p>
-        <p className="text-xl font-figtree font-extrabold text-[#B3412A]">
+        <p className="text-lg font-mono font-bold text-rose-600">
           ₹{val.toLocaleString('en-IN')}
         </p>
       </div>
-      <span className="text-xs bg-[#FAD9C8] text-[#B3412A] px-2.5 py-1 rounded-md border border-[#1C1B18]/40 font-bold font-figtree">
+      <span className="text-xs bg-rose-50 text-rose-700 px-2.5 py-1 rounded-md border border-rose-200/60 font-medium">
         5 items logged
       </span>
     </div>
@@ -312,30 +321,31 @@ function LiveRupeeCounter() {
 // Micro-visual 3: Packet travelling along drawn SVG path
 function LiveTransferPacket() {
   return (
-    <div className="bg-[#FFFDF5] rounded-card p-3.5 border-[1.5px] border-[#1C1B18] shadow-hard-sm">
-      <div className="flex items-center justify-between text-xs font-bold text-[#1F5C8A] mb-2 font-figtree">
-        <span>Outlet 1</span>
-        <span className="text-[11px] bg-[#D6E8F5] text-[#1F5C8A] px-2 py-0.5 rounded-full border border-[#1C1B18]/30">
+    <div className="bg-[#F5F5F7] rounded-xl p-3 border border-hairline">
+      <div className="flex items-center justify-between text-xs font-medium text-teal-800 mb-1.5">
+        <span className="text-[11px]">Outlet 1</span>
+        <span className="text-[10px] bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full border border-teal-200/60 font-mono">
           10 L Cooking oil
         </span>
-        <span>Outlet 2</span>
+        <span className="text-[11px]">Outlet 2</span>
       </div>
-      <div className="relative h-6 flex items-center">
-        <svg className="w-full h-2" fill="none">
+      <div className="relative h-5 flex items-center">
+        <svg className="w-full h-1.5" fill="none">
           <line
             x1="0"
-            y1="4"
+            y1="3"
             x2="100%"
-            y2="4"
-            stroke="#1F5C8A"
-            strokeWidth="2"
+            y2="3"
+            stroke="#0F766E"
+            strokeWidth="1.5"
             strokeDasharray="4 4"
+            opacity="0.4"
           />
         </svg>
         <motion.div
           animate={{ x: ['0%', '88%', '0%'] }}
           transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
-          className="absolute w-3.5 h-3.5 bg-[#1F5C8A] rounded-full border border-[#1C1B18]"
+          className="absolute w-2.5 h-2.5 bg-teal-600 rounded-full shadow-xs"
         />
       </div>
     </div>
@@ -347,47 +357,47 @@ function LiveOutletToggle() {
   const [outlet, setOutlet] = useState<'all' | 'o1' | 'o2'>('all');
 
   return (
-    <div className="bg-[#FFFDF5] rounded-card p-3.5 border-[1.5px] border-[#1C1B18] shadow-hard-sm">
+    <div className="bg-[#F5F5F7] rounded-xl p-3 border border-hairline">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-bold text-[#1C1B18] flex items-center gap-1.5 font-figtree">
-          <Store size={14} className="text-[#5B3FA0]" /> Outlet View:
+        <span className="text-xs font-semibold text-ink flex items-center gap-1.5">
+          <Store size={13} strokeWidth={1.5} className="text-blue" /> View:
         </span>
-        <div className="inline-flex bg-[#F7F5E4] rounded-lg p-0.5 border border-[#1C1B18]/30 text-[11px] font-figtree font-bold">
+        <div className="inline-flex bg-slate-200/70 rounded-lg p-0.5 text-[11px]">
           <button
             onClick={() => setOutlet('all')}
-            className={`px-2 py-0.5 rounded ${
+            className={`px-2 py-0.5 rounded-md transition-all ${
               outlet === 'all'
-                ? 'bg-[#E9D8FD] text-[#1C1B18] border border-[#1C1B18]'
-                : 'text-[#4B4A44] hover:text-[#1C1B18]'
+                ? 'bg-surface text-ink font-semibold shadow-xs'
+                : 'text-muted hover:text-ink'
             }`}
           >
             All
           </button>
           <button
             onClick={() => setOutlet('o1')}
-            className={`px-2 py-0.5 rounded ${
+            className={`px-2 py-0.5 rounded-md transition-all ${
               outlet === 'o1'
-                ? 'bg-[#E9D8FD] text-[#1C1B18] border border-[#1C1B18]'
-                : 'text-[#4B4A44] hover:text-[#1C1B18]'
+                ? 'bg-surface text-ink font-semibold shadow-xs'
+                : 'text-muted hover:text-ink'
             }`}
           >
             O-1
           </button>
           <button
             onClick={() => setOutlet('o2')}
-            className={`px-2 py-0.5 rounded ${
+            className={`px-2 py-0.5 rounded-md transition-all ${
               outlet === 'o2'
-                ? 'bg-[#E9D8FD] text-[#1C1B18] border border-[#1C1B18]'
-                : 'text-[#4B4A44] hover:text-[#1C1B18]'
+                ? 'bg-surface text-ink font-semibold shadow-xs'
+                : 'text-muted hover:text-ink'
             }`}
           >
             O-2
           </button>
         </div>
       </div>
-      <div className="flex justify-between text-xs text-[#4B4A44] font-figtree font-bold">
+      <div className="flex justify-between text-xs text-muted font-medium">
         <span>Stock value:</span>
-        <span className="text-[#1C1B18]">
+        <span className="text-ink font-mono font-semibold">
           {outlet === 'all' ? '₹3,48,500' : outlet === 'o1' ? '₹1,42,000' : '₹1,18,000'}
         </span>
       </div>

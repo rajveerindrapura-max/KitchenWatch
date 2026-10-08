@@ -19,16 +19,16 @@ export default function ContactPage() {
   )}`;
 
   return (
-    <div className="min-h-screen bg-ivory flex flex-col">
+    <div className="min-h-screen bg-bg flex flex-col font-sans">
       <AnnouncementStrip />
       <Nav />
       <main className="flex-1 pt-28 pb-20 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold tracking-widest text-muted uppercase mb-3 block">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-tint border border-blue/20 text-blue font-sans font-medium text-xs tracking-wide uppercase mb-3">
               CONNECT WITH US
             </span>
-            <h1 className="font-serif font-normal text-ink text-4xl sm:text-5xl tracking-tight mb-3">
+            <h1 className="font-sans font-semibold text-ink text-4xl sm:text-5xl tracking-tight mb-3">
               Book a Demo or Ask a Question
             </h1>
             <p className="text-secondary text-sm sm:text-base">
@@ -39,9 +39,9 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Direct Contact Cards */}
             <div className="lg:col-span-5 space-y-4">
-              <div className="bg-card rounded-2xl border-1.5 border-ink p-6 shadow-hard-sm">
-                <h2 className="font-serif text-xl font-normal text-ink mb-3 flex items-center gap-2">
-                  <MessageSquare size={18} className="text-sage-ink" />
+              <div className="bg-surface rounded-2xl border border-border p-6 shadow-subtle">
+                <h2 className="font-sans font-semibold text-lg text-ink mb-2 flex items-center gap-2">
+                  <MessageSquare size={18} className="text-emerald-600" />
                   Direct WhatsApp Support
                 </h2>
                 <p className="text-xs text-secondary leading-relaxed mb-4">
@@ -51,16 +51,16 @@ export default function ContactPage() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3 px-4 rounded-xl bg-card text-ink font-bold text-xs border-1.5 border-ink shadow-hard-sm hover:shadow-hard transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3 px-4 rounded-full bg-surface text-ink font-semibold text-xs border border-border shadow-xs hover:bg-[#F5F5F7] transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <MessageSquare size={16} className="text-sage-ink" />
+                  <MessageSquare size={15} className="text-emerald-600" />
                   <span>Chat on WhatsApp</span>
                 </a>
               </div>
 
-              <div className="bg-card rounded-2xl border-1.5 border-ink p-6 shadow-hard-sm">
-                <h2 className="font-serif text-xl font-normal text-ink mb-3 flex items-center gap-2">
-                  <Mail size={18} className="text-sky-ink" />
+              <div className="bg-surface rounded-2xl border border-border p-6 shadow-subtle">
+                <h2 className="font-sans font-semibold text-lg text-ink mb-2 flex items-center gap-2">
+                  <Mail size={18} className="text-blue" />
                   Email Support
                 </h2>
                 <p className="text-xs text-secondary leading-relaxed mb-2">
@@ -68,27 +68,27 @@ export default function ContactPage() {
                 </p>
                 <a
                   href={`mailto:${site.footer.email}`}
-                  className="text-sm font-bold text-ink underline hover:text-ink/80"
+                  className="text-sm font-semibold text-blue hover:underline"
                 >
                   {site.footer.email}
                 </a>
               </div>
 
-              <div className="bg-paper rounded-2xl border-1.5 border-ink p-5 text-xs space-y-2 text-secondary shadow-hard-sm">
+              <div className="bg-[#F5F5F7] rounded-2xl border border-border p-5 text-xs space-y-2 text-secondary">
                 <div className="flex items-center gap-2 font-medium text-ink">
-                  <Clock size={15} className="text-ink" />
+                  <Clock size={15} className="text-muted" />
                   <span>Operating hours: 10:00 AM – 9:00 PM IST</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <ShieldCheck size={15} className="text-sage-ink" />
+                  <ShieldCheck size={15} className="text-emerald-700" />
                   <span>Responses within 2 hours during kitchen hours</span>
                 </div>
               </div>
             </div>
 
             {/* Form */}
-            <div id="book" className="lg:col-span-7 bg-card rounded-2xl border-2 border-ink p-6 sm:p-8 shadow-hard-lg">
-              <h2 className="font-serif text-2xl font-normal text-ink mb-6 pb-3 border-b border-ink/15">
+            <div id="book" className="lg:col-span-7 bg-surface rounded-2xl border border-border p-6 sm:p-8 shadow-float">
+              <h2 className="font-sans font-semibold text-xl text-ink mb-6 pb-3 border-b border-hairline">
                 Schedule a 15-Minute Screen Share
               </h2>
               <LeadForm theme="light" source="contact-page" />

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Pause, Play } from 'lucide-react';
+import { Menu, X, ArrowRight, Pause, Play } from 'lucide-react';
 import Logo from '../ui/Logo';
 import { site } from '../../content/site';
 import { useAnimationPause } from '../../lib/useAnimationPause';
@@ -12,14 +12,14 @@ export default function Nav() {
   const { paused, toggle: togglePause } = useAnimationPause();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 30);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Track active section for indicator
   useEffect(() => {
-    const sectionIds = ['product', 'features', 'calculator', 'pricing', 'faq'];
+    const sectionIds = ['product', 'features', 'calculator', 'pricing', 'about', 'faq'];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -41,20 +41,18 @@ export default function Nav() {
   return (
     <>
       <header
-        className={`sticky top-3 z-40 px-3 sm:px-6 w-full flex justify-center transition-all duration-200 pointer-events-none`}
+        className={`sticky top-0 z-50 w-full h-14 flex items-center transition-all duration-200 ${
+          scrolled
+            ? 'bg-[#FBFBFD]/80 backdrop-blur-md border-b border-[#EDEFF3]'
+            : 'bg-transparent border-b border-transparent'
+        }`}
       >
-        <div
-          className={`pointer-events-auto max-w-[1100px] w-full bg-[#FFFEF2] rounded-full px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between transition-all duration-200 ${
-            scrolled
-              ? 'border-[1.5px] border-[#1C1B18] shadow-hard'
-              : 'border border-[#1C1B18]/70 shadow-hard-sm'
-          }`}
-        >
-          {/* Logo in pure ink */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full flex items-center justify-between">
+          {/* Logo in ink */}
           <Logo size="md" />
 
           {/* Desktop links - exactly 5 links */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8" aria-label="Main navigation">
+          <nav className="hidden md:flex items-center gap-7 lg:gap-8" aria-label="Main navigation">
             {site.nav.links.map((link) => {
               const id = link.href.replace('/#', '').replace('#', '');
               const isActive = activeSection === id;
@@ -62,130 +60,120 @@ export default function Nav() {
                 <a
                   key={link.label}
                   href={link.href}
-                  className={`relative text-[15px] font-figtree font-medium transition-colors py-1 ${
-                    isActive ? 'text-[#1C1B18] font-bold' : 'text-[#4B4A44] hover:text-[#1C1B18]'
+                  className={`text-[14px] font-sans transition-colors py-1 ${
+                    isActive ? 'text-ink font-semibold' : 'text-secondary hover:text-ink font-medium'
                   }`}
                 >
                   {link.label}
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-underline"
-                      className="absolute -bottom-0.5 left-0 right-0 h-[2px] bg-[#1C1B18] rounded-full"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
                 </a>
               );
             })}
           </nav>
 
-          {/* Desktop Right Actions: Pause Motion + Log in + Lavender Primary Button */}
-          <div className="hidden md:flex items-center gap-3.5">
+          {/* Desktop Right Actions: Log in + Book a demo pill */}
+          <div className="hidden md:flex items-center gap-4">
             {/* Ambient motion toggle */}
             <button
               type="button"
               onClick={togglePause}
               title={paused ? 'Resume animations' : 'Pause animations'}
               aria-label={paused ? 'Resume animations' : 'Pause animations'}
-              className="px-2.5 py-1.5 rounded-full border border-[#1C1B18]/40 hover:border-[#1C1B18] text-[#4B4A44] hover:text-[#1C1B18] text-xs font-figtree font-medium inline-flex items-center gap-1.5 transition-colors bg-[#F7F5E4]"
+              className="p-1.5 rounded-full text-muted hover:text-ink transition-colors"
             >
-              {paused ? <Play size={12} /> : <Pause size={12} />}
-              <span className="hidden xl:inline">{paused ? 'Play motion' : 'Pause motion'}</span>
+              {paused ? <Play size={14} strokeWidth={1.5} /> : <Pause size={14} strokeWidth={1.5} />}
             </button>
 
             <a
               href={`${site.config.appUrl}/login`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-figtree font-semibold text-[#4B4A44] hover:text-[#1C1B18] transition-colors px-2 py-1.5"
+              className="text-[14px] font-sans font-medium text-secondary hover:text-ink transition-colors px-2 py-1"
             >
               {site.nav.loginText}
             </a>
 
-            {/* Thick-outlined lavender primary button */}
+            {/* Apple/Stripe Blue Pill Button */}
             <a
               href="#cta"
-              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-btn bg-[#E9D8FD] text-[#1C1B18] text-sm font-figtree font-bold border-2 border-[#1C1B18] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-hard active:translate-y-0 active:shadow-none inline-flex items-center justify-center min-h-[42px]"
+              className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-pill bg-blue hover:bg-blue-hover text-white text-[13px] font-sans font-medium transition-all shadow-subtle hover:shadow-card"
             >
-              {site.nav.ctaPrimary}
+              <span>{site.nav.ctaPrimary}</span>
+              <ArrowRight
+                size={13}
+                strokeWidth={2}
+                className="transition-transform duration-150 group-hover:translate-x-0.5"
+              />
             </a>
           </div>
 
           {/* Mobile hamburger */}
-          <div className="flex md:hidden items-center gap-2">
-            <button
-              type="button"
-              onClick={togglePause}
-              aria-label={paused ? 'Resume animations' : 'Pause animations'}
-              className="p-2 text-[#4B4A44] rounded-full border border-[#1C1B18]/30 bg-[#F7F5E4]"
-            >
-              {paused ? <Play size={14} /> : <Pause size={14} />}
-            </button>
-            <button
-              className="p-2 -mr-1 text-[#1C1B18] rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
-              onClick={() => setMobileOpen(true)}
-              aria-label="Open navigation menu"
-            >
-              <Menu size={24} />
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            className="md:hidden p-2 rounded-lg text-ink hover:bg-hairline transition-colors"
+          >
+            {mobileOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
+          </button>
         </div>
       </header>
 
-      {/* Mobile full-screen warm cream menu */}
+      {/* Full-screen Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -16 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 bg-[#FFFEF2] z-[60] flex flex-col p-6 overflow-y-auto"
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-x-0 top-14 bottom-0 z-40 bg-[#FBFBFD] px-6 py-8 flex flex-col justify-between md:hidden overflow-y-auto"
           >
-            <div className="flex items-center justify-between pb-6 border-b border-[#1C1B18]/15">
-              <Logo size="md" />
-              <button
-                onClick={() => setMobileOpen(false)}
-                className="p-2.5 text-[#1C1B18] rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
-                aria-label="Close navigation menu"
-              >
-                <X size={24} />
-              </button>
-            </div>
-
-            <nav className="flex flex-col gap-2 py-8" aria-label="Mobile navigation">
+            <div className="space-y-4">
+              <span className="text-[11px] font-semibold text-muted uppercase tracking-wider block mb-2">
+                Menu
+              </span>
               {site.nav.links.map((link, i) => (
                 <motion.a
                   key={link.label}
                   href={link.href}
-                  initial={{ opacity: 0, x: -16 }}
+                  onClick={() => setMobileOpen(false)}
+                  initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.04 }}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-2xl font-serif text-[#1C1B18] py-3 hover:opacity-75 transition-opacity min-h-[44px] flex items-center"
+                  className="block text-2xl font-semibold text-ink hover:text-blue transition-colors py-2 border-b border-hairline"
                 >
                   {link.label}
                 </motion.a>
               ))}
-            </nav>
+            </div>
 
-            <div className="mt-auto pt-6 border-t border-[#1C1B18]/15 flex flex-col gap-3">
+            <div className="space-y-3 pt-6 border-t border-hairline">
+              <a
+                href="#cta"
+                onClick={() => setMobileOpen(false)}
+                className="w-full py-3.5 px-4 rounded-pill bg-blue text-white font-medium text-center text-sm block shadow-subtle"
+              >
+                {site.nav.ctaPrimary}
+              </a>
               <a
                 href={`${site.config.appUrl}/login`}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
-                className="w-full text-center py-3.5 rounded-btn border-2 border-[#1C1B18] bg-[#FFFEF2] font-figtree font-bold text-[#1C1B18] text-base min-h-[44px] flex items-center justify-center hover:shadow-hard transition-shadow"
+                className="w-full py-3.5 px-4 rounded-pill border border-border bg-white text-ink font-medium text-center text-sm block"
               >
                 {site.nav.loginText}
               </a>
-              <a
-                href="#cta"
-                onClick={() => setMobileOpen(false)}
-                className="w-full text-center py-3.5 rounded-btn bg-[#E9D8FD] border-2 border-[#1C1B18] text-[#1C1B18] font-figtree font-bold text-base min-h-[44px] flex items-center justify-center shadow-hard"
-              >
-                {site.nav.ctaPrimary}
-              </a>
+              <div className="pt-2 flex items-center justify-between text-xs text-muted">
+                <span>Ambient motion</span>
+                <button
+                  type="button"
+                  onClick={togglePause}
+                  className="underline font-medium text-ink"
+                >
+                  {paused ? 'Resume motion' : 'Pause motion'}
+                </button>
+              </div>
             </div>
           </motion.div>
         )}
