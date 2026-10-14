@@ -2,6 +2,8 @@
 // Single source of truth. All copy, flags, prices, and links live here.
 // Fields with confirm: true require founder confirmation and are tracked in CONTENT_TODO.md.
 
+import { getDashboardUrl } from '../lib/urls';
+
 export interface PlanPricing {
   monthly: number;
   yearly: number;
@@ -20,7 +22,7 @@ export interface PricingPlan {
 export const site = {
   // Environment & External URLs
   config: {
-    appUrl: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_APP_URL) || 'https://app.kitchenwatch.in',
+    appUrl: getDashboardUrl(),
     whatsappNumber: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_WHATSAPP_NUMBER) || '919876543210',
     whatsappPrefill: 'Hi, I would like to know more about KitchenWatch',
     bookingUrl: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_BOOKING_URL) || 'https://cal.com/kitchenwatch/demo',

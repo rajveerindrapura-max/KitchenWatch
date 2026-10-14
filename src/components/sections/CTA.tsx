@@ -73,9 +73,7 @@ export default function CTA() {
                 </div>
                 <div className="pt-2">
                   <a
-                    href={`${site.config.appUrl}/signup`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="#pricing"
                     className="text-white hover:underline font-medium inline-flex items-center gap-1"
                   >
                     <span>{trialLinkText}</span> &rarr;
