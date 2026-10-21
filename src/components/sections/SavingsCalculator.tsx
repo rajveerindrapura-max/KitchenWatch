@@ -29,9 +29,9 @@ export default function SavingsCalculator() {
 
   // Suggested Plan
   const suggestedPlan = useMemo(() => {
-    if (outlets <= 2) return { name: 'Starter', price: 2499 };
-    if (outlets <= 6) return { name: 'Growth', price: 4999 };
-    return { name: 'Business', price: 8999 };
+    if (outlets <= 1) return { name: 'Starter', price: 399 };
+    if (outlets <= 3) return { name: 'Growth', price: 699 };
+    return { name: 'Business', price: 999 };
   }, [outlets]);
 
   const netMonthlyBenefit = Math.max(0, potentialMonthlySavings - suggestedPlan.price);
